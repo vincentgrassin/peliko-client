@@ -1,0 +1,20 @@
+@startuml
+
+user -> mobile : signup
+mobile -> int_amplify : signup
+int_amplify -> cognito : signup
+cognito --> int_amplify : unregistered user created
+int_amplify --> mobile : unregistered user created
+mobile --> user : success 
+user --> mobile : register
+
+...
+
+user -> mobile : create new roll
+user -> mobile : invite friends
+user -> mobile : add picture
+user -> mobile : get existing rolls
+user -> mobile : see roll invite status
+
+
+@enduml

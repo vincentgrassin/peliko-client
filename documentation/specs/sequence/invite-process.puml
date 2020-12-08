@@ -1,0 +1,21 @@
+@startuml
+
+participant -> pelliko : participant create roll
+note right
+participant is somebody with an 
+account created and a roll
+NB: normally participant is user when creating a roll
+flow is simplified because the focus is invitee flow
+end note
+
+participant -> pelliko : participant invite friend by phone
+pelliko -> invitee : pelliko send sms with link to pelliko and secret code
+invitee -> pelliko : invitee create account
+invitee -> pelliko : invitee claim invite (new button ??)
+invitee -> pelliko : invitee provide phone # and secret code
+pelliko -> invitee : pelliko list of rolls
+invitee -> pelliko : invitee accept roll
+invitee -> invitee: invitee becomes a participant
+
+
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+
+object participant
+
+participant : {pk} - cognitoUserId : link with the actual user
+participant : {sk} - rollId : link to the roll
+participant : {att} - profilInfo : profile information for the user
+
+object roll
+roll : {pk} - rollId
+roll : {att} - [participant] : contributors
+roll : {att} - [participant] : administrators
+roll : {att} - [picture] : picture list for the roll
+
+object picture
+picture : {pk} - rollId : linked roll
+picture : {att} - participant : the one who has added the photo
+
+object invite
+invite : {pk} - inviteId : email or phone
+invite : {att} - secretCode : code sent to the invitee
+invite : {att} - [roll] : list of rolls to which you are invited
+
+legend
+{pk} - dynDB primary key
+{sk} - dynDB sort key
+{att} - dynDB attribute
+
+not all the attributes are here because only keys matters 
+in dynDB schemas. Attributes can be added along the way
+end legend
+
+@enduml
+
+
+what we know:
+    - congnitoUserId
+
+queries we want: 
+    - list of all the rolls for a user
+    - list of all the users for a roll
+        - need number of pictures taken
+        - need number of invitee for this roll
+                -- can be done through the pictures gathering:
+                1. get the roll list 
+                2. select a roll
+                2.1 get picture list
+                2.2 phone calculate the number per user
+                3. get invitee list 
+                3.1 phone display who has accepted or not
+    - pictures for a roll
+    - pictures added by this participant
