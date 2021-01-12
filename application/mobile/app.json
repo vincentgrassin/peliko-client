@@ -1,0 +1,12 @@
+{
+  "name": "pelliko",
+  "displayName": "pelliko",
+  "expo": {
+    "name": "pelliko",
+    "slug": "pelliko",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
