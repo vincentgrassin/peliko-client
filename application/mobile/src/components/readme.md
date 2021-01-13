@@ -1,0 +1,1 @@
+components are things like buttons; tabs... that can be shared
