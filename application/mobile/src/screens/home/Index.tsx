@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, DefaultRootState } from "react-redux";
 import {
   withNavigationFocus,
   NavigationFocusInjectedProps,
@@ -26,6 +26,14 @@ import TabContent from "./TabContent";
 //import HeaderHome from "../generic/HeaderHome";
 //import CustomBottomNavigator from "../generic/CustomBottomNavigator";
 
+interface RootState{
+  userData: {
+    token: string | undefined;
+  },
+  formRollData: any;
+
+}
+
 export interface StateProps {
   userData: {
     token: string | undefined;
@@ -36,26 +44,13 @@ interface DispatchProps {
   notificationUpdate(nb: string | undefined): object;
 }
 
-interface OwnProps {
-  backgroundColor: string;
-}
-
 export type HomeProps = StateProps &
   DispatchProps &
-  OwnProps &
   NavigationFocusInjectedProps;
-
-type HomeState = {
-  rollList: [any];
-  closedRollList: [any];
-  numberToDiscover: number;
-  isTabSelected: boolean;
-  isLoaded: boolean;
-};
 
 //class Home extends React.Component<Props,HomeState>{
 // console.log("BACK-END RUNNING ON : ",Ip())
-const Home: React.FC<HomeProps> = (props) => {
+export const Home: React.FC<HomeProps> = (props) => {
   // VARIALBES
   const [rollList, setRollList] = useState([]);
   const [closedRollList, setClosedRollList] = useState([]);
@@ -86,13 +81,14 @@ const Home: React.FC<HomeProps> = (props) => {
       }
 
       let pushToken = await Notifications.getExpoPushTokenAsync();
+      // TODO: probably no longer needed
       // console.log("is token ?",pushToken)
-      let data = await fetch(`${Ip()}/push/token/`, {
+      /*let data = await fetch(`${Ip()}/push/token/`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `token=${props.userData.token}&pushToken=${pushToken}`,
-      });
-      let dataJson = await data.json();
+      });*/
+      let dataJson = "";//await data.json();
 
       if (Platform.OS === "android") {
         Notifications.createChannelAndroidAsync("default", {
@@ -138,7 +134,9 @@ const Home: React.FC<HomeProps> = (props) => {
       );
 
       if (props.userData.token !== undefined && props.userData.token !== null) {
-        let data = await fetch(`${Ip()}/roll/roll-list/`, {
+        
+        // TODO: get roll list
+        /*let data = await fetch(`${Ip()}/roll/roll-list/`, {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: `token=${props.userData.token}`,
@@ -149,6 +147,7 @@ const Home: React.FC<HomeProps> = (props) => {
         setNumberToDiscover(dataJson.dataFromBack.discoveryCount);
         setIsLoaded(true);
         props.notificationUpdate(dataJson.dataFromBack.invitationRollNumber);
+        */
       }
     };
     if (mounted) {
@@ -216,7 +215,7 @@ const style = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state: StateProps) => {
+function mapStateToProps(state: RootState) {
   return {
     userData: {
       token: state.userData.token,
@@ -241,9 +240,10 @@ function mapDispatchToProps(dispatch: any) {
 //);
 
 export default withNavigationFocus<HomeProps>(
-  connect<StateProps, DispatchProps, OwnProps>(
+  connect<StateProps, DispatchProps>(
     mapStateToProps,
     mapDispatchToProps
   )(Home)
 );
 // TODO: continue the reading on redux https://react-redux.js.org/using-react-redux/static-typing
+// TODO: 

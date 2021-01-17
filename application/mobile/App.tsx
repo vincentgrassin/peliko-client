@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createStore, combineReducers }  from 'redux';
+import { UserData, Notification, FormRollData } from './src/utils/redux/reducers';
+import {Home} from './src/screens/home'
+const store = createStore(combineReducers({UserData,Notification,FormRollData}));
 
 const stackNavigatorHome = createStackNavigator(
   {
