@@ -1,39 +1,21 @@
+
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createStore, combineReducers }  from 'redux';
-import { UserData, Notification, FormRollData } from './src/utils/redux/reducers';
-import {Home} from './src/screens/home'
-const store = createStore(combineReducers({UserData,Notification,FormRollData}));
+import {NavigationContainer} from '@react-navigation/native'
+import {createStackNavigator} from '@react-navigation/stack'
+import { Home } from './src/screens/home'
+import { Notifications } from './src/screens/notifications'
 
-const stackNavigatorHome = createStackNavigator(
-  {
-    Home: Home,
-    // Roll: Roll,
-    // Gallery:Gallery,
-    // FullRoll:FullRoll,
-    // Cam:Cam,
-    // MasterForm:MasterForm,
-    // joinRoll:joinRoll,
-    // MyAccount:MyAccount,
-    // MyPassword:MyPassword,
-    MasterParameters:MasterParameters
-}, {headerMode: 'none',});
 
+const stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <NavigationContainer> 
+      <stack.Navigator>
+        <stack.Screen name='Home' component={Home} options={{title:'Vos pelliko'}} />
+        <stack.Screen name='Notifications' component={Notifications} options={{title:'notif pelli'}} />
+      </stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
