@@ -23,9 +23,9 @@ export const MainTabView = () => {
     });
 
     return (<TabView 
-        navigationState={{index, routes}}
+        navigationState={{ index, routes }}
         renderScene={ renderScene }
-        onIndexChange={setIndex}
-        initialLayout={initialLayout}  
+        onIndexChange={ setIndex }
+        initialLayout={ initialLayout }  
         />);
 }

@@ -8,6 +8,10 @@ interface RollProps {
 
 export const Rolls: React.FC<RollProps> = (props) => {
 
-    return (<View></View>);
+    return (
+    <View>
+        
+    </View>
+    );
 
 }
