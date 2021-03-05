@@ -1,17 +1,6 @@
-import React from 'react';
-import { View } from 'react-native';
+import React from "react";
+import { View } from "react-native";
 
+interface RollProps {}
 
-interface RollProps {
-
-}
-
-export const Rolls: React.FC<RollProps> = (props) => {
-
-    return (
-    <View>
-        
-    </View>
-    );
-
-}
+export const Rolls: React.FC<RollProps> = (props) => <View />;
