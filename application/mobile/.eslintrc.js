@@ -14,6 +14,7 @@ module.exports = {
   },
   rules: {
     // note you must disable the base rule as it can report incorrect errors
+    "no-empty":"false",
     "no-use-before-define": "off",
     "react/prop-types":"off",
     "import/extensions": "off",
