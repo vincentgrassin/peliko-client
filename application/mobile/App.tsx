@@ -7,9 +7,9 @@ import Login from "./src/screens/login";
 import Home from "./src/screens/home";
 import Notifications from "./src/screens/notifications";
 import NavigationContext from "./src/navigation/NavigationContext";
-import { Icon } from "react-native-elements";
-import { palette, iconSet } from "./src/assets";
+import { palette, iconSet } from "./src/themeHelpers";
 import { useNavigationContext } from "./src/navigation/NavigationContext";
+import { Icon } from "./src/components";
 
 function BottomNavigation() {
   const Tab = createBottomTabNavigator();
