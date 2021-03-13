@@ -2,7 +2,7 @@ import React from "react";
 import {
   Text as ReactNativeText,
   TextProps as ReactNativeTextProps
-} from "react-native";
+} from "react-native-elements";
 
 interface TextProps extends ReactNativeTextProps {}
 

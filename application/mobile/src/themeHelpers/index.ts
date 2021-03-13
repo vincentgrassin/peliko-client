@@ -2,7 +2,7 @@ import globalPalette from "./palette";
 export const palette = globalPalette;
 
 import globalResources from "./resources";
-export const ressources = globalResources;
+export const resources = globalResources;
 
 import globalTheme from "./theme";
 export const theme = globalTheme;
