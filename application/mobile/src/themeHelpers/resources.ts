@@ -1,6 +1,8 @@
 const globalResources = {
   rollTabName: "roll tab",
-  notificationTabName: "notification"
+  notificationTabName: "notification",
+  openRollListTabTitle: "En cours",
+  closedRollListTabTitle: "Développés"
 };
 
 export default globalResources;
