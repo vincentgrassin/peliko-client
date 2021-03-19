@@ -6,10 +6,6 @@ import TabContent from "../TabContent";
 
 interface TabsProps {}
 
-const OpenRollTab = () => <TabContent isOpenRollTab />;
-
-const ClosedRollTab = () => <TabContent isOpenRollTab={false} />;
-
 const Tabs: React.FC<TabsProps> = ({ ...props }) => {
   const layout = useWindowDimensions();
 
@@ -20,8 +16,8 @@ const Tabs: React.FC<TabsProps> = ({ ...props }) => {
   ]);
 
   const renderScene = SceneMap({
-    openRollList: OpenRollTab,
-    closedRollList: ClosedRollTab
+    openRollList: () => <TabContent isOpenRollTab />,
+    closedRollList: () => <TabContent isOpenRollTab={false} />
   });
 
   return (
