@@ -7,7 +7,7 @@ interface RollFormWizardProps {}
 type FormValues = {
   name: string;
   description: string;
-  date: any;
+  date: string;
 };
 
 // const validate = {
@@ -39,9 +39,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   console.log(step);
 
   const handlePrevious = () => {
-    console.log("prevoious");
     if (step > 0) {
-      console.log("condition");
       setStep(step - 1);
     }
   };
@@ -68,16 +66,16 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
             <Button onPress={(e: any) => handleSubmit(e)} title="Submit" />
             <Button onPress={handleNext} title="Next" />
             <Button onPress={handlePrevious} title="Previous" />
-            {step === 0 && (
-              <FormStep
-                step={0}
-                values={values}
-                errors={errors}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-              />
-            )}
-            {step === 1 && (
+            {/* {step === 0 && ( */}
+            <FormStep
+              step={step}
+              values={values}
+              errors={errors}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
+            {/* )} */}
+            {/* {step === 1 && (
               <FormStep
                 step={1}
                 values={values}
@@ -85,7 +83,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
                 handleChange={handleChange}
                 handleBlur={handleBlur}
               />
-            )}
+            )} */}
           </View>
         )}
       </Formik>

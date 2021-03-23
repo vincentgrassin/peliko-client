@@ -3,6 +3,7 @@ import View from "../View";
 import Text from "../Text";
 import Input from "../Input";
 import StyleSheet from "../StyleSheet";
+import DatePicker from "../DatePicker";
 
 interface FormStepProps {
   handleChange: (text: string) => void;
@@ -39,12 +40,15 @@ const FormStep: React.FC<FormStepProps> = ({
         </>
       )}
       {step === 1 && (
-        <Input
-          label="date"
-          value={values.description}
-          onChangeText={handleChange("date")}
-          onBlur={handleBlur("date")}
-        />
+        <>
+          <Input
+            label="date"
+            value={values.date}
+            onChangeText={handleChange("date")}
+            onBlur={handleBlur("date")}
+          />
+          <DatePicker />
+        </>
       )}
       {errors.name && (
         <View style={{ backgroundColor: "red" }}>{errors.name}</View>
