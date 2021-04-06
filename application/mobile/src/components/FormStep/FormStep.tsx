@@ -20,7 +20,6 @@ const FormStep: React.FC<FormStepProps> = ({
   handleBlur,
   step
 }) => {
-  console.log("input", values);
   return (
     <View style={style.formStep}>
       {step === 0 && (
@@ -41,13 +40,13 @@ const FormStep: React.FC<FormStepProps> = ({
       )}
       {step === 1 && (
         <>
-          <Input
+          {/* <Input
             label="date"
             value={values.date}
             onChangeText={handleChange("date")}
             onBlur={handleBlur("date")}
-          />
-          <DatePicker />
+          /> */}
+          <DatePicker value={values.date} />
         </>
       )}
       {errors.name && (

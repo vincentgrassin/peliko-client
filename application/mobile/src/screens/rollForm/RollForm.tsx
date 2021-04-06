@@ -7,7 +7,7 @@ interface RollFormWizardProps {}
 type FormValues = {
   name: string;
   description: string;
-  date: string;
+  date: any;
 };
 
 // const validate = {
@@ -32,11 +32,9 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const [formValues, setFormValues] = React.useState<FormValues>({
     name: "",
     description: "",
-    date: ""
-  }); // a typer
+    date: new Date(Date.now())
+  });
   const [step, setStep] = React.useState(0);
-
-  console.log(step);
 
   const handlePrevious = () => {
     if (step > 0) {
