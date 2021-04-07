@@ -10,7 +10,5 @@ export { default as Tabs } from "./Tabs";
 export * from "./Tabs";
 export { default as StyleSheet } from "./StyleSheet";
 export * from "./StyleSheet";
-export { default as FormStep } from "./FormStep";
-export * from "./FormStep";
 export { default as Input } from "./Input";
 export * from "./Input";
