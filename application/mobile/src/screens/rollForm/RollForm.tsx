@@ -73,19 +73,12 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
         onSubmit={handleSubmit}
         // validate={validate[step]}
       >
-        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+        {({ handleSubmit }) => (
           <View>
             <Button onPress={(e: any) => handleSubmit(e)} title="Submit" />
             <Button onPress={handleNext} title="Next" />
             <Button onPress={handlePrevious} title="Previous" />
-            {step === 0 && (
-              <RollFormStep0
-                values={values}
-                errors={errors}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-              />
-            )}
+            {step === 0 && <RollFormStep0 />}
             {step === 1 && <RollFormStep1 />}
             {step === 2 && <RollFormStep2 />}
           </View>

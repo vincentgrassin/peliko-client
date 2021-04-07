@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Button, Text, Input } from "../../components";
+import { View, StyleSheet, Button, Input } from "../../components";
 import { useField, useFormikContext } from "formik";
 import { Participants, FormValues } from "./RollForm";
 

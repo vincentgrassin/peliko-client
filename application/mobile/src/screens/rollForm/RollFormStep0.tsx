@@ -1,37 +1,31 @@
 import React from "react";
-import { View, Input, Text, StyleSheet, Button } from "../../components";
+import { View, Input, StyleSheet } from "../../components";
+import { useField, useFormikContext } from "formik";
+import { FormValues } from "./RollForm";
 
-interface RollFormStep0Props {
-  handleChange: (text: string) => void;
-  handleBlur: (e: any) => void;
-  values: any;
-  errors: any;
-}
+interface RollFormStep0Props {}
 
-const RollFormStep0: React.FC<RollFormStep0Props> = ({
-  values,
-  errors,
-  handleChange,
-  handleBlur
-}) => {
+const RollFormStep0: React.FC<RollFormStep0Props> = ({}) => {
+  const { setFieldValue, values, errors } = useFormikContext<FormValues>();
+
+  const onChange = (val: string, fieldName: string) => {
+    setFieldValue(fieldName, val);
+  };
+  const [nameField] = useField("name");
+  const [descriptionField] = useField("description");
+
   return (
     <View style={style.RollFormStep0}>
       <>
         <Input
-          label="name"
+          label={nameField.name}
           value={values.name}
-          //@ts-ignore
-          onChangeText={handleChange("name")}
-          //@ts-ignore
-          onBlur={handleBlur("name")}
+          onChangeText={(val) => onChange(val, nameField.name)}
         />
         <Input
-          label="description"
+          label={descriptionField.name}
           value={values.description}
-          //@ts-ignore
-          onChangeText={handleChange("description")}
-          //@ts-ignore
-          onBlur={handleBlur("description")}
+          onChangeText={(val) => onChange(val, descriptionField.name)}
         />
       </>
       {errors.name && (

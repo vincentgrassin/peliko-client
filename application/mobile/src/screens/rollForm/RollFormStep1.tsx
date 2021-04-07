@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Text, View, StyleSheet, Input } from "../../components";
+import { Button, Text, View, StyleSheet } from "../../components";
 import { Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useField, useFormikContext } from "formik";
