@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "../../components";
+import {
+  View,
+  StyleSheet,
+  Button,
+  Stepper,
+  ScrollView
+} from "../../components";
 import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
 import RollFormStep2 from "./RollFormStep2";
@@ -61,13 +67,17 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
     }
   };
 
+  const handleStep = (step: number) => {
+    setStep(step);
+  };
+
   const handleSubmit = (values: FormValues) => {
     console.log("formvalues : ", values);
   };
 
   return (
-    <View style={style.rollForm}>
-      <Text>roll form</Text>
+    <ScrollView style={style.rollForm}>
+      <Stepper step={step} onStepChange={handleStep} />
       <Formik
         initialValues={formValues}
         onSubmit={handleSubmit}
@@ -84,7 +94,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
           </View>
         )}
       </Formik>
-    </View>
+    </ScrollView>
   );
 };
 

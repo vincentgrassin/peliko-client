@@ -28,23 +28,18 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     setFieldValue(field.name, participantsList);
   };
 
-  console.log("out", values);
-
   return (
     <View style={style.RollFormStep2}>
-      {values.participants.map((participant: Participants, index: number) => {
-        console.log("participant", participant);
-        return (
-          <View key={index}>
-            <Input
-              value={participant.phoneNumber}
-              onChangeText={(val) => handleInputChange(val, index)}
-            />
-            <Button onPress={handleAddFields} title="More" />
-            <Button onPress={() => handleRemoveFields(index)} title="Less" />
-          </View>
-        );
-      })}
+      {values.participants.map((participant: Participants, index: number) => (
+        <View key={index}>
+          <Input
+            value={participant.phoneNumber}
+            onChangeText={(val) => handleInputChange(val, index)}
+          />
+          <Button onPress={handleAddFields} title="More" />
+          <Button onPress={() => handleRemoveFields(index)} title="Less" />
+        </View>
+      ))}
       {errors.name && (
         <View style={{ backgroundColor: "red" }}>{errors.name}</View>
       )}
