@@ -1,3 +1,5 @@
+export { default as Autocomplete } from "./Autocomplete";
+export * from "./Autocomplete";
 export { default as Button } from "./Button";
 export * from "./Button";
 export { default as Divider } from "./Divider";

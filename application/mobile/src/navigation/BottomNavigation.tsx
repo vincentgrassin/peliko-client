@@ -23,7 +23,7 @@ export default function BottomNavigation() {
         component={Home}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon type="entypo" name={iconSet.entypo.notification} />
+            <Icon type={iconSet.bell.type} name={iconSet.bell.name} />
           )
         }}
       />
@@ -42,7 +42,7 @@ export default function BottomNavigation() {
         options={{
           tabBarBadge: notification,
           tabBarIcon: ({ color }) => (
-            <Icon type="materialicons" name={iconSet.materialicons.roll} />
+            <Icon type={iconSet.roll.type} name={iconSet.roll.name} />
           )
         }}
       />

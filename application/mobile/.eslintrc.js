@@ -1,10 +1,10 @@
 module.exports = {
   parser: "@typescript-eslint/parser", // Specifies the ESLint parser
-  plugins: ["@typescript-eslint", "react-native", "prettier"],
+  plugins: ["@typescript-eslint", "react-native", "prettier","react-hooks"],
   parserOptions: {
     sourceType: "module"
   },
-  extends: ["airbnb", "plugin:@typescript-eslint/recommended", "prettier"],
+  extends: ["airbnb", "plugin:@typescript-eslint/recommended","plugin:react-hooks/recommended"],
   settings: {
     "import/resolver": {
       node: {
@@ -31,6 +31,8 @@ module.exports = {
     "react-native/no-inline-styles": 0,
     "react-native/no-color-literals": 1,
     "react-native/no-raw-text": 0,
-    "prettier/prettier": "off"
+    "prettier/prettier": "off",
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   }
 };

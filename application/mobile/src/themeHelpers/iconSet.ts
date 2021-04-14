@@ -1,9 +1,19 @@
 const globalIconSet = {
-  entypo: {
-    notification: "bell"
+  bell: {
+    name: "bell",
+    type: "entypo"
   },
-  materialicons: {
-    roll: "camera-roll"
+  roll: {
+    name: "camera-roll",
+    type: "materialicons"
+  },
+  plus: {
+    name: "pluscircleo",
+    type: "antdesign"
+  },
+  minus: {
+    name: "minuscircleo",
+    type: "antdesign"
   }
 };
 

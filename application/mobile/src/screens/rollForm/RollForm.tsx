@@ -10,11 +10,12 @@ import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
 import RollFormStep2 from "./RollFormStep2";
 import { Formik } from "formik";
+import { resources } from "../../themeHelpers";
 
 interface RollFormWizardProps {}
 export type Participants = {
   name: string;
-  phoneNumber: string;
+  phoneNumber: string | undefined;
 };
 
 export type FormValues = {
@@ -85,12 +86,15 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       >
         {({ handleSubmit }) => (
           <View>
-            <Button onPress={(e: any) => handleSubmit(e)} title="Submit" />
-            <Button onPress={handleNext} title="Next" />
-            <Button onPress={handlePrevious} title="Previous" />
             {step === 0 && <RollFormStep0 />}
             {step === 1 && <RollFormStep1 />}
             {step === 2 && <RollFormStep2 />}
+            <Button
+              onPress={(e: any) => handleSubmit(e)}
+              title={resources.submit}
+            />
+            <Button onPress={handleNext} title={resources.next} />
+            <Button onPress={handlePrevious} title={resources.previous} />
           </View>
         )}
       </Formik>
