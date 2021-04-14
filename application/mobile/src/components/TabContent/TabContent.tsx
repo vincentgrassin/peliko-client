@@ -2,6 +2,11 @@ import React from "react";
 import View from "../View";
 import Text from "../Text";
 import StyleSheet from "../StyleSheet";
+import RollThumbnail from "../RollThumbnail";
+import ScrollView from "../ScrollView";
+import { palette } from "../../themeHelpers";
+import { RollData } from "../../utils/types/types";
+import { openRollsList } from "../../utils/types/dumbData";
 
 interface TabContentProps {
   isOpenRollTab: boolean;
@@ -14,10 +19,29 @@ const style = StyleSheet.create({
 });
 
 const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
+  const [rollList, setRollList] = React.useState<RollData[]>([]);
+
+  React.useEffect(() => {
+    // should be replaced by useFetch hook
+    const doFetch = async () => {
+      setRollList(openRollsList);
+    };
+    doFetch();
+  }, []);
+
   return (
-    <View style={style.tabContent}>
+    <ScrollView style={style.tabContent}>
       <Text>{isOpenRollTab ? "open" : "closed"}</Text>
-    </View>
+      {rollList &&
+        rollList.map((roll, key) => (
+          <RollThumbnail
+            key={key}
+            backgroundColor={palette("red")}
+            url={undefined}
+            name={roll?.name}
+          />
+        ))}
+    </ScrollView>
   );
 };
 

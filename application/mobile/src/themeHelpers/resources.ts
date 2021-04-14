@@ -6,7 +6,8 @@ const globalResources = {
   next: "Suivant",
   previous: "Précédent",
   submit: "submit",
-  accessPhoneContact: "load contact"
+  accessPhoneContact: "load contact",
+  shootPicture: "shootPicture"
 };
 
 export default globalResources;

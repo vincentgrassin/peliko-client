@@ -53,6 +53,8 @@
     "import/first":"off",
     "import/newline-after-import":"off",
     "implicit-arrow-linebreak":"off",
-    "operator-linebreak":"off"
+    "operator-linebreak":"off",
+    "max-len":"off",
+    "react/destructuring-assignment":"off"
   }
 }

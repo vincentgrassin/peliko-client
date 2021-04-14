@@ -13,7 +13,6 @@ const style = StyleSheet.create({
 });
 
 const Stepper: React.FC<StepperProps> = ({ step, onStepChange, ...props }) => {
-  console.log(step);
   return (
     <View style={style.stepper}>
       <Step step={0} isActive={step === 0} onStepChange={onStepChange} />
