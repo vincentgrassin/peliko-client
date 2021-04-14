@@ -22,7 +22,6 @@
     "@typescript-eslint/no-empty-interface": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
-    "no-unused-vars": 1,
     "@typescript-eslint/no-unused-vars": 1,
     "@typescript-eslint/explicit-member-accessibility": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
@@ -55,6 +54,8 @@
     "implicit-arrow-linebreak":"off",
     "operator-linebreak":"off",
     "max-len":"off",
-    "react/destructuring-assignment":"off"
+    "react/destructuring-assignment":"off",
+    "no-return-assign":"off",
+    "no-unused-vars":"off"
   }
 }

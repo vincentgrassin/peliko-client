@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Camera } from "expo-camera";
 import Text from "../Text";
+import Button from "../Button";
+import { resources } from "../../themeHelpers";
 
 interface CamProps {}
 
@@ -8,7 +10,7 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
   const [hasPermission, setHasPermission] = React.useState<boolean>(false);
   const [type, setType] = React.useState(Camera.Constants.Type.back);
   const [flash, setFlash] = React.useState(Camera.Constants.FlashMode.off);
-  // const camera = React.useRef(null);
+  let camera = React.useRef(null);
   const [toggleFlashState, setToggleFlashState] = React.useState(true);
   const [isVisibleModal, setIsVisibleModal] = React.useState(false);
 
@@ -21,18 +23,18 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
     })();
   }, []);
 
-  // async function takePicture() {
-  //   // setIsVisibleModal(true);
-  //   // if (camera) {
-  //   //   const photo = await camera.takePictureAsync({
-  //   //     quality: 0.7,
-  //   //     base64: true,
-  //   //     exif: true
-  //   //   });
-  //     // console.log("Picture is taken", photo.width, photo.height);
-  //     // setIsVisibleModal(false);
-  //   }
-  // }
+  async function takePicture() {
+    setIsVisibleModal(true);
+    if (camera) {
+      const photo = await camera.takePictureAsync({
+        quality: 0.7,
+        base64: true,
+        exif: true
+      });
+      console.log("Picture is taken", photo.width, photo.height);
+      setIsVisibleModal(false);
+    }
+  }
 
   return (
     <>
@@ -41,8 +43,10 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
           style={{ flex: 1 }}
           type={type}
           flashMode={flash}
-          // ref={(ref) => (camera = ref)}
-        />
+          ref={(ref) => (camera = ref)}
+        >
+          <Button onPress={takePicture} title={resources.shootPicture} />
+        </Camera>
       )}
     </>
   );
