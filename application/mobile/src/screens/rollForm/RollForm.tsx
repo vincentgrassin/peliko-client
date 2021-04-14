@@ -1,4 +1,5 @@
 import React from "react";
+import { Formik } from "formik";
 import {
   View,
   StyleSheet,
@@ -9,7 +10,6 @@ import {
 import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
 import RollFormStep2 from "./RollFormStep2";
-import { Formik } from "formik";
 import { resources } from "../../themeHelpers";
 
 interface RollFormWizardProps {}
@@ -21,9 +21,15 @@ export type Participants = {
 export type FormValues = {
   name: string;
   description: string;
-  date: any;
+  date: Date;
   participants: Participants[];
 };
+
+const style = StyleSheet.create({
+  rollForm: {
+    flex: 1
+  }
+});
 
 // const validate = {
 //   1: (values: FormValues) => {
@@ -103,9 +109,3 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
 };
 
 export default RollFormWizard;
-
-const style = StyleSheet.create({
-  rollForm: {
-    flex: 1
-  }
-});

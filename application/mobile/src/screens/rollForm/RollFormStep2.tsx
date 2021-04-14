@@ -1,4 +1,5 @@
 import React from "react";
+import { useField, useFormikContext } from "formik";
 import {
   View,
   StyleSheet,
@@ -11,11 +12,23 @@ import {
 } from "../../components";
 import { iconSet, resources } from "../../themeHelpers";
 
-import { useField, useFormikContext } from "formik";
 import { Participants, FormValues } from "./RollForm";
 import usePhoneContacts, { Contact } from "../../utils/hooks/usePhoneContacts";
 
 interface RollFormStep2Props {}
+
+const style = StyleSheet.create({
+  rollForm: {
+    marginTop: 100
+  },
+  participantField: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  inputParticipant: {
+    width: "70%"
+  }
+});
 
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const { setFieldValue, values, errors } = useFormikContext<FormValues>();
@@ -59,28 +72,26 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
         hideResults={isHiddenResult}
         defaultValue={searchContact}
         onChangeText={(val) => {
-          val == "" ? setIsHiddenResult(true) : setIsHiddenResult(false);
+          val === "" ? setIsHiddenResult(true) : setIsHiddenResult(false);
           setSearchContact(val);
           findContact(val);
         }}
         flatListProps={{
-          renderItem: ({ item }: { item: Contact }) => {
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  setIsHiddenResult(true);
-                  handleInputChange(
-                    item.phoneNumbers ? item.phoneNumbers[0].number : "",
-                    values.participants.length
-                  );
-                }}
-              >
-                <Text>
-                  {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
-                </Text>
-              </TouchableOpacity>
-            );
-          }
+          renderItem: ({ item }: { item: Contact }) => (
+            <TouchableOpacity
+              onPress={() => {
+                setIsHiddenResult(true);
+                handleInputChange(
+                  item.phoneNumbers ? item.phoneNumbers[0].number : "",
+                  values.participants.length
+                );
+              }}
+            >
+              <Text>
+                {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
+              </Text>
+            </TouchableOpacity>
+          )
         }}
       />
       {values.participants.map((participant: Participants, index: number) => (
@@ -110,16 +121,3 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
 };
 
 export default RollFormStep2;
-
-const style = StyleSheet.create({
-  rollForm: {
-    marginTop: 100
-  },
-  participantField: {
-    display: "flex",
-    flexDirection: "row"
-  },
-  inputParticipant: {
-    width: "70%"
-  }
-});

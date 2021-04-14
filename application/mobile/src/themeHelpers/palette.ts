@@ -1,4 +1,4 @@
-export const globalPalette = (color: string, opacity?: number) => {
+export const globalPalette = (color: string, opacity?: number): string => {
   if (opacity === undefined) {
     opacity = 1;
   }

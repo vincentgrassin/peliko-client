@@ -5,7 +5,7 @@ import Home from "../screens/home";
 import RollForm from "../screens/rollForm";
 import Notifications from "../screens/notifications";
 import { palette, iconSet } from "../themeHelpers";
-import { useNavigationContext } from "../navigation/NavigationContext";
+import { useNavigationContext } from "./NavigationContext";
 import { Icon } from "../components";
 
 export default function BottomNavigation() {
