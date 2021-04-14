@@ -42,7 +42,17 @@
     "react/jsx-one-expression-per-line":"off",
     "react/no-array-index-key":"off",
     "no-unused-expressions":"off",
-    "no-param-reassign":"off"
-    
+    "no-param-reassign":"off",
+    "@typescript-eslint/ban-ts-comment":"off",
+    "spaced-comment":"off",
+    "react/jsx-props-no-spreading":"off",
+    "arrow-body-style":"off",
+    "@typescript-eslint/no-empty-function":"off",
+    "@typescript-eslint/explicit-module-boundary-types":"off",
+    "object-curly-newline":"off",
+    "import/first":"off",
+    "import/newline-after-import":"off",
+    "implicit-arrow-linebreak":"off",
+    "operator-linebreak":"off"
   }
 }

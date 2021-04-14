@@ -1,9 +1,15 @@
 import React from "react";
-import { View, Input, StyleSheet } from "../../components";
 import { useField, useFormikContext } from "formik";
+import { View, Input, StyleSheet } from "../../components";
 import { FormValues } from "./RollForm";
 
 interface RollFormStep0Props {}
+
+const style = StyleSheet.create({
+  RollFormStep0: {
+    marginTop: 100
+  }
+});
 
 const RollFormStep0: React.FC<RollFormStep0Props> = ({}) => {
   const { setFieldValue, values, errors } = useFormikContext<FormValues>();
@@ -36,9 +42,3 @@ const RollFormStep0: React.FC<RollFormStep0Props> = ({}) => {
 };
 
 export default RollFormStep0;
-
-const style = StyleSheet.create({
-  RollFormStep0: {
-    marginTop: 100
-  }
-});

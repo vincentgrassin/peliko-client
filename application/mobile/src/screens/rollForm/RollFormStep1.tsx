@@ -1,11 +1,17 @@
 import React from "react";
-import { Button, Text, View, StyleSheet } from "../../components";
+import { useField, useFormikContext } from "formik";
 import { Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useField, useFormikContext } from "formik";
+import { Button, Text, View, StyleSheet } from "../../components";
 import { FormValues } from "./RollForm";
 
 interface RollFormStep1Props {}
+
+const style = StyleSheet.create({
+  RollFormStep1: {
+    marginTop: 100
+  }
+});
 
 const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
   const { setFieldValue, errors } = useFormikContext<FormValues>();
@@ -47,9 +53,3 @@ const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
 };
 
 export default RollFormStep1;
-
-const style = StyleSheet.create({
-  RollFormStep1: {
-    marginTop: 100
-  }
-});

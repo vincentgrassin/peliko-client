@@ -8,6 +8,10 @@ interface StepperProps {
   onStepChange: (s: number) => void;
 }
 
+const style = StyleSheet.create({
+  stepper: { display: "flex", flexDirection: "row" }
+});
+
 const Stepper: React.FC<StepperProps> = ({ step, onStepChange, ...props }) => {
   console.log(step);
   return (
@@ -21,7 +25,3 @@ const Stepper: React.FC<StepperProps> = ({ step, onStepChange, ...props }) => {
 };
 
 export default Stepper;
-
-const style = StyleSheet.create({
-  stepper: { display: "flex", flexDirection: "row" }
-});

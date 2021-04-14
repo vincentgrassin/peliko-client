@@ -7,6 +7,12 @@ interface TabContentProps {
   isOpenRollTab: boolean;
 }
 
+const style = StyleSheet.create({
+  tabContent: {
+    flex: 1
+  }
+});
+
 const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
   return (
     <View style={style.tabContent}>
@@ -16,9 +22,3 @@ const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
 };
 
 export default TabContent;
-
-const style = StyleSheet.create({
-  tabContent: {
-    flex: 1
-  }
-});
