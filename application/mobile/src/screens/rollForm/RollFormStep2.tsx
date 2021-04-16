@@ -12,7 +12,7 @@ import {
 } from "../../components";
 import { iconSet, resources } from "../../themeHelpers";
 
-import { Participants, FormValues } from "./RollForm";
+import { ParticipantContact, FormValues } from "./RollForm";
 import usePhoneContacts, { Contact } from "../../utils/hooks/usePhoneContacts";
 
 interface RollFormStep2Props {}
@@ -36,19 +36,19 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
 
   const handleAddFields = () => {
     setFieldValue(field.name, [
-      ...values.participants,
+      ...values.participantContact,
       { name: "", phoneNumber: "" }
     ]);
   };
 
   const handleRemoveFields = (index: number) => {
-    const participantsList = values.participants;
+    const participantsList = values.participantContact;
     participantsList.splice(index, 1);
     setFieldValue(field.name, participantsList);
   };
 
   const handleInputChange = (val: string | undefined, index: number) => {
-    const participantsList = values.participants;
+    const participantsList = values.participantContact;
     participantsList[index] = { name: "", phoneNumber: val };
     setFieldValue(field.name, participantsList);
   };
@@ -83,7 +83,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
                 setIsHiddenResult(true);
                 handleInputChange(
                   item.phoneNumbers ? item.phoneNumbers[0].number : "",
-                  values.participants.length
+                  values.participantContact.length
                 );
               }}
             >
@@ -94,25 +94,27 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           )
         }}
       />
-      {values.participants.map((participant: Participants, index: number) => (
-        <View key={index} style={style.participantField}>
-          <Input
-            value={participant.phoneNumber}
-            onChangeText={(val) => handleInputChange(val, index)}
-            containerStyle={style.inputParticipant}
-          />
-          <Icon
-            type={iconSet.plus.type}
-            name={iconSet.plus.name}
-            onPress={handleAddFields}
-          />
-          <Icon
-            type={iconSet.minus.type}
-            name={iconSet.minus.name}
-            onPress={() => handleRemoveFields(index)}
-          />
-        </View>
-      ))}
+      {values.participantContact.map(
+        (participant: ParticipantContact, index: number) => (
+          <View key={index} style={style.participantField}>
+            <Input
+              value={participant.phoneNumber}
+              onChangeText={(val) => handleInputChange(val, index)}
+              containerStyle={style.inputParticipant}
+            />
+            <Icon
+              type={iconSet.plus.type}
+              name={iconSet.plus.name}
+              onPress={handleAddFields}
+            />
+            <Icon
+              type={iconSet.minus.type}
+              name={iconSet.minus.name}
+              onPress={() => handleRemoveFields(index)}
+            />
+          </View>
+        )
+      )}
       {errors.name && (
         <View style={{ backgroundColor: "red" }}>{errors.name}</View>
       )}

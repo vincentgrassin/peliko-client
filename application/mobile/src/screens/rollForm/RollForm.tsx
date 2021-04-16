@@ -13,7 +13,7 @@ import RollFormStep2 from "./RollFormStep2";
 import { resources } from "../../themeHelpers";
 
 interface RollFormWizardProps {}
-export type Participants = {
+export type ParticipantContact = {
   name: string;
   phoneNumber: string | undefined;
 };
@@ -22,7 +22,7 @@ export type FormValues = {
   name: string;
   description: string;
   date: Date;
-  participants: Participants[];
+  participantContact: ParticipantContact[];
 };
 
 const style = StyleSheet.create({
@@ -54,7 +54,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
     name: "",
     description: "",
     date: new Date(Date.now()),
-    participants: [
+    participantContact: [
       {
         name: "",
         phoneNumber: ""
