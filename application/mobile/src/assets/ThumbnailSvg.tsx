@@ -3,8 +3,8 @@ import { ImageSourcePropType } from "react-native";
 import Svg, { Defs, G, Rect, Image, Use, ClipPath } from "react-native-svg";
 
 export interface ThumbnailSvgProps {
-  url: ImageSourcePropType | undefined;
-  backgroundColor: string;
+  url?: ImageSourcePropType | undefined;
+  backgroundColor?: string;
 }
 const ThumbnailSvg: React.FC<ThumbnailSvgProps> = ({
   url,

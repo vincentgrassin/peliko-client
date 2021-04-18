@@ -37,8 +37,11 @@ const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
           <RollThumbnail
             key={key}
             backgroundColor={palette("red")}
-            url={undefined}
-            name={roll?.name}
+            rollName={roll?.name}
+            pictureNumber={roll?.pictureNumber}
+            participantNumber={roll?.participants?.length}
+            closingDate={roll?.closingDate}
+            hasBeenDiscovered={false}
           />
         ))}
     </ScrollView>

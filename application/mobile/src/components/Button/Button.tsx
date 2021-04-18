@@ -4,7 +4,6 @@ import {
   ButtonProps as ReactNativeButtonProps
 } from "react-native-elements";
 import { shape, palette } from "../../themeHelpers";
-
 import StyleSheet from "../StyleSheet";
 
 interface ButtonProps extends ReactNativeButtonProps {}

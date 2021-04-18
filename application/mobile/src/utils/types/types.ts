@@ -1,17 +1,17 @@
 export type RollData =
   | {
-      id: string;
-      name: string;
-      description: string;
-      accessCodeRoll: string;
-      creationDate: string;
-      closingDate: string;
-      deliveryType: string;
+      id: string | undefined;
+      name: string | undefined;
+      description: string | undefined;
+      accessCodeRoll: string | undefined;
+      creationDate: string | undefined;
+      closingDate: string | undefined;
+      deliveryType: string | undefined;
       pictureNumber: number;
-      remainingPictures: number;
+      remainingPictures: number | undefined;
       openingStatus: boolean;
-      participants: Participant[];
-      pictures: Picture[];
+      participants: Participant[] | undefined;
+      pictures: Picture[] | undefined;
     }
   | undefined;
 

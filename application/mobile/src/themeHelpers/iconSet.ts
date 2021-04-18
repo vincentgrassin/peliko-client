@@ -14,6 +14,18 @@ const globalIconSet = {
   minus: {
     name: "minuscircleo",
     type: "antdesign"
+  },
+  calendar: {
+    name: "calendar",
+    type: "antdesign"
+  },
+  people: {
+    name: "people",
+    type: "materialicons"
+  },
+  picture: {
+    name: "picture",
+    type: "antdesign"
   }
 };
 
