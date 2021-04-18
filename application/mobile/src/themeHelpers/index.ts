@@ -9,3 +9,6 @@ export const theme = globalTheme;
 
 import globalIconSet from "./iconSet";
 export const iconSet = globalIconSet;
+
+import globalShapes from "./shape";
+export const shape = globalShapes;

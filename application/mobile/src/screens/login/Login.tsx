@@ -5,10 +5,11 @@ import {
   View,
   StyleSheet,
   Button,
+  Icon,
   ScrollView,
   InputFormik
 } from "../../components";
-import { resources } from "../../themeHelpers";
+import { resources, iconSet } from "../../themeHelpers";
 import useNavigation from "../../utils/hooks/useNavigation";
 
 interface LoginFormProps {}
@@ -76,6 +77,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
             <Button
               onPress={(e: any) => handleSubmit(e)}
               title={resources.submit}
+              type="outline"
+              icon={<Icon type={iconSet.bell.type} name={iconSet.bell.name} />}
             />
             <Button
               onPress={() => setIsSignUpForm((prev) => !prev)}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Camera } from "expo-camera";
-import Text from "../Text";
 import Button from "../Button";
 import { resources } from "../../themeHelpers";
 
@@ -26,6 +25,7 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
   async function takePicture() {
     setIsVisibleModal(true);
     if (camera) {
+      //@ts-ignore
       const photo = await camera.takePictureAsync({
         quality: 0.7,
         base64: true,
@@ -43,6 +43,7 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
           style={{ flex: 1 }}
           type={type}
           flashMode={flash}
+          //@ts-ignore
           ref={(ref) => (camera = ref)}
         >
           <Button onPress={takePicture} title={resources.shootPicture} />
