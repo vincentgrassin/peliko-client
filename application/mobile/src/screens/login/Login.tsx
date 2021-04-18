@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
+import * as Yup from "yup";
 import {
   View,
   StyleSheet,
@@ -25,7 +26,14 @@ const style = StyleSheet.create({
   }
 });
 
-const LoginForm: React.FC<LoginFormProps> = ({}) => {
+const LoginSchema = Yup.object().shape({
+  phoneNumber: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required")
+});
+
+const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   const [formValues, setFormValues] = React.useState<LoginInformation>({
     userName: "",
     phoneNumber: "",
@@ -44,7 +52,11 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   return (
     <ScrollView style={style.rollForm}>
-      <Formik initialValues={formValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={formValues}
+        onSubmit={handleSubmit}
+        validationSchema={LoginSchema}
+      >
         {({ handleSubmit }) => (
           <View>
             {isSignUpForm && (
