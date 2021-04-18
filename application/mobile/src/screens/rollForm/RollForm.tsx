@@ -19,7 +19,7 @@ export type ParticipantContact = {
 };
 
 export type FormValues = {
-  name: string;
+  rollName: string;
   description: string;
   date: Date;
   participantContact: ParticipantContact[];
@@ -31,27 +31,9 @@ const style = StyleSheet.create({
   }
 });
 
-// const validate = {
-//   1: (values: FormValues) => {
-//     const errors = {};
-//     if (!values.name) errors.name = "required";
-//     return errors;
-//   },
-//   2: (values: FormValues) => {
-//     const errors = {};
-//     if (!values.description) errors.description = "required";
-//     return errors;
-//   },
-//   3: (values: FormValues) => {
-//     const errors = {};
-//     if (!values.date) errors.date = "required";
-//     return errors;
-//   }
-// };
-
 const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const [formValues, setFormValues] = React.useState<FormValues>({
-    name: "",
+    rollName: "",
     description: "",
     date: new Date(Date.now()),
     participantContact: [

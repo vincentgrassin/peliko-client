@@ -115,9 +115,6 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           </View>
         )
       )}
-      {errors.name && (
-        <View style={{ backgroundColor: "red" }}>{errors.name}</View>
-      )}
     </View>
   );
 };

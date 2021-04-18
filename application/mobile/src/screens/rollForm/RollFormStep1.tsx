@@ -45,9 +45,6 @@ const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
         )}
         <Text>{JSON.stringify(field.value)} </Text>
       </View>
-      {errors.name && (
-        <View style={{ backgroundColor: "red" }}>{errors.name}</View>
-      )}
     </View>
   );
 };

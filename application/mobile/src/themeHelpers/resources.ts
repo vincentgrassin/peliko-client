@@ -7,7 +7,17 @@ const globalResources = {
   previous: "Précédent",
   submit: "submit",
   accessPhoneContact: "load contact",
-  shootPicture: "shootPicture"
+  shootPicture: "shootPicture",
+  name: "Name",
+  description: "Description",
+  date: "Date",
+  participants: "Participants",
+  userName: "Nom d'utilisateur",
+  password: "Mot de passe",
+  confirmPassword: "Confirmation du mot de passe",
+  phoneNumber: "Numéro de téléphone",
+  signIn: "Change to sign in",
+  signUp: "Change to sign up"
 };
 
 export default globalResources;

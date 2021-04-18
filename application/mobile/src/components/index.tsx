@@ -10,6 +10,8 @@ export { default as Icon } from "./Icon";
 export * from "./Icon";
 export { default as Input } from "./Input";
 export * from "./Input";
+export { default as InputFormik } from "./InputFormik";
+export * from "./InputFormik";
 export { default as Roll } from "./Roll";
 export * from "./Roll";
 export { default as Tabs } from "./Tabs";
