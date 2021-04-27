@@ -7,6 +7,7 @@ import StyleSheet from "../StyleSheet";
 
 interface RollBadgeProps {
   value: ReactNode;
+  secondaryValue?: ReactNode;
   icon?: "date" | "participantNumber" | "pictureNumber";
 }
 
@@ -21,7 +22,11 @@ const style = StyleSheet.create({
   }
 });
 
-const RollBadge: React.FC<RollBadgeProps> = ({ value, icon }) => {
+const RollBadge: React.FC<RollBadgeProps> = ({
+  value,
+  icon,
+  secondaryValue
+}) => {
   const iconComponent = {
     date: {
       type: iconSet.calendar.type,
@@ -48,6 +53,7 @@ const RollBadge: React.FC<RollBadgeProps> = ({ value, icon }) => {
         />
       )}
       <Text>{value}</Text>
+      {secondaryValue && <Text>{secondaryValue}</Text>}
     </View>
   );
 };

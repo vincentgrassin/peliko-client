@@ -56,6 +56,9 @@
     "max-len":"off",
     "react/destructuring-assignment":"off",
     "no-return-assign":"off",
-    "no-unused-vars":"off"
+    "no-unused-vars":"off",
+    "indent":"off",
+    "no-nested-ternary":"off",
+    "react/jsx-wrap-multilines":"off"
   }
 }

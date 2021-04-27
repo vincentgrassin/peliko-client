@@ -1,5 +1,5 @@
 import React from "react";
-import useNavigation from "../../utils/hooks/useNavigation";
+import { useNavigation } from "../../utils/hooks/useNavigation";
 import View from "../View";
 import Text from "../Text";
 import StyleSheet from "../StyleSheet";
@@ -26,15 +26,7 @@ const style = StyleSheet.create({
   },
   badgeArea: {
     display: "flex",
-    flexDirection: "row",
-    alignItems: "stretch"
-  },
-  badge: {
-    backgroundColor: palette("white", 0.4),
-    borderWidth: 0,
-    paddingLeft: shape.spacing(1),
-    paddingRight: shape.spacing(1),
-    height: shape.spacing(3)
+    flexDirection: "row"
   }
 });
 
@@ -53,7 +45,7 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
   return (
     <TouchableOpacity
       style={style.root}
-      onPress={() => navigate("RollContainer")}
+      onPress={() => navigate("RollScreen", { backgroundColor })}
     >
       <View>
         <ThumbnailSvg backgroundColor={backgroundColor} url={url} {...props} />
@@ -62,18 +54,13 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
           <View style={style.badgeArea}>
             <Badge
               value={<RollBadge value={pictureNumber} icon="pictureNumber" />}
-              badgeStyle={style.badge}
             />
             <Badge
               value={
                 <RollBadge value={participantNumber} icon="participantNumber" />
               }
-              badgeStyle={style.badge}
             />
-            <Badge
-              value={<RollBadge value={closingDate} icon="date" />}
-              badgeStyle={style.badge}
-            />
+            <Badge value={<RollBadge value={closingDate} icon="date" />} />
           </View>
         </View>
       </View>

@@ -7,8 +7,15 @@ import RollScreen from "../screens/roll";
 import CamScreen from "../screens/cam";
 import BottomNavigation from "./BottomNavigation";
 
+export type ParamList = {
+  RollScreen: {
+    backgroundColor: string;
+  };
+};
+
 export default function MainNavigationContainer() {
   const Stack = createStackNavigator();
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">

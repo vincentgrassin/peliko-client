@@ -10,7 +10,7 @@ import {
   InputFormik
 } from "../../components";
 import { resources, iconSet } from "../../themeHelpers";
-import useNavigation from "../../utils/hooks/useNavigation";
+import { useNavigation } from "../../utils/hooks/useNavigation";
 
 interface LoginFormProps {}
 export type LoginInformation = {

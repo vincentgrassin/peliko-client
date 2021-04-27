@@ -1,2 +1,2 @@
-import { useNavigation } from "@react-navigation/native";
-export default useNavigation;
+import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+export { useNavigation, useRoute, RouteProp };

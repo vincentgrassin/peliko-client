@@ -17,7 +17,9 @@ const globalResources = {
   confirmPassword: "Confirmation du mot de passe",
   phoneNumber: "Numéro de téléphone",
   signIn: "Change to sign in",
-  signUp: "Change to sign up"
+  signUp: "Change to sign up",
+  remainingDays: "jours restants",
+  remaningPictures: "photos restantes"
 };
 
 export default globalResources;

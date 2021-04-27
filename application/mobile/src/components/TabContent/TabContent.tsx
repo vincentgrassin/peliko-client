@@ -6,6 +6,7 @@ import RollThumbnail from "../RollThumbnail";
 import ScrollView from "../ScrollView";
 import { palette } from "../../themeHelpers";
 import { RollData } from "../../utils/types/types";
+import { getThumbnailRollColor } from "../../utils/helpers/colorHelper";
 import { openRollsList } from "../../utils/types/dumbData";
 
 interface TabContentProps {
@@ -33,10 +34,10 @@ const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
     <ScrollView style={style.tabContent}>
       <Text>{isOpenRollTab ? "open" : "closed"}</Text>
       {rollList &&
-        rollList.map((roll, key) => (
+        rollList.map((roll, index) => (
           <RollThumbnail
-            key={key}
-            backgroundColor={palette("red")}
+            key={index}
+            backgroundColor={getThumbnailRollColor(index)}
             rollName={roll?.name}
             pictureNumber={roll?.pictureNumber}
             participantNumber={roll?.participants?.length}
