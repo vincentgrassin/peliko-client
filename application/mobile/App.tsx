@@ -1,15 +1,14 @@
 import React from "react";
-import { Provider as GraphQlProvider } from "urql";
-import { client } from "./src/utils/helpers/client";
+import { client, ApolloProvider } from "./src/utils/hooks/useApolloClient";
 import { NavigationProvider } from "./src/navigation/NavigationContext";
 import MainNavigationContainer from "./src/navigation/NavigationContainer";
 
 export default function App() {
   return (
-    <GraphQlProvider value={client}>
+    <ApolloProvider client={client}>
       <NavigationProvider>
         <MainNavigationContainer />
       </NavigationProvider>
-    </GraphQlProvider>
+    </ApolloProvider>
   );
 }

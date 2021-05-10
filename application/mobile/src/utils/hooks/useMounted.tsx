@@ -1,5 +1,5 @@
 import * as React from "react";
-const useMounted = () => {
+export const useMounted = () => {
   const isMounted = React.useRef(false);
   React.useEffect(() => {
     isMounted.current = true;
@@ -9,4 +9,3 @@ const useMounted = () => {
   }, []);
   return isMounted;
 };
-export default useMounted;

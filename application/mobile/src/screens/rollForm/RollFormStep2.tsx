@@ -13,7 +13,7 @@ import {
 import { iconSet, resources } from "../../themeHelpers";
 
 import { ParticipantContact, FormValues } from "./RollForm";
-import usePhoneContacts, { Contact } from "../../utils/hooks/usePhoneContacts";
+import { usePhoneContacts, Contact } from "../../utils/hooks/usePhoneContacts";
 
 interface RollFormStep2Props {}
 

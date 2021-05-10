@@ -1,5 +1,4 @@
 import React from "react";
-import { useQuery } from "urql";
 import Text from "../Text";
 import StyleSheet from "../StyleSheet";
 import RollThumbnail from "../RollThumbnail";
@@ -7,7 +6,8 @@ import ScrollView from "../ScrollView";
 import { RollData } from "../../utils/types/types";
 import { getThumbnailRollColor } from "../../utils/helpers/colorHelper";
 import { openRollsList } from "../../utils/types/dumbData";
-import { GetRolls } from "../../utils/helpers/queries";
+import { GET_ROLLS } from "../../utils/helpers/queries";
+import { useQuery } from "../../utils/hooks/useApolloClient";
 
 interface TabContentProps {
   isOpenRollTab: boolean;
@@ -30,14 +30,10 @@ const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
     doFetch();
   }, []);
 
-  const [result, reexecuteQuery] = useQuery({
-    query: GetRolls
-  });
+  const { loading, error, data } = useQuery(GET_ROLLS);
+  console.log({ data, loading, error });
 
-  const { data, fetching, error } = result;
-  console.log({ data, fetching, error });
-
-  if (fetching) return <Text>Loading...</Text>;
+  if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Oh no... {error.message}</Text>;
 
   return (

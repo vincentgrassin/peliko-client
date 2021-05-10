@@ -4,7 +4,7 @@ import * as Contacts from "expo-contacts";
 export type PhoneContact = Contacts.Contact[];
 export type Contact = Contacts.Contact;
 
-const usePhoneContacts = () => {
+export const usePhoneContacts = () => {
   const [
     hasPermissionToAccessContact,
     setHasPermissionToAccessContact
@@ -53,5 +53,3 @@ const usePhoneContacts = () => {
     findContact
   };
 };
-
-export default usePhoneContacts;
