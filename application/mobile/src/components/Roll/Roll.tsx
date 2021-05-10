@@ -32,7 +32,7 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
       />
       <RollParticipants />
       <Button
-        onPress={() => navigate("CamContainer")}
+        onPress={() => navigate("CamScreen")}
         title={resources.shootPicture}
       />
     </>

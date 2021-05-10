@@ -12,7 +12,8 @@ const style = StyleSheet.create({
   button: {
     borderRadius: shape.radius[30],
     borderWidth: shape.width.buttonBorder,
-    borderColor: palette("yellow")
+    borderColor: palette("yellow"),
+    height: 50
   },
   solidButton: {
     backgroundColor: palette("yellow")

@@ -5,11 +5,25 @@ interface NavigationContextProps {
   updateNotificationNumber: (n: number) => void;
 }
 
-const NavigationContext = React.createContext<NavigationContextProps>({
+export const NavigationContext = React.createContext<NavigationContextProps>({
   notification: 0,
   updateNotificationNumber: () => {}
 });
 
-export const useNavigationContext = () => React.useContext(NavigationContext);
+export const NavigationProvider: React.FC = ({ children, ...props }) => {
+  const [notification, setNotifications] = React.useState<number>(0);
+  const updateNotificationNumber = (n: number) => setNotifications(n);
 
-export default NavigationContext;
+  return (
+    <NavigationContext.Provider
+      value={{
+        notification,
+        updateNotificationNumber
+      }}
+    >
+      {children}
+    </NavigationContext.Provider>
+  );
+};
+
+export const useNavigationContext = () => React.useContext(NavigationContext);

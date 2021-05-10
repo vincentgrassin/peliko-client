@@ -1,19 +1,15 @@
 import React from "react";
-import NavigationContext from "./src/navigation/NavigationContext";
+import { Provider as GraphQlProvider } from "urql";
+import { client } from "./src/utils/helpers/client";
+import { NavigationProvider } from "./src/navigation/NavigationContext";
 import MainNavigationContainer from "./src/navigation/NavigationContainer";
 
 export default function App() {
-  const [notification, setNotifications] = React.useState<number>(0);
-  const updateNotificationNumber = (n: number) => setNotifications(n);
-
   return (
-    <NavigationContext.Provider
-      value={{
-        notification,
-        updateNotificationNumber
-      }}
-    >
-      <MainNavigationContainer />
-    </NavigationContext.Provider>
+    <GraphQlProvider value={client}>
+      <NavigationProvider>
+        <MainNavigationContainer />
+      </NavigationProvider>
+    </GraphQlProvider>
   );
 }
