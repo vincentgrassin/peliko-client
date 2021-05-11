@@ -1,7 +1,8 @@
+import { BASE_URL } from "@env";
 import { useQuery, ApolloClient, InMemoryCache, gql } from "@apollo/client";
 export { useQuery, gql };
 export const client = new ApolloClient({
-  uri: "http://192.168.43.22:4000/graphql",
+  uri: `${BASE_URL}/graphql`,
   cache: new InMemoryCache()
 });
 
