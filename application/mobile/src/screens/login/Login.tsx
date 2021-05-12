@@ -11,6 +11,8 @@ import {
 } from "../../components";
 import { resources, iconSet } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
+import { useNavigationContext } from "../../navigation/NavigationContext";
+import { userIdConnected } from "../../utils/types/dumbData";
 
 interface LoginFormProps {}
 export type LoginInformation = {
@@ -45,9 +47,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
 
   const { navigate } = useNavigation();
+  const { updateUserId } = useNavigationContext();
 
   const handleSubmit = (values: LoginInformation) => {
     console.log("login data : ", values);
+    updateUserId(userIdConnected);
     navigate("BottomNavigation");
   };
 

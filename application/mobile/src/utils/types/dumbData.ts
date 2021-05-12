@@ -36,3 +36,5 @@ export const openRollsList: RollData[] = [
   rollData,
   rollData2
 ];
+
+export const userIdConnected = 1;
