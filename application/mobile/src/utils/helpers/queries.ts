@@ -9,19 +9,16 @@ export const GET_ROLLS = gql`
   }
 `;
 
-export const GET_THUMBNAIL_ROLLS_LIST_BY_USER = gql`
-  query RollsByUser($id: Int!) {
+export const GET_ROLLS_BY_USER = gql`
+  query GetRollsByUser($id: Float!) {
     rollsByUser(id: $id) {
       id
-    }
-  }
-`;
-
-const GET_DOG_PHOTO = gql`
-  query Dog($breed: String!) {
-    dog(breed: $breed) {
-      id
-      displayImage
+      name
+      closingDate
+      remainingPictures
+      participants {
+        id
+      }
     }
   }
 `;
@@ -40,15 +37,6 @@ export const GET_USER_BY_ID = gql`
   query GetUserById($id: ID) {
     user(id: $id) {
       id
-    }
-  }
-`;
-
-export const TEST = gql`
-  query GetUserById($name: String) {
-    test(name: "efaefaefaefa") {
-      id
-      name
     }
   }
 `;

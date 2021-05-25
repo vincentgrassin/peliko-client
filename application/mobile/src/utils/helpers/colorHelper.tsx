@@ -30,7 +30,6 @@ export const getThumbnailRollColor = (index: number) => {
 };
 
 export const getDefaultAvatarUri = (index: number) => {
-  console.log(index);
   return (index + 4) % 4 === 0
     ? defaultPelikoFaceBlueUri
     : (index + 4) % 4 === 1

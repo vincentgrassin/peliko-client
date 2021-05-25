@@ -5,13 +5,7 @@ import RollThumbnail from "../RollThumbnail";
 import ScrollView from "../ScrollView";
 import { RollData } from "../../utils/types/types";
 import { getThumbnailRollColor } from "../../utils/helpers/colorHelper";
-import {
-  GET_ROLLS,
-  GET_USERS,
-  GET_THUMBNAIL_ROLLS_LIST_BY_USER,
-  GET_USER_BY_ID,
-  TEST
-} from "../../utils/helpers/queries";
+import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { useNavigationContext } from "../../navigation/NavigationContext";
 
@@ -27,20 +21,10 @@ const style = StyleSheet.create({
 
 const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
   const { userId } = useNavigationContext();
-  const [rollList, setRollList] = React.useState<RollData[]>([]);
-  console.log(userId, typeof userId);
-  const { loading, error, data } = useQuery(GET_THUMBNAIL_ROLLS_LIST_BY_USER, {
-    variables: { id: 1 }
+  const { loading, error, data } = useQuery(GET_ROLLS_BY_USER, {
+    variables: { id: userId }
   });
-  console.log(error);
-
-  // const { loading, error, data } = useQuery(GET_USERS);
-  // const rollList: RollData[] = data.rolls;
-
-  React.useEffect(() => {
-    data && setRollList(data.rolls);
-  }, [isOpenRollTab]);
-  console.log({ loading, isOpenRollTab, data });
+  const rollList: RollData[] = data?.rollsByUser;
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Oh no... {error.message}</Text>;
@@ -54,7 +38,7 @@ const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
             key={index}
             backgroundColor={getThumbnailRollColor(index)}
             rollName={roll?.name}
-            pictureNumber={roll?.pictureNumber}
+            pictureNumber={roll?.remainingPictures}
             participantNumber={roll?.participants?.length}
             closingDate={roll?.closingDate}
             hasBeenDiscovered={false}

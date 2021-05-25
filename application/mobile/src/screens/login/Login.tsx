@@ -50,7 +50,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   const { updateUserId } = useNavigationContext();
 
   const handleSubmit = (values: LoginInformation) => {
-    console.log("login data : ", values);
     updateUserId(userIdConnected);
     navigate("BottomNavigation");
   };
