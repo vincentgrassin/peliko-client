@@ -22,7 +22,7 @@ const style = StyleSheet.create({
 const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
   const { userId } = useNavigationContext();
   const { loading, error, data } = useQuery(GET_ROLLS_BY_USER, {
-    variables: { id: userId }
+    variables: { id: userId, isOpenTab: isOpenRollTab }
   });
   const rollList: RollData[] = data?.rollsByUser;
 
