@@ -15,6 +15,9 @@ interface AvatarProps extends ReactNativeAvatarProps {
 }
 
 const style = StyleSheet.create({
+  root: {
+    position: "relative"
+  },
   notification: {
     position: "absolute",
     top: 0,
@@ -32,22 +35,24 @@ const Avatar: React.FC<AvatarProps> = ({
   index = 0,
   source,
   ...props
-}) => (
-  <View style={{ position: "relative" }}>
-    <ReactNativeAvatar
-      rounded
-      source={source || { uri: getDefaultAvatarUri(index) }}
-      {...props}
-    />
-    {notification && (
-      <Badge
-        status="success"
-        containerStyle={style.notification}
-        badgeStyle={style.badge}
-        value={notification}
+}) => {
+  return (
+    <View style={style.root}>
+      <ReactNativeAvatar
+        rounded
+        source={source || { uri: getDefaultAvatarUri(index) }}
+        {...props}
       />
-    )}
-  </View>
-);
+      {notification && (
+        <Badge
+          status="success"
+          containerStyle={style.notification}
+          badgeStyle={style.badge}
+          value={notification}
+        />
+      )}
+    </View>
+  );
+};
 
 export default Avatar;

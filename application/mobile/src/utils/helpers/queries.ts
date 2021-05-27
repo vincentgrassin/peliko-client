@@ -40,3 +40,18 @@ export const GET_USER_BY_ID = gql`
     }
   }
 `;
+
+export const GET_ROLL_BY_ID = gql`
+  query GetRollById($id: Float!) {
+    roll(id: $id) {
+      name
+      closingDate
+      remainingPictures
+      participants {
+        phoneNumber
+        id
+        rollId
+      }
+    }
+  }
+`;

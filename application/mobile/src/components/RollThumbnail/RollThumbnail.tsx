@@ -5,7 +5,7 @@ import Text from "../Text";
 import StyleSheet from "../StyleSheet";
 import TouchableOpacity from "../TouchableOpacity";
 import ThumbnailSvg, { ThumbnailSvgProps } from "../../assets/ThumbnailSvg";
-import { palette, shape } from "../../themeHelpers";
+import { shape } from "../../themeHelpers";
 import RollBadge from "../RollBadge";
 import Badge from "../Badge";
 
@@ -15,6 +15,7 @@ interface RollThumbnailProps extends ThumbnailSvgProps {
   participantNumber: number | undefined;
   closingDate: string | undefined;
   hasBeenDiscovered: boolean;
+  rollId: number | undefined;
 }
 
 const style = StyleSheet.create({
@@ -38,6 +39,7 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
   hasBeenDiscovered,
   backgroundColor,
   url,
+  rollId,
   ...props
 }) => {
   const { navigate } = useNavigation();
@@ -45,7 +47,7 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
   return (
     <TouchableOpacity
       style={style.root}
-      onPress={() => navigate("RollScreen", { backgroundColor })}
+      onPress={() => navigate("RollScreen", { backgroundColor, rollId })}
     >
       <View>
         <ThumbnailSvg backgroundColor={backgroundColor} url={url} {...props} />

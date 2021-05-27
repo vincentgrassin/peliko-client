@@ -42,6 +42,7 @@ const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
             participantNumber={roll?.participants?.length}
             closingDate={roll?.closingDate}
             hasBeenDiscovered={false}
+            rollId={roll?.id}
           />
         ))}
     </ScrollView>

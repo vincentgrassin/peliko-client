@@ -1,6 +1,6 @@
 export type RollData =
   | {
-      id?: string | undefined;
+      id?: number | undefined;
       name?: string | undefined;
       description?: string | undefined;
       accessCodeRoll?: string | undefined;
@@ -34,4 +34,5 @@ export type Participant = {
   hasJoined: boolean;
   isRemoved: boolean;
   hasDiscoverRoll: boolean;
+  avatarImageUri?: string;
 };

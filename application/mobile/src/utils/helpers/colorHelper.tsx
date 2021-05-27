@@ -36,5 +36,5 @@ export const getDefaultAvatarUri = (index: number) => {
     ? defaultPelikoFacePinkUri
     : (index + 4) % 4 === 2
     ? defaultPelikoFaceOrangeUri
-    : defaultPelikoFaceYellow;
+    : defaultPelikoFaceYellowUri;
 };

@@ -3,24 +3,32 @@ import RollHeader from "../RollHeader";
 import RollParticipants from "../RollParticipants";
 import Button from "../Button";
 import { resources } from "../../themeHelpers";
-import { useNavigation } from "../../utils/hooks/useNavigation";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "../../utils/hooks/useNavigation";
+import { ParamList } from "../../navigation/NavigationContainer";
+import { GET_ROLL_BY_ID } from "../../utils/helpers/queries";
+import { useQuery } from "../../utils/hooks/useApolloClient";
+import Text from "../Text";
 import { RollData } from "../../utils/types/types";
-import { openRollsList } from "../../utils/types/dumbData";
 
 interface RollProps {}
 
 const Roll: React.FC<RollProps> = ({ ...props }) => {
   const { navigate } = useNavigation();
+  const route = useRoute<RouteProp<ParamList, "RollScreen">>();
+  const rollId = route?.params?.rollId;
 
-  const [roll, setRoll] = React.useState<RollData>(undefined);
+  const { loading, error, data } = useQuery(GET_ROLL_BY_ID, {
+    variables: { id: rollId }
+  });
 
-  React.useEffect(() => {
-    // should be replaced by useFetch hook
-    const doFetch = async () => {
-      setRoll(openRollsList[0]);
-    };
-    doFetch();
-  }, []);
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Oh no... {error.message}</Text>;
+
+  const { roll }: { roll: RollData } = data;
 
   return (
     <>
@@ -30,7 +38,7 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
         closingDate={roll?.closingDate}
         remainingPictures={roll?.remainingPictures}
       />
-      <RollParticipants />
+      <RollParticipants participants={roll?.participants} />
       <Button
         onPress={() => navigate("CamScreen")}
         title={resources.shootPicture}

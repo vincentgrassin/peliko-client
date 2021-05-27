@@ -10,6 +10,7 @@ import BottomNavigation from "./BottomNavigation";
 export type ParamList = {
   RollScreen: {
     backgroundColor: string;
+    rollId: number;
   };
 };
 
