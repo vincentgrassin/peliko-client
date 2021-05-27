@@ -36,19 +36,19 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
 
   const handleAddFields = () => {
     setFieldValue(field.name, [
-      ...values.participantContact,
+      ...values.participantsContact,
       { name: "", phoneNumber: "" }
     ]);
   };
 
   const handleRemoveFields = (index: number) => {
-    const participantsList = values.participantContact;
+    const participantsList = values.participantsContact;
     participantsList.splice(index, 1);
     setFieldValue(field.name, participantsList);
   };
 
   const handleInputChange = (val: string | undefined, index: number) => {
-    const participantsList = values.participantContact;
+    const participantsList = values.participantsContact;
     participantsList[index] = { name: "", phoneNumber: val };
     setFieldValue(field.name, participantsList);
   };
@@ -83,7 +83,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
                 setIsHiddenResult(true);
                 handleInputChange(
                   item.phoneNumbers ? item.phoneNumbers[0].number : "",
-                  values.participantContact.length
+                  values.participantsContact.length
                 );
               }}
             >
@@ -94,7 +94,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           )
         }}
       />
-      {values.participantContact.map(
+      {values.participantsContact.map(
         (participant: ParticipantContact, index: number) => (
           <View key={index} style={style.participantField}>
             <Input

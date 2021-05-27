@@ -11,6 +11,8 @@ import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
 import RollFormStep2 from "./RollFormStep2";
 import { resources } from "../../themeHelpers";
+import { useMutation } from "../../utils/hooks/useApolloClient";
+import { CREATE_ROLL } from "../../utils/helpers/mutation";
 
 interface RollFormWizardProps {}
 export type ParticipantContact = {
@@ -22,7 +24,7 @@ export type FormValues = {
   rollName: string;
   description: string;
   date: Date;
-  participantContact: ParticipantContact[];
+  participantsContact: ParticipantContact[];
 };
 
 const style = StyleSheet.create({
@@ -32,11 +34,12 @@ const style = StyleSheet.create({
 });
 
 const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
+  const [createRoll, { data }] = useMutation(CREATE_ROLL);
   const [formValues, setFormValues] = React.useState<FormValues>({
     rollName: "",
     description: "",
     date: new Date(Date.now()),
-    participantContact: [
+    participantsContact: [
       {
         name: "",
         phoneNumber: ""
@@ -62,6 +65,18 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
 
   const handleSubmit = (values: FormValues) => {
     console.log("formvalues : ", values);
+    const { date, description, participantsContact, rollName } = values;
+    createRoll({
+      variables: {
+        rollData: {
+          name: rollName,
+          deliveryType: "digital",
+          description,
+          closingDate: date,
+          participants: participantsContact
+        }
+      }
+    });
   };
 
   return (
