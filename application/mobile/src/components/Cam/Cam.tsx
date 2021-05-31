@@ -1,7 +1,11 @@
 import * as React from "react";
 import { Camera } from "expo-camera";
+import { CLOUDINARY_UPLOAD_URL, CLOUDINARY_UPLOAD_PRESET } from "@env";
 import Button from "../Button";
 import { resources } from "../../themeHelpers";
+import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
+import { useMutation } from "../../utils/hooks/useApolloClient";
+import { useNavigationContext } from "../../navigation/NavigationContext";
 
 interface CamProps {}
 
@@ -12,6 +16,8 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
   let camera = React.useRef(null);
   const [toggleFlashState, setToggleFlashState] = React.useState(true);
   const [isVisibleModal, setIsVisibleModal] = React.useState(false);
+  const [uploadPicture, { data }] = useMutation(UPLOAD_PICTURE);
+  const { userId } = useNavigationContext();
 
   React.useEffect(() => {
     (async () => {
@@ -26,12 +32,29 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
     setIsVisibleModal(true);
     if (camera) {
       //@ts-ignore
-      const photo = await camera.takePictureAsync({
+      const picture = await camera.takePictureAsync({
         quality: 0.7,
         base64: true,
         exif: true
       });
-      console.log("Picture is taken", photo.width, photo.height);
+      console.log("Picture is taken", picture.width, picture.height);
+      if (picture.base64) {
+        const data = {
+          file: `data:image/jpg;base64,${picture.base64}`,
+          upload_preset: CLOUDINARY_UPLOAD_PRESET
+        };
+        const response = await fetch(CLOUDINARY_UPLOAD_URL, {
+          body: JSON.stringify(data),
+          headers: {
+            "content-type": "application/json"
+          },
+          method: "POST"
+        });
+        const jsonResponse = await response.json();
+        uploadPicture({
+          variables: { cloudinaryId: jsonResponse.public_id, userId, rollId: 3 }
+        });
+      }
       setIsVisibleModal(false);
     }
   }
