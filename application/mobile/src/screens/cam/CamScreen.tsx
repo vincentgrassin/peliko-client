@@ -1,8 +1,8 @@
 import React from "react";
 import { Camera } from "expo-camera";
 import { CLOUDINARY_UPLOAD_URL, CLOUDINARY_UPLOAD_PRESET } from "@env";
-import { Button } from "../../components";
-import { resources } from "../../themeHelpers";
+import { Button, Icon, StyleSheet, View } from "../../components";
+import { resources, iconSet, shape } from "../../themeHelpers";
 import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { useNavigationContext } from "../../navigation/NavigationContext";
@@ -11,12 +11,23 @@ import { ParamList } from "../../navigation/NavigationContainer";
 
 interface CamProps {}
 
+const style = StyleSheet.create({
+  actions: {
+    marginTop: "auto"
+  },
+  cameraOptions: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: shape.spacing(3)
+  }
+});
+
 const Cam: React.FC<CamProps> = ({ ...props }) => {
-  const [hasPermission, setHasPermission] = React.useState<boolean>(false);
-  const [type, setType] = React.useState(Camera.Constants.Type.back);
-  const [flash, setFlash] = React.useState(Camera.Constants.FlashMode.off);
   let camera = React.useRef(null);
-  const [toggleFlashState, setToggleFlashState] = React.useState(true);
+  const [hasPermission, setHasPermission] = React.useState<boolean>(false);
+  const [isCameraBack, setIsCameraBack] = React.useState<boolean>(true);
+  const [isFlashOn, setIsFlashOn] = React.useState<boolean>(false);
   const [isVisibleModal, setIsVisibleModal] = React.useState(false);
   const [uploadPicture, { data }] = useMutation(UPLOAD_PICTURE);
   const { userId } = useNavigationContext();
@@ -24,12 +35,13 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
   const rollId = route?.params?.rollId;
 
   React.useEffect(() => {
-    (async () => {
+    const requestPermission = async () => {
       const { status } = await Camera.requestPermissionsAsync();
       if (status === "granted") {
         setHasPermission(true);
       }
-    })();
+    };
+    requestPermission();
   }, []);
 
   async function takePicture() {
@@ -41,7 +53,6 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
         base64: true,
         exif: true
       });
-      console.log("Picture is taken", picture.width, picture.height);
       if (picture.base64) {
         const data = {
           file: `data:image/jpg;base64,${picture.base64}`,
@@ -63,17 +74,47 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
     }
   }
 
+  const toggleFlash = () => {
+    setIsFlashOn(!isFlashOn);
+  };
+
+  const reverseCam = () => {
+    setIsCameraBack((prev) => !prev);
+  };
+
   return (
     <>
       {hasPermission && (
         <Camera
           style={{ flex: 1 }}
-          type={type}
-          flashMode={flash}
+          type={
+            isCameraBack
+              ? Camera.Constants.Type.back
+              : Camera.Constants.Type.front
+          }
+          flashMode={
+            isFlashOn
+              ? Camera.Constants.FlashMode.torch
+              : Camera.Constants.FlashMode.off
+          }
           //@ts-ignore
           ref={(ref) => (camera = ref)}
         >
-          <Button onPress={takePicture} title={resources.shootPicture} />
+          <View style={style.actions}>
+            <View style={style.cameraOptions}>
+              <Icon
+                name={iconSet.flash.name}
+                type={iconSet.flash.type}
+                onPress={toggleFlash}
+              />
+              <Icon
+                name={iconSet.reverseCam.name}
+                type={iconSet.reverseCam.type}
+                onPress={reverseCam}
+              />
+            </View>
+            <Button onPress={takePicture} title={resources.shootPicture} />
+          </View>
         </Camera>
       )}
     </>

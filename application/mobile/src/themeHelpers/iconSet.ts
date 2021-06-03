@@ -26,6 +26,14 @@ const globalIconSet = {
   picture: {
     name: "picture",
     type: "antdesign"
+  },
+  flash: {
+    name: "flash",
+    type: "entypo"
+  },
+  reverseCam: {
+    name: "ios-reverse-camera",
+    type: "ionicon"
   }
 };
 
