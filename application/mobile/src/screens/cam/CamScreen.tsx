@@ -51,6 +51,7 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
           method: "POST"
         });
         const jsonResponse = await response.json();
+        console.log({ jsonResponse });
         uploadPicture({
           variables: { cloudinaryId: jsonResponse.public_id, userId, rollId: 3 }
         });

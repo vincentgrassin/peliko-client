@@ -2,8 +2,6 @@ export { default as Autocomplete } from "./Autocomplete";
 export * from "./Autocomplete";
 export { default as Button } from "./Button";
 export * from "./Button";
-export { default as Cam } from "./Cam";
-export * from "./Cam";
 export { default as Divider } from "./Divider";
 export * from "./Divider";
 export { default as Icon } from "./Icon";
