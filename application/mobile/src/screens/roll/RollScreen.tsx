@@ -4,7 +4,8 @@ import { resources } from "../../themeHelpers";
 import {
   RouteProp,
   useNavigation,
-  useRoute
+  useRoute,
+  useIsFocused
 } from "../../utils/hooks/useNavigation";
 import { ParamList } from "../../navigation/NavigationContainer";
 import { GET_ROLL_BY_ID } from "../../utils/helpers/queries";
@@ -17,10 +18,14 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
   const { navigate } = useNavigation();
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const rollId = route?.params?.rollId;
-
-  const { loading, error, data } = useQuery(GET_ROLL_BY_ID, {
+  const isFocused = useIsFocused();
+  const { loading, error, data, refetch } = useQuery(GET_ROLL_BY_ID, {
     variables: { id: rollId }
   });
+
+  React.useEffect(() => {
+    refetch();
+  }, [refetch, isFocused]);
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Oh no... {error.message}</Text>;
