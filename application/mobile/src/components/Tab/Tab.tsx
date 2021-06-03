@@ -9,17 +9,17 @@ import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { useNavigationContext } from "../../navigation/NavigationContext";
 
-interface TabContentProps {
+interface TabProps {
   isOpenRollTab: boolean;
 }
 
 const style = StyleSheet.create({
-  tabContent: {
+  tab: {
     flex: 1
   }
 });
 
-const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
+const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const { userId } = useNavigationContext();
   const { loading, error, data } = useQuery(GET_ROLLS_BY_USER, {
     variables: { id: userId, isOpenTab: isOpenRollTab }
@@ -30,7 +30,7 @@ const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
   if (error) return <Text>Oh no... {error.message}</Text>;
 
   return (
-    <ScrollView style={style.tabContent}>
+    <ScrollView style={style.tab}>
       <Text>{isOpenRollTab ? "open" : "closed"}</Text>
       {rollList &&
         rollList.map((roll, index) => (
@@ -49,4 +49,4 @@ const TabContent: React.FC<TabContentProps> = ({ isOpenRollTab }) => {
   );
 };
 
-export default TabContent;
+export default Tab;
