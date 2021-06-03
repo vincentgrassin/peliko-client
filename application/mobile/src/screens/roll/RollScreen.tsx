@@ -26,7 +26,6 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
   if (error) return <Text>Oh no... {error.message}</Text>;
 
   const { roll }: { roll: RollData } = data;
-
   return (
     <>
       <RollHeader
@@ -37,7 +36,7 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
       />
       <RollParticipants participants={roll?.participants} />
       <Button
-        onPress={() => navigate("CamScreen")}
+        onPress={() => navigate("CamScreen", { rollId })}
         title={resources.shootPicture}
       />
     </>

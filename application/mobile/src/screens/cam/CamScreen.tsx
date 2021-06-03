@@ -6,6 +6,8 @@ import { resources } from "../../themeHelpers";
 import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { useNavigationContext } from "../../navigation/NavigationContext";
+import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
+import { ParamList } from "../../navigation/NavigationContainer";
 
 interface CamProps {}
 
@@ -18,6 +20,8 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
   const [isVisibleModal, setIsVisibleModal] = React.useState(false);
   const [uploadPicture, { data }] = useMutation(UPLOAD_PICTURE);
   const { userId } = useNavigationContext();
+  const route = useRoute<RouteProp<ParamList, "RollScreen">>();
+  const rollId = route?.params?.rollId;
 
   React.useEffect(() => {
     (async () => {
@@ -51,9 +55,8 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
           method: "POST"
         });
         const jsonResponse = await response.json();
-        console.log({ jsonResponse });
         uploadPicture({
-          variables: { cloudinaryId: jsonResponse.public_id, userId, rollId: 3 }
+          variables: { cloudinaryId: jsonResponse.public_id, userId, rollId }
         });
       }
       setIsVisibleModal(false);
