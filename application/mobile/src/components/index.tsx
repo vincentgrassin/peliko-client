@@ -12,6 +12,8 @@ export { default as Input } from "./Input";
 export * from "./Input";
 export { default as InputFormik } from "./InputFormik";
 export * from "./InputFormik";
+export { default as Notification } from "./Notification";
+export * from "./Notification";
 export { default as Roll } from "./Roll";
 export * from "./Roll";
 export { default as Tabs } from "./Tabs";

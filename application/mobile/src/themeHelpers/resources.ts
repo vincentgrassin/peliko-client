@@ -19,7 +19,10 @@ const globalResources = {
   signIn: "Change to sign in",
   signUp: "Change to sign up",
   remainingDays: "jours restants",
-  remaningPictures: "photos restantes"
+  remaningPictures: "photos restantes",
+  confirm: "confirm",
+  decline: "decline",
+  invitationText: "vous à invité à rejoindre"
 };
 
 export default globalResources;
