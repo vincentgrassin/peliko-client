@@ -1,6 +1,8 @@
 import React from "react";
 import { Formik } from "formik";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Yup from "yup";
+import { BASE_URL } from "@env";
 import {
   View,
   StyleSheet,
@@ -13,6 +15,9 @@ import { resources, iconSet } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useNavigationContext } from "../../navigation/NavigationContext";
 import { userIdConnected } from "../../utils/types/dumbData";
+import { useMutation } from "../../utils/hooks/useApolloClient";
+import { LOGIN } from "../../utils/helpers/mutation";
+import { setAccessToken } from "../../utils/helpers/accessToken";
 
 interface LoginFormProps {}
 export type LoginInformation = {
@@ -45,13 +50,66 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
     passwordConfirm: ""
   });
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
+  const [login] = useMutation(LOGIN);
 
   const { navigate } = useNavigation();
-  const { updateUserId } = useNavigationContext();
+  const { updateAccessToken, updateUserId } = useNavigationContext();
 
-  const handleSubmit = (values: LoginInformation) => {
+  // React.useEffect(() => {
+  //   const getRefreshToken = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem("@refreshToken");
+  //       console.log("IS STORED ////// ", token);
+  //       if (token !== null) {
+  //         const response = await fetch(`${BASE_URL}/refresh_token/`, {
+  //           method: "POST",
+  //           headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  //           body: `refreshToken=${token}`
+  //         });
+  //         const responseJson = await response.json();
+  //         console.log("response", responseJson);
+  //         if (responseJson.ok) {
+  //           updateAccessToken(responseJson.accessToken);
+  //           setAccessToken(responseJson.accessToken);
+  //           // navigate("BottomNavigation");
+  //           try {
+  //             await AsyncStorage.setItem(
+  //               "@refreshToken",
+  //               responseJson.refreshToken
+  //             );
+  //           } catch (e) {
+  //             console.log(e);
+  //           }
+  //         }
+  //       }
+  //     } catch (e) {}
+  //   };
+  //   getRefreshToken();
+  // }, []);
+
+  const handleSubmit = async (values: LoginInformation) => {
+    const { password, phoneNumber } = values;
+    const response = await login({ variables: { password, phoneNumber } });
+    console.log("response ////////// ", response);
+    if (response && response.data) {
+      updateAccessToken(response.data.login.accessToken);
+      setAccessToken(response.data.login.accessToken);
+      navigate("BottomNavigation");
+      try {
+        await AsyncStorage.setItem(
+          "@refreshToken",
+          response.data.login.refreshToken
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    }
     updateUserId(userIdConnected);
-    navigate("BottomNavigation");
+  };
+
+  const logOut = async () => {
+    setAccessToken("");
+    await AsyncStorage.setItem("@refreshToken", "");
   };
 
   return (
@@ -87,6 +145,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
               onPress={() => setIsSignUpForm((prev) => !prev)}
               title={isSignUpForm ? resources.signUp : resources.signIn}
             />
+            <Button onPress={logOut} title="Log out" />
           </View>
         )}
       </Formik>

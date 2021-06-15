@@ -20,3 +20,12 @@ export const UPLOAD_PICTURE = gql`
     uploadPicture(cloudinaryId: $cloudinaryId, userId: $userId, rollId: $rollId)
   }
 `;
+
+export const LOGIN = gql`
+  mutation Login($password: String!, $phoneNumber: String!) {
+    login(password: $password, phoneNumber: $phoneNumber) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
