@@ -9,16 +9,15 @@ import {
 } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client/react";
 import { setContext } from "@apollo/client/link/context";
-import { getAccessToken } from "../helpers/accessToken";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const httpLink = createHttpLink({
   uri: `${BASE_URL}/graphql`
 });
 
-const authLink = setContext((_, { headers }) => {
-  const accessToken = getAccessToken();
-  console.log("HEADER /////////////////// ", accessToken);
-  setTimeout(() => {}, 3000);
+const authLink = setContext(async (_, { headers }) => {
+  const accessToken = await AsyncStorage.getItem("@accessToken");
+  console.log("HEADER PROVIDED :  ", accessToken);
   return {
     headers: {
       ...headers,

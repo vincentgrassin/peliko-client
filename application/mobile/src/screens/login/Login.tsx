@@ -17,7 +17,6 @@ import { useNavigationContext } from "../../navigation/NavigationContext";
 import { userIdConnected } from "../../utils/types/dumbData";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOGIN } from "../../utils/helpers/mutation";
-import { setAccessToken } from "../../utils/helpers/accessToken";
 
 interface LoginFormProps {}
 export type LoginInformation = {
@@ -53,47 +52,49 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   const [login] = useMutation(LOGIN);
 
   const { navigate } = useNavigation();
-  const { updateAccessToken, updateUserId } = useNavigationContext();
+  const { updateUserId } = useNavigationContext();
 
-  // React.useEffect(() => {
-  //   const getRefreshToken = async () => {
-  //     try {
-  //       const token = await AsyncStorage.getItem("@refreshToken");
-  //       console.log("IS STORED ////// ", token);
-  //       if (token !== null) {
-  //         const response = await fetch(`${BASE_URL}/refresh_token/`, {
-  //           method: "POST",
-  //           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //           body: `refreshToken=${token}`
-  //         });
-  //         const responseJson = await response.json();
-  //         console.log("response", responseJson);
-  //         if (responseJson.ok) {
-  //           updateAccessToken(responseJson.accessToken);
-  //           setAccessToken(responseJson.accessToken);
-  //           // navigate("BottomNavigation");
-  //           try {
-  //             await AsyncStorage.setItem(
-  //               "@refreshToken",
-  //               responseJson.refreshToken
-  //             );
-  //           } catch (e) {
-  //             console.log(e);
-  //           }
-  //         }
-  //       }
-  //     } catch (e) {}
-  //   };
-  //   getRefreshToken();
-  // }, []);
+  React.useEffect(() => {
+    const getRefreshToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("@refreshToken");
+        if (token !== null) {
+          const response = await fetch(`${BASE_URL}/refresh_token/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `refreshToken=${token}`
+          });
+          const responseJson = await response.json();
+          if (responseJson.ok) {
+            // navigate("BottomNavigation");
+            try {
+              await AsyncStorage.setItem(
+                "@refreshToken",
+                responseJson.refreshToken
+              );
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        }
+      } catch (e) {}
+    };
+    getRefreshToken();
+  }, []);
 
   const handleSubmit = async (values: LoginInformation) => {
     const { password, phoneNumber } = values;
     const response = await login({ variables: { password, phoneNumber } });
-    console.log("response ////////// ", response);
     if (response && response.data) {
-      updateAccessToken(response.data.login.accessToken);
-      setAccessToken(response.data.login.accessToken);
+      await AsyncStorage.setItem(
+        "@accessToken",
+        response.data.login.accessToken
+      );
+      await AsyncStorage.setItem(
+        "@refreshToken",
+        response.data.login.refreshToken
+      );
+
       navigate("BottomNavigation");
       try {
         await AsyncStorage.setItem(
@@ -108,8 +109,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   };
 
   const logOut = async () => {
-    setAccessToken("");
-    await AsyncStorage.setItem("@refreshToken", "");
+    await AsyncStorage.setItem("@accessToken", "");
   };
 
   return (
