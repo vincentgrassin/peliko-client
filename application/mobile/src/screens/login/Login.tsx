@@ -81,7 +81,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
       } catch (e) {}
     };
     getRefreshToken();
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (values: LoginInformation) => {
     const { password, phoneNumber } = values;

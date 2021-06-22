@@ -32,7 +32,7 @@ const style = StyleSheet.create({
 
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const { setFieldValue, values, errors } = useFormikContext<FormValues>();
-  const [field] = useField("participants");
+  const [field] = useField("participantsContact");
 
   const handleAddFields = () => {
     setFieldValue(field.name, [
