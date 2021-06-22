@@ -30,7 +30,6 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
   const [isFlashOn, setIsFlashOn] = React.useState<boolean>(false);
   const [isVisibleModal, setIsVisibleModal] = React.useState(false);
   const [uploadPicture, { data }] = useMutation(UPLOAD_PICTURE);
-  const { userId } = useNavigationContext();
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const rollId = route?.params?.rollId;
 
@@ -67,7 +66,7 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
         });
         const jsonResponse = await response.json();
         uploadPicture({
-          variables: { cloudinaryId: jsonResponse.public_id, userId, rollId }
+          variables: { cloudinaryId: jsonResponse.public_id, rollId }
         });
       }
       setIsVisibleModal(false);

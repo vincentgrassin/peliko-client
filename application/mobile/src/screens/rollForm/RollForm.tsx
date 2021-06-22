@@ -77,8 +77,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
           description,
           closingDate: date,
           participants: participantsContact
-        },
-        userId
+        }
       }
     });
   };
