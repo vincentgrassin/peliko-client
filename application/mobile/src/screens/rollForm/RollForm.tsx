@@ -13,7 +13,6 @@ import RollFormStep2 from "./RollFormStep2";
 import { resources } from "../../themeHelpers";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { CREATE_ROLL } from "../../utils/helpers/mutation";
-import { useNavigationContext } from "../../navigation/NavigationContext";
 
 interface RollFormWizardProps {}
 export type ParticipantContact = {
@@ -36,7 +35,6 @@ const style = StyleSheet.create({
 
 const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const [createRoll, { data }] = useMutation(CREATE_ROLL);
-  const { userId } = useNavigationContext();
   const [formValues, setFormValues] = React.useState<FormValues>({
     rollName: "",
     description: "",

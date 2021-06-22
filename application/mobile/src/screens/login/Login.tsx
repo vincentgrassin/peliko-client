@@ -13,8 +13,6 @@ import {
 } from "../../components";
 import { resources, iconSet } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
-import { useNavigationContext } from "../../navigation/NavigationContext";
-import { userIdConnected } from "../../utils/types/dumbData";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOGIN } from "../../utils/helpers/mutation";
 
@@ -52,7 +50,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   const [login] = useMutation(LOGIN);
 
   const { navigate } = useNavigation();
-  const { updateUserId } = useNavigationContext();
 
   React.useEffect(() => {
     const getRefreshToken = async () => {
@@ -109,7 +106,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
         console.log(e);
       }
     }
-    updateUserId(userIdConnected);
   };
 
   const logOut = async () => {

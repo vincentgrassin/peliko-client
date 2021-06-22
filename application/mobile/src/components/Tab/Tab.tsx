@@ -20,7 +20,6 @@ const style = StyleSheet.create({
 });
 
 const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
-  const { userId } = useNavigationContext();
   const { loading, error, data, refetch } = useQuery(GET_ROLLS_BY_USER, {
     variables: { isOpenTab: isOpenRollTab }
   });
