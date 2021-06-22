@@ -55,3 +55,17 @@ export const GET_ROLL_BY_ID = gql`
     }
   }
 `;
+
+export const GET_INVITATIONS_BY_USER = gql`
+  query GetInvitationsByUser {
+    invitationRollsByUser {
+      roll {
+        id
+        name
+      }
+      admin {
+        name
+      }
+    }
+  }
+`;

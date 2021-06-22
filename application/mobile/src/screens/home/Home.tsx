@@ -3,8 +3,7 @@ import { useWindowDimensions } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { resources } from "../../themeHelpers";
 import { Tab } from "../../components";
-// import { useQuery } from "../../utils/hooks/useApolloClient";
-// import { BYE } from "../../utils/helpers/queries";
+
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = ({ ...props }) => {

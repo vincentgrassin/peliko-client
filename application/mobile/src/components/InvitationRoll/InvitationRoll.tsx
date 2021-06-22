@@ -8,7 +8,7 @@ import Avatar from "../Avatar";
 import Button from "../Button";
 import { resources } from "../../themeHelpers";
 
-interface NotificationProps {
+interface InvitationRollProps {
   adminAvatarSource: ImageSourcePropType | undefined;
   rollTitle: string;
   adminUserName: string;
@@ -26,7 +26,7 @@ const style = StyleSheet.create({
   }
 });
 
-const Notification: React.FC<NotificationProps> = ({
+const InvitationRoll: React.FC<InvitationRollProps> = ({
   adminAvatarSource,
   adminUserName,
   closingDate,
@@ -62,4 +62,4 @@ const Notification: React.FC<NotificationProps> = ({
   );
 };
 
-export default Notification;
+export default InvitationRoll;
