@@ -66,11 +66,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
           });
           const responseJson = await response.json();
           if (responseJson.ok) {
-            // navigate("BottomNavigation");
+            navigate("BottomNavigation");
             try {
               await AsyncStorage.setItem(
                 "@refreshToken",
                 responseJson.refreshToken
+              );
+              await AsyncStorage.setItem(
+                "@accessToken",
+                responseJson.accessToken
               );
             } catch (e) {
               console.log(e);

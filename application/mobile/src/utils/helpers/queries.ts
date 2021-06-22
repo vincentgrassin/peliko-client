@@ -10,8 +10,8 @@ export const GET_ROLLS = gql`
 `;
 
 export const GET_ROLLS_BY_USER = gql`
-  query GetRollsByUser($id: Float!, $isOpenTab: Boolean!) {
-    rollsByUser(id: $id, isOpenTab: $isOpenTab) {
+  query GetRollsByUser($isOpenTab: Boolean!) {
+    rollsByUser(isOpenTab: $isOpenTab) {
       id
       name
       closingDate

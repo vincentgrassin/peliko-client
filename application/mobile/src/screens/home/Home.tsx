@@ -3,8 +3,8 @@ import { useWindowDimensions } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { resources } from "../../themeHelpers";
 import { Tab } from "../../components";
-import { useQuery } from "../../utils/hooks/useApolloClient";
-import { BYE } from "../../utils/helpers/queries";
+// import { useQuery } from "../../utils/hooks/useApolloClient";
+// import { BYE } from "../../utils/helpers/queries";
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = ({ ...props }) => {
@@ -20,18 +20,8 @@ const Home: React.FC<HomeProps> = ({ ...props }) => {
     closedRollList: () => <Tab isOpenRollTab={false} />
   });
 
-  const {
-    loading: loading1,
-    error: error1,
-    data: data1,
-    refetch: refetchBye
-  } = useQuery(BYE);
-  console.log({ loading1, error1, data1 });
-
-  React.useEffect(() => {
-    console.log("i am refetch");
-    refetchBye();
-  }, [refetchBye]);
+  // to do remove : user from Nav context, remove dumb data
+  // update all queries and muation
 
   return (
     <TabView

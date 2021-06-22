@@ -21,10 +21,14 @@ const style = StyleSheet.create({
 
 const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const { userId } = useNavigationContext();
-  const { loading, error, data } = useQuery(GET_ROLLS_BY_USER, {
-    variables: { id: userId, isOpenTab: isOpenRollTab }
+  const { loading, error, data, refetch } = useQuery(GET_ROLLS_BY_USER, {
+    variables: { isOpenTab: isOpenRollTab }
   });
   const rollList: RollData[] = data?.rollsByUser;
+
+  React.useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Oh no... {error.message}</Text>;
