@@ -19,9 +19,6 @@ const Home: React.FC<HomeProps> = ({ ...props }) => {
     closedRollList: () => <Tab isOpenRollTab={false} />
   });
 
-  // to do remove : user from Nav context, remove dumb data
-  // update all queries and muation
-
   return (
     <TabView
       navigationState={{ index, routes }}

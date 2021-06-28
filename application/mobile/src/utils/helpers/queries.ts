@@ -62,6 +62,7 @@ export const GET_INVITATIONS_BY_USER = gql`
       roll {
         id
         name
+        closingDate
       }
       admin {
         name

@@ -7,7 +7,7 @@ import { RollData } from "../../utils/types/types";
 import { getThumbnailRollColor } from "../../utils/helpers/colorHelper";
 import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
-import { useNavigationContext } from "../../navigation/NavigationContext";
+import { resources } from "../../themeHelpers";
 
 interface TabProps {
   isOpenRollTab: boolean;
@@ -23,7 +23,6 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const { loading, error, data, refetch } = useQuery(GET_ROLLS_BY_USER, {
     variables: { isOpenTab: isOpenRollTab }
   });
-  const rollList: RollData[] = data?.rollsByUser;
 
   React.useEffect(() => {
     refetch();
@@ -32,9 +31,15 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Oh no... {error.message}</Text>;
 
+  const rollList: RollData[] = data?.rollsByUser;
+
   return (
     <ScrollView style={style.tab}>
-      <Text>{isOpenRollTab ? "open" : "closed"}</Text>
+      <Text>
+        {isOpenRollTab
+          ? resources.openRollListTabTitle
+          : resources.closedRollListTabTitle}
+      </Text>
       {rollList &&
         rollList.map((roll, index) => (
           <RollThumbnail

@@ -36,3 +36,14 @@ export type Participant = {
   hasDiscoverRoll: boolean;
   avatarImageUri?: string;
 };
+
+export type InvitationRoll = {
+  admin: {
+    name: string;
+  };
+  roll: {
+    id: number;
+    name: string;
+    closingData: string;
+  };
+};

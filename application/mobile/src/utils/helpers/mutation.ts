@@ -25,3 +25,15 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const JOIN_ROLL = gql`
+  mutation JoinRoll($rollId: Float!, $accessCode: String!) {
+    joinRoll(rollId: $rollId, accessCode: $accessCode)
+  }
+`;
+
+export const DECLINE_INVITATION = gql`
+  mutation DeclineInvitation($rollId: Float!) {
+    declineRollInvitation(rollId: $rollId)
+  }
+`;
