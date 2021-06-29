@@ -68,7 +68,7 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
         key="avatar"
         source={adminAvatarSource}
         index={index}
-        size="large"
+        size="medium"
       />
       <View>
         <View>
