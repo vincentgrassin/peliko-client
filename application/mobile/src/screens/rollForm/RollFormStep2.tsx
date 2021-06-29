@@ -3,15 +3,13 @@ import { useField, useFormikContext } from "formik";
 import {
   View,
   StyleSheet,
-  Button,
   Input,
   Autocomplete,
   TouchableOpacity,
   Text,
   Icon
 } from "../../components";
-import { iconSet, resources } from "../../themeHelpers";
-
+import { iconSet } from "../../themeHelpers";
 import { ParticipantContact, FormValues } from "./RollForm";
 import { usePhoneContacts, Contact } from "../../utils/hooks/usePhoneContacts";
 
@@ -27,19 +25,27 @@ const style = StyleSheet.create({
   },
   inputParticipant: {
     width: "70%"
+  },
+  autocomplete: {
+    display: "flex",
+    flexDirection: "row"
   }
 });
 
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const { setFieldValue, values, errors } = useFormikContext<FormValues>();
   const [field] = useField("participantsContact");
+  const [isHiddenResult, setIsHiddenResult] = React.useState(true);
+  const [searchContact, setSearchContact] = React.useState("");
+  const {
+    phoneContactData,
+    loadPhoneContacts,
+    findContact
+  } = usePhoneContacts();
 
-  const handleAddFields = () => {
-    setFieldValue(field.name, [
-      ...values.participantsContact,
-      { name: "", phoneNumber: "" }
-    ]);
-  };
+  React.useEffect(() => {
+    loadPhoneContacts();
+  }, [loadPhoneContacts]);
 
   const handleRemoveFields = (index: number) => {
     const participantsList = values.participantsContact;
@@ -53,47 +59,47 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     setFieldValue(field.name, participantsList);
   };
 
-  const [isHiddenResult, setIsHiddenResult] = React.useState(false);
-  const [searchContact, setSearchContact] = React.useState("");
-  const {
-    phoneContactData,
-    loadPhoneContacts,
-    findContact
-  } = usePhoneContacts();
+  const handleAddField = () =>
+    handleInputChange(searchContact, values.participantsContact.length);
+
+  const handleChangeText = (val: string) => {
+    const isEmptySearchField = val === "";
+    setIsHiddenResult(isEmptySearchField);
+    setSearchContact(val);
+    findContact(val);
+  };
 
   return (
     <View style={style.rollForm}>
-      <Button
-        onPress={loadPhoneContacts}
-        title={resources.accessPhoneContact}
-      />
-      <Autocomplete
-        data={phoneContactData}
-        hideResults={isHiddenResult}
-        defaultValue={searchContact}
-        onChangeText={(val) => {
-          val === "" ? setIsHiddenResult(true) : setIsHiddenResult(false);
-          setSearchContact(val);
-          findContact(val);
-        }}
-        flatListProps={{
-          renderItem: ({ item }: { item: Contact }) => (
-            <TouchableOpacity
-              onPress={() => {
-                setIsHiddenResult(true);
-                handleInputChange(
-                  item.phoneNumbers ? item.phoneNumbers[0].number : "",
-                  values.participantsContact.length
-                );
-              }}
-            >
-              <Text>
-                {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
-              </Text>
-            </TouchableOpacity>
-          )
-        }}
-      />
+      <View style={style.autocomplete}>
+        <Autocomplete
+          data={phoneContactData}
+          hideResults={isHiddenResult}
+          value={searchContact}
+          onChangeText={handleChangeText}
+          flatListProps={{
+            renderItem: ({ item }: { item: Contact }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  setIsHiddenResult(true);
+                  item.phoneNumbers &&
+                    item.phoneNumbers[0].number &&
+                    setSearchContact(item.phoneNumbers[0].number);
+                }}
+              >
+                <Text>
+                  {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
+                </Text>
+              </TouchableOpacity>
+            )
+          }}
+        />
+        <Icon
+          type={iconSet.plus.type}
+          name={iconSet.plus.name}
+          onPress={handleAddField}
+        />
+      </View>
       {values.participantsContact.map(
         (participant: ParticipantContact, index: number) => (
           <View key={index} style={style.participantField}>
@@ -102,11 +108,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
               onChangeText={(val) => handleInputChange(val, index)}
               containerStyle={style.inputParticipant}
             />
-            <Icon
-              type={iconSet.plus.type}
-              name={iconSet.plus.name}
-              onPress={handleAddFields}
-            />
+
             <Icon
               type={iconSet.minus.type}
               name={iconSet.minus.name}

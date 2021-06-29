@@ -17,7 +17,7 @@ export const usePhoneContacts = () => {
     setInitialPhoneContact
   ] = React.useState<PhoneContact>([]);
 
-  const loadPhoneContacts = async () => {
+  const loadPhoneContacts = React.useCallback(async () => {
     const { status } = await Contacts.requestPermissionsAsync();
     if (status === "granted") {
       setHasPermissionToAccessContact("granted");
@@ -29,7 +29,7 @@ export const usePhoneContacts = () => {
     } else {
       setHasPermissionToAccessContact("notgranted");
     }
-  };
+  }, []);
 
   const findContact = (search: string) => {
     const regex = new RegExp(

@@ -5,6 +5,7 @@ import Autocomplete from "react-native-autocomplete-input";
 interface AutocompleteProps {
   hideResults: boolean;
   data?: any;
+  value?: any;
   onChangeText?: (val: any) => void;
   inputContainerStyle?: any;
   defaultValue?: any;

@@ -39,12 +39,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
     rollName: "",
     description: "",
     date: new Date(Date.now()),
-    participantsContact: [
-      {
-        name: "",
-        phoneNumber: ""
-      }
-    ]
+    participantsContact: []
   });
   const [step, setStep] = React.useState(0);
 
