@@ -20,6 +20,8 @@ export { default as Tab } from "./Tab";
 export * from "./Tab";
 export { default as Text } from "./Text";
 export * from "./Text";
+export { default as ThemeProvider } from "./ThemeProvider";
+export * from "./ThemeProvider";
 export { default as TouchableOpacity } from "./TouchableOpacity";
 export * from "./TouchableOpacity";
 export { default as ScrollView } from "./ScrollView";

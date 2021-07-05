@@ -52,7 +52,7 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
       <View>
         <ThumbnailSvg backgroundColor={backgroundColor} url={url} {...props} />
         <View style={style.thumbnailContent}>
-          <Text>{rollName}</Text>
+          <Text h1>{rollName}</Text>
           <View style={style.badgeArea}>
             <Badge
               value={<RollBadge value={pictureNumber} icon="pictureNumber" />}
