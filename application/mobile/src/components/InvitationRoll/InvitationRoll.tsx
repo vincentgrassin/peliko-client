@@ -1,14 +1,15 @@
 import React from "react";
 import { ImageSourcePropType } from "react-native";
+import { makeStyles } from "react-native-elements";
 import View from "../View";
 import Text from "../Text";
-import StyleSheet from "../StyleSheet";
 import Avatar from "../Avatar";
 import Button from "../Button";
-import { resources } from "../../themeHelpers";
+import { resources, shape } from "../../themeHelpers";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { DECLINE_INVITATION, JOIN_ROLL } from "../../utils/helpers/mutation";
 import { GET_INVITATIONS_BY_USER } from "../../utils/helpers/queries";
+import { getDateFormat } from "../../utils/helpers/dateHelper";
 
 interface InvitationRollProps {
   adminAvatarSource: ImageSourcePropType | undefined;
@@ -19,16 +20,22 @@ interface InvitationRollProps {
   index: number;
 }
 
-const style = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   content: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    marginLeft: shape.spacing(2),
+    marginBottom: shape.spacing(2)
   },
   actions: {
     display: "flex",
     flexDirection: "row"
+  },
+  detail: {
+    marginLeft: shape.spacing(2),
+    flex: 1
   }
-});
+}));
 
 const InvitationRoll: React.FC<InvitationRollProps> = ({
   adminAvatarSource,
@@ -39,6 +46,8 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
   index,
   ...props
 }) => {
+  const styles = useStyles();
+
   const [joinRoll] = useMutation(JOIN_ROLL, {
     refetchQueries: [{ query: GET_INVITATIONS_BY_USER }]
   });
@@ -63,23 +72,32 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
   };
 
   return (
-    <View style={style.content}>
+    <View style={styles.content}>
       <Avatar
         key="avatar"
         source={adminAvatarSource}
         index={index}
         size="medium"
       />
-      <View>
+      <View style={styles.detail}>
         <View>
           <Text>
             {adminUserName} {resources.invitationText} {rollTitle}
           </Text>
-          <Text>{closingDate}</Text>
+          <Text>{getDateFormat(closingDate)}</Text>
         </View>
-        <View style={style.actions}>
-          <Button onPress={handleConfirm} title={resources.confirm} />
-          <Button onPress={handleDecline} title={resources.decline} />
+        <View style={styles.actions}>
+          <Button
+            onPress={handleConfirm}
+            title={resources.confirm}
+            size="small"
+          />
+          <Button
+            onPress={handleDecline}
+            title={resources.decline}
+            size="small"
+            type="outline"
+          />
         </View>
       </View>
     </View>

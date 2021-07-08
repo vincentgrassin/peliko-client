@@ -23,7 +23,7 @@ const Notifications: React.FC<NotificationsProps> = ({ ...props }) => {
           <InvitationRoll
             key={index}
             adminAvatarSource={undefined}
-            closingDate={invitation.roll.closingData}
+            closingDate={invitation.roll.closingDate}
             adminUserName={invitation.admin.name}
             rollTitle={invitation.roll.name}
             rollId={invitation.roll.id}

@@ -44,6 +44,6 @@ export type InvitationRoll = {
   roll: {
     id: number;
     name: string;
-    closingData: string;
+    closingDate: string;
   };
 };

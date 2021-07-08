@@ -1,53 +1,59 @@
 import React from "react";
 import {
   Button as ReactNativeButton,
-  ButtonProps as ReactNativeButtonProps
+  ButtonProps as ReactNativeButtonProps,
+  makeStyles
 } from "react-native-elements";
-import { shape, palette } from "../../themeHelpers";
-import StyleSheet from "../StyleSheet";
+import { shape, palette, typography } from "../../themeHelpers";
 
-interface ButtonProps extends ReactNativeButtonProps {}
+interface ButtonProps extends ReactNativeButtonProps {
+  size?: "small" | "large";
+}
 
-const style = StyleSheet.create({
-  button: {
-    borderRadius: shape.radius[30],
-    borderWidth: shape.width.buttonBorder,
-    borderColor: palette("yellow"),
-    height: 50
-  },
-  solidButton: {
-    backgroundColor: palette("yellow")
-  },
-  outlinedButton: {
-    backgroundColor: palette("white")
-  },
-  solidTitle: {
-    color: palette("black")
-  },
-  outlinedTitle: {
-    color: palette("yellow")
+const useStyles = makeStyles(
+  (
+    theme,
+    styleProps: {
+      size: "large" | "small";
+      type: "outline" | "solid" | "clear" | undefined;
+    }
+  ) => {
+    const { size, type } = styleProps;
+    return {
+      button: {
+        borderRadius: shape.radius[30],
+        borderWidth: shape.width.buttonBorder,
+        borderColor: palette("yellow"),
+        height: size === "large" ? 50 : 25,
+        backgroundColor:
+          type === "outline" ? palette("white") : palette("yellow")
+      },
+      buttonTitle: {
+        color: type === "outline" ? palette("yellow") : palette("black"),
+        fontSize:
+          size === "small" ? typography.fontSize.xs : typography.fontSize.s
+      }
+    };
   }
-});
+);
 
 const Button: React.FC<ButtonProps> = ({
-  type,
+  type = "solid",
   buttonStyle,
   titleStyle,
+  size = "large",
   ...props
-}) => (
-  <ReactNativeButton
-    buttonStyle={[
-      style.button,
-      type === "outline" ? style.outlinedButton : style.solidButton,
-      buttonStyle
-    ]}
-    titleStyle={[
-      type === "outline" ? style.outlinedTitle : style.solidTitle,
-      titleStyle
-    ]}
-    type={type}
-    {...props}
-  />
-);
+}) => {
+  const styles = useStyles({ size, type });
+
+  return (
+    <ReactNativeButton
+      buttonStyle={[styles.button, buttonStyle]}
+      titleStyle={[styles.buttonTitle, titleStyle]}
+      type={type}
+      {...props}
+    />
+  );
+};
 
 export default Button;

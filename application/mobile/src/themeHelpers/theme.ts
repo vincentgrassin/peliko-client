@@ -1,35 +1,45 @@
 import { globalPalette } from "./palette";
 import shape from "./shape";
+import typography from "./typography";
 
 const globalTheme = {
+  Button: {
+    titleStyle: [
+      {
+        fontFamily: "WorkSansRegular",
+        fontSize: typography.fontSize.xm,
+        fontWeight: "bold"
+      }
+    ]
+  },
+  Input: {
+    labelStyle: [
+      {
+        fontFamily: "Windsor",
+        fontSize: typography.fontSize.xm
+      }
+    ]
+  },
   Text: {
     h1Style: {
       fontFamily: "Windsor",
       fontWeight: "normal",
-      fontSize: 22
+      fontSize: typography.fontSize.xl
     },
     h2Style: {
       fontFamily: "Windsor",
       fontWeight: "normal",
-      fontSize: 18
+      fontSize: typography.fontSize.m
     },
     h3Style: {
       fontFamily: "WorkSansRegular",
       fontWeight: "normal",
-      fontSize: 18
+      fontSize: typography.fontSize.xm
     },
     style: {
       fontFamily: "WorkSansRegular",
-      fontSize: 14
+      fontSize: typography.fontSize.s
     }
-  },
-  Button: {
-    titleStyle: [
-      {
-        fontFamily: "Windsor",
-        fontSize: 14
-      }
-    ]
   }
 };
 

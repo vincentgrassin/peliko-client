@@ -12,3 +12,6 @@ export const iconSet = globalIconSet;
 
 import globalShapes from "./shape";
 export const shape = globalShapes;
+
+import globalTypography from "./typography";
+export const typography = globalTypography;
