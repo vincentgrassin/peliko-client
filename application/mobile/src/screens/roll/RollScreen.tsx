@@ -31,6 +31,7 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
   if (error) return <Text>Oh no... {error.message}</Text>;
 
   const { roll }: { roll: RollData } = data;
+  console.log(roll);
   return (
     <>
       <RollHeader

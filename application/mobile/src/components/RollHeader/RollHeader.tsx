@@ -38,7 +38,7 @@ const RollHeader: React.FC<RollHeaderProps> = ({
     <View style={style.root}>
       <HeaderRollSvg backgroundColor={route?.params?.backgroundColor} />
       <View style={style.rollHeaderContent}>
-        <Text>{name}</Text>
+        <Text h2>{name}</Text>
         <Text>{description}</Text>
         <Badge
           value={

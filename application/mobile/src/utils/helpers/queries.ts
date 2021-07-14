@@ -14,6 +14,7 @@ export const GET_ROLLS_BY_USER = gql`
     rollsByUser(isOpenTab: $isOpenTab) {
       id
       name
+      description
       closingDate
       remainingPictures
       participants {

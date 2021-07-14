@@ -29,11 +29,15 @@ const useStyles = makeStyles((theme) => ({
   },
   actions: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    marginTop: shape.spacing(1)
   },
   detail: {
     marginLeft: shape.spacing(2),
     flex: 1
+  },
+  containerStyle: {
+    marginRight: shape.spacing(2)
   }
 }));
 
@@ -91,6 +95,7 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
             onPress={handleConfirm}
             title={resources.confirm}
             size="small"
+            containerStyle={styles.containerStyle}
           />
           <Button
             onPress={handleDecline}

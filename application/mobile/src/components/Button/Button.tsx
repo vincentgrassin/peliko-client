@@ -25,6 +25,8 @@ const useStyles = makeStyles(
         borderWidth: shape.width.buttonBorder,
         borderColor: palette("yellow"),
         height: size === "large" ? 50 : 25,
+        paddingLeft: shape.spacing(2),
+        paddingRight: shape.spacing(2),
         backgroundColor:
           type === "outline" ? palette("white") : palette("yellow")
       },
