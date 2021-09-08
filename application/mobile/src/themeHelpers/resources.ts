@@ -18,11 +18,14 @@ const globalResources = {
   phoneNumber: "Numéro de téléphone",
   signIn: "Change to sign in",
   signUp: "Change to sign up",
-  remainingDays: "jours restants",
   remaningPictures: "photos restantes",
   confirm: "confirm",
   decline: "decline",
-  invitationText: "vous à invité à rejoindre"
+  invitationText: "vous à invité à rejoindre",
+  remainingDays: "jours restants",
+  remainingHours: "heures restantes",
+  remainingHoursShort: "h",
+  remainingDaysShort: "j"
 };
 
 export default globalResources;
