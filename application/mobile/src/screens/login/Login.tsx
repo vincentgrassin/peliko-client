@@ -63,7 +63,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
           });
           const responseJson = await response.json();
           if (responseJson.ok) {
-            console.log(responseJson);
             navigate("BottomNavigation");
             try {
               await AsyncStorage.setItem(

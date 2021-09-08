@@ -14,7 +14,6 @@ export const GET_ROLLS_BY_USER = gql`
     rollsByUser(isOpenTab: $isOpenTab) {
       id
       name
-      description
       closingDate
       remainingPictures
       participants {
@@ -48,6 +47,7 @@ export const GET_ROLL_BY_ID = gql`
       name
       closingDate
       remainingPictures
+      description
       participants {
         phoneNumber
         id

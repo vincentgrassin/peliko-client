@@ -59,9 +59,8 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   };
 
   const handleSubmit = (values: FormValues) => {
-    console.log("formvalues : ", values);
     const { date, description, participantsContact, rollName } = values;
-    // will have to manage error validation and double management
+    // will have to manage error validation and duplicates
     createRoll({
       variables: {
         rollData: {
