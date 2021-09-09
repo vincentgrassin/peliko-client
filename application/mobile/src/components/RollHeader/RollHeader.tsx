@@ -13,7 +13,7 @@ import { getRemainingTimeOnDate } from "../../utils/helpers/dateHelper";
 interface RollHeaderProps {
   name: string | undefined;
   description: string | undefined;
-  closingDate: string;
+  closingDate: string | undefined;
   remainingPictures: number | undefined;
 }
 
@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
   badges: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "space-evenly"
   }
 }));
 
@@ -44,13 +45,7 @@ const RollHeader: React.FC<RollHeaderProps> = ({
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const styles = useStyles();
 
-  // let time;
-  // if (closingDate) {
-  //   time = getRemainingTimeOnDate(closingDate, true);
-  // }
-  // console.log(time)
-  const remainingTime = getRemainingTimeOnDate(closingDate, true);
-  console.log(remainingTime);
+  const remainingTime = getRemainingTimeOnDate(closingDate, false);
 
   return (
     <View style={styles.root}>
@@ -59,14 +54,16 @@ const RollHeader: React.FC<RollHeaderProps> = ({
         <Text h2>{name}</Text>
         <Text style={styles.description}>{description}</Text>
         <View style={styles.badges}>
-          <Badge
-            value={
-              <RollBadge
-                value={closingDate}
-                secondaryValue={resources.remainingDays}
-              />
-            }
-          />
+          {remainingTime && (
+            <Badge
+              value={
+                <RollBadge
+                  value={remainingTime.value}
+                  secondaryValue={remainingTime.text}
+                />
+              }
+            />
+          )}
           <Badge
             value={
               <RollBadge
