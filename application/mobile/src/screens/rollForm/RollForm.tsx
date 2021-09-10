@@ -1,16 +1,11 @@
 import React from "react";
 import { Formik } from "formik";
-import {
-  View,
-  StyleSheet,
-  Button,
-  Stepper,
-  ScrollView
-} from "../../components";
+import { makeStyles } from "react-native-elements";
+import { View, Button, Stepper, ScrollView } from "../../components";
 import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
 import RollFormStep2 from "./RollFormStep2";
-import { resources } from "../../themeHelpers";
+import { resources, shape } from "../../themeHelpers";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { CREATE_ROLL } from "../../utils/helpers/mutation";
 
@@ -27,13 +22,27 @@ export type FormValues = {
   participantsContact: ParticipantContact[];
 };
 
-const style = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   rollForm: {
+    height: "100%"
+  },
+  formActions: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: shape.spacing(3)
+  },
+  actionButton: {
+    width: "45%"
+  },
+  formStep: {
     flex: 1
   }
-});
+}));
 
 const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
+  const styles = useStyles();
+
   const [createRoll, { data }] = useMutation(CREATE_ROLL);
   const [formValues, setFormValues] = React.useState<FormValues>({
     rollName: "",
@@ -75,25 +84,38 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   };
 
   return (
-    <ScrollView style={style.rollForm}>
+    <ScrollView contentContainerStyle={styles.rollForm}>
       <Stepper step={step} onStepChange={handleStep} />
-      <Formik
-        initialValues={formValues}
-        onSubmit={handleSubmit}
-        // validate={validate[step]}
-      >
+      <Formik initialValues={formValues} onSubmit={handleSubmit}>
         {({ handleSubmit }) => (
-          <View>
-            {step === 0 && <RollFormStep0 />}
-            {step === 1 && <RollFormStep1 />}
-            {step === 2 && <RollFormStep2 />}
-            <Button
-              onPress={(e: any) => handleSubmit(e)}
-              title={resources.submit}
-            />
-            <Button onPress={handleNext} title={resources.next} />
-            <Button onPress={handlePrevious} title={resources.previous} />
-          </View>
+          <>
+            <View style={styles.formStep}>
+              {step === 0 && <RollFormStep0 />}
+              {step === 1 && <RollFormStep1 />}
+              {step === 2 && <RollFormStep2 />}
+            </View>
+            <View style={styles.formActions}>
+              <Button
+                onPress={handlePrevious}
+                title={resources.previous}
+                containerStyle={styles.actionButton}
+                type="outline"
+              />
+              {step === 2 ? (
+                <Button
+                  onPress={(e: any) => handleSubmit(e)}
+                  title={resources.submit}
+                  containerStyle={styles.actionButton}
+                />
+              ) : (
+                <Button
+                  onPress={handleNext}
+                  title={resources.next}
+                  containerStyle={styles.actionButton}
+                />
+              )}
+            </View>
+          </>
         )}
       </Formik>
     </ScrollView>

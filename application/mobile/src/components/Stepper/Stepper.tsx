@@ -2,6 +2,7 @@ import React from "react";
 import View from "../View";
 import Step from "../Step";
 import StyleSheet from "../StyleSheet";
+import { shape } from "../../themeHelpers";
 
 interface StepperProps {
   step: number;
@@ -9,7 +10,11 @@ interface StepperProps {
 }
 
 const style = StyleSheet.create({
-  stepper: { display: "flex", flexDirection: "row" }
+  stepper: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: shape.spacing(2)
+  }
 });
 
 const Stepper: React.FC<StepperProps> = ({ step, onStepChange, ...props }) => {

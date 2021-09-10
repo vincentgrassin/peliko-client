@@ -1,10 +1,11 @@
 import React from "react";
+import { makeStyles } from "react-native-elements";
 import View from "../View";
 import Text from "../Text";
 import TouchableOpacity from "../TouchableOpacity";
-import StyleSheet from "../StyleSheet";
 import Divider from "../Divider";
 import { palette } from "../../themeHelpers";
+import { getAlternateColor } from "../../utils/helpers/colorHelper";
 
 interface StepProps {
   isActive: boolean;
@@ -12,62 +13,64 @@ interface StepProps {
   onStepChange: (s: number) => void;
 }
 
+const useStyles = makeStyles((theme, step: number) => {
+  return {
+    step: {
+      display: "flex",
+      flexDirection: "row",
+      width: "25%",
+      alignItems: "center"
+    },
+    divider: {
+      width: "25%",
+      borderBottomWidth: 2,
+      borderBottomColor: palette("black")
+    },
+    emptyView: {
+      width: "25%"
+    },
+    textArea: {
+      width: 45,
+      height: 45,
+      borderRadius: 50,
+      justifyContent: "center",
+      alignItems: "center",
+      borderWidth: 2,
+      borderColor: palette("black")
+    },
+    textActive: {
+      backgroundColor: getAlternateColor(step)
+    }
+  };
+});
+
 const Step: React.FC<StepProps> = ({
   isActive,
   step,
   onStepChange,
   ...props
 }) => {
+  const styles = useStyles(step);
   return (
-    <View style={style.step}>
+    <View style={styles.step}>
       {step !== 0 ? (
-        <Divider style={style.divider} />
+        <Divider style={styles.divider} />
       ) : (
-        <View style={style.emptyView} />
+        <View style={styles.emptyView} />
       )}
       <TouchableOpacity
-        style={[style.textArea, isActive && style.textActive]}
+        style={[styles.textArea, isActive && styles.textActive]}
         onPress={() => onStepChange(step)}
       >
-        <Text>{step}</Text>
+        <Text h2>{step}</Text>
       </TouchableOpacity>
       {step !== 3 ? (
-        <Divider style={style.divider} />
+        <Divider style={styles.divider} />
       ) : (
-        <View style={style.emptyView} />
+        <View style={styles.emptyView} />
       )}
     </View>
   );
 };
 
 export default Step;
-
-const style = StyleSheet.create({
-  step: {
-    display: "flex",
-    flexDirection: "row",
-    width: "25%",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  divider: {
-    width: "25%",
-    borderBottomWidth: 2,
-    borderBottomColor: palette("black")
-  },
-  emptyView: {
-    width: "25%"
-  },
-  textArea: {
-    width: 40,
-    height: 40,
-    borderRadius: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: palette("black")
-  },
-  textActive: {
-    borderColor: palette("red")
-  }
-});

@@ -1,13 +1,14 @@
 import React from "react";
+import { makeStyles } from "react-native-elements";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import View from "../View";
 import Text from "../Text";
-import StyleSheet from "../StyleSheet";
 import TouchableOpacity from "../TouchableOpacity";
 import ThumbnailSvg, { ThumbnailSvgProps } from "../../assets/ThumbnailSvg";
 import { shape } from "../../themeHelpers";
 import RollBadge from "../RollBadge";
 import Badge from "../Badge";
+import { getRemainingTimeOnDate } from "../../utils/helpers/dateHelper";
 
 interface RollThumbnailProps extends ThumbnailSvgProps {
   rollName: string | undefined;
@@ -18,7 +19,7 @@ interface RollThumbnailProps extends ThumbnailSvgProps {
   rollId: number | undefined;
 }
 
-const style = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   root: { position: "relative" },
   thumbnailContent: {
     position: "absolute",
@@ -27,9 +28,13 @@ const style = StyleSheet.create({
   },
   badgeArea: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    marginTop: shape.spacing(2)
+  },
+  badge: {
+    marginRight: shape.spacing(1)
   }
-});
+}));
 
 const RollThumbnail: React.FC<RollThumbnailProps> = ({
   rollName,
@@ -42,27 +47,39 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
   rollId,
   ...props
 }) => {
+  const styles = useStyles();
   const { navigate } = useNavigation();
+  const remainingTime = getRemainingTimeOnDate(closingDate, true);
 
   return (
     <TouchableOpacity
-      style={style.root}
+      style={styles.root}
       onPress={() => navigate("RollScreen", { backgroundColor, rollId })}
     >
       <View>
         <ThumbnailSvg backgroundColor={backgroundColor} url={url} {...props} />
-        <View style={style.thumbnailContent}>
+        <View style={styles.thumbnailContent}>
           <Text h1>{rollName}</Text>
-          <View style={style.badgeArea}>
+          <View style={styles.badgeArea}>
             <Badge
               value={<RollBadge value={pictureNumber} icon="pictureNumber" />}
+              containerStyle={styles.badge}
             />
             <Badge
               value={
                 <RollBadge value={participantNumber} icon="participantNumber" />
               }
+              containerStyle={styles.badge}
             />
-            <Badge value={<RollBadge value={closingDate} icon="date" />} />
+            <Badge
+              value={
+                <RollBadge
+                  value={remainingTime?.value}
+                  secondaryValue={remainingTime?.text}
+                  icon="date"
+                />
+              }
+            />
           </View>
         </View>
       </View>

@@ -1,25 +1,31 @@
 import React from "react";
+import { makeStyles } from "react-native-elements";
 import Text from "../Text";
-import StyleSheet from "../StyleSheet";
 import RollThumbnail from "../RollThumbnail";
 import ScrollView from "../ScrollView";
 import { RollData } from "../../utils/types/types";
-import { getThumbnailRollColor } from "../../utils/helpers/colorHelper";
+import { getAlternateColor } from "../../utils/helpers/colorHelper";
 import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
-import { resources } from "../../themeHelpers";
+import { shape } from "../../themeHelpers";
+import View from "../View";
 
 interface TabProps {
   isOpenRollTab: boolean;
 }
-
-const style = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   tab: {
     flex: 1
+  },
+  thumbNail: {
+    marginTop: shape.spacing(2),
+    marginLeft: shape.spacing(2),
+    marginRight: shape.spacing(2)
   }
-});
+}));
 
 const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
+  const styles = useStyles();
   const { loading, error, data, refetch } = useQuery(GET_ROLLS_BY_USER, {
     variables: { isOpenTab: isOpenRollTab }
   });
@@ -34,24 +40,20 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const rollList: RollData[] = data?.rollsByUser;
 
   return (
-    <ScrollView style={style.tab}>
-      <Text>
-        {isOpenRollTab
-          ? resources.openRollListTabTitle
-          : resources.closedRollListTabTitle}
-      </Text>
+    <ScrollView style={styles.tab}>
       {rollList &&
         rollList.map((roll, index) => (
-          <RollThumbnail
-            key={index}
-            backgroundColor={getThumbnailRollColor(index)}
-            rollName={roll?.name}
-            pictureNumber={roll?.remainingPictures}
-            participantNumber={roll?.participants?.length}
-            closingDate={roll?.closingDate}
-            hasBeenDiscovered={false}
-            rollId={roll?.id}
-          />
+          <View style={styles.thumbNail} key={index}>
+            <RollThumbnail
+              backgroundColor={getAlternateColor(index)}
+              rollName={roll?.name}
+              pictureNumber={roll?.remainingPictures}
+              participantNumber={roll?.participants?.length}
+              closingDate={roll?.closingDate}
+              hasBeenDiscovered={false}
+              rollId={roll?.id}
+            />
+          </View>
         ))}
     </ScrollView>
   );

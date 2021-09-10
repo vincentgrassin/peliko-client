@@ -21,7 +21,7 @@ const defaultPelikoFaceYellowUri = Image.resolveAssetSource(
   defaultPelikoFaceYellow
 ).uri;
 
-export const getThumbnailRollColor = (index: number) => {
+export const getAlternateColor = (index: number) => {
   return (index + 3) % 3 === 0
     ? palette("yellow")
     : (index + 3) % 3 === 1
