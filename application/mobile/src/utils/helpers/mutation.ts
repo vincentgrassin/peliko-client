@@ -17,9 +17,18 @@ export const UPLOAD_PICTURE = gql`
   }
 `;
 
-export const LOGIN = gql`
+export const LOG_IN = gql`
   mutation Login($password: String!, $phoneNumber: String!) {
     login(password: $password, phoneNumber: $phoneNumber) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
+
+export const SIGN_UP = gql`
+  mutation SignUp($name: String!, $password: String!, $phoneNumber: String!) {
+    createUser(name: $name, password: $password, phoneNumber: $phoneNumber) {
       accessToken
       refreshToken
     }

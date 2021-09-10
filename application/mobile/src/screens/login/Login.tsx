@@ -14,7 +14,7 @@ import {
 import { resources, iconSet } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
-import { LOGIN } from "../../utils/helpers/mutation";
+import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
 
 interface LoginFormProps {}
 export type LoginInformation = {
@@ -47,7 +47,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
     passwordConfirm: ""
   });
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
-  const [login] = useMutation(LOGIN);
+  const [logIn] = useMutation(LOG_IN);
+  const [signUp] = useMutation(SIGN_UP);
 
   const { navigate } = useNavigation();
 
@@ -84,24 +85,24 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   }, [navigate]);
 
   const handleSubmit = async (values: LoginInformation) => {
-    const { password, phoneNumber } = values;
-    const response = await login({ variables: { password, phoneNumber } });
-    if (response && response.data) {
-      await AsyncStorage.setItem(
-        "@accessToken",
-        response.data.login.accessToken
-      );
-      await AsyncStorage.setItem(
-        "@refreshToken",
-        response.data.login.refreshToken
-      );
+    const { userName, password, phoneNumber } = values;
+    let data: { accessToken: string; refreshToken: string };
+    if (isSignUpForm) {
+      const response = await signUp({
+        variables: { name: userName, password, phoneNumber }
+      });
+      data = response.data.createUser;
+    } else {
+      const response = await logIn({ variables: { password, phoneNumber } });
+      data = response.data.login;
+    }
+    if (data) {
+      await AsyncStorage.setItem("@accessToken", data.accessToken);
+      await AsyncStorage.setItem("@refreshToken", data.refreshToken);
 
       navigate("BottomNavigation");
       try {
-        await AsyncStorage.setItem(
-          "@refreshToken",
-          response.data.login.refreshToken
-        );
+        await AsyncStorage.setItem("@refreshToken", data.refreshToken);
       } catch (e) {
         console.log(e);
       }
