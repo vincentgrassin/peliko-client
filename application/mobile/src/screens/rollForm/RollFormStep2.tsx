@@ -1,38 +1,60 @@
 import React from "react";
 import { useField, useFormikContext } from "formik";
+import { makeStyles } from "react-native-elements";
 import {
   View,
-  StyleSheet,
   Input,
   Autocomplete,
   TouchableOpacity,
   Text,
-  Icon
+  Icon,
+  Button
 } from "../../components";
-import { iconSet } from "../../themeHelpers";
+import { iconSet, palette, resources, shape } from "../../themeHelpers";
 import { ParticipantContact, FormValues } from "./RollForm";
 import { usePhoneContacts, Contact } from "../../utils/hooks/usePhoneContacts";
 
 interface RollFormStep2Props {}
 
-const style = StyleSheet.create({
+const useStyles = makeStyles((theme) => ({
   rollForm: {
-    marginTop: 100
+    marginTop: shape.spacing(3),
+    marginLeft: shape.spacing(2),
+    marginRight: shape.spacing(2)
+  },
+  title: {
+    marginBottom: shape.spacing(3)
   },
   participantField: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "center"
   },
   inputParticipant: {
-    width: "70%"
+    width: "90%"
+  },
+  addArea: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
   },
   autocomplete: {
-    display: "flex",
-    flexDirection: "row"
+    width: "90%"
+  },
+  addButton: {
+    height: 30
+  },
+  participantsArea: {
+    marginTop: shape.spacing(3)
+  },
+  trashButton: {
+    color: palette("lightGrey")
   }
-});
+}));
 
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
+  const styles = useStyles();
+
   const { setFieldValue, values, errors } = useFormikContext<FormValues>();
   const [field] = useField("participantsContact");
   const [isHiddenResult, setIsHiddenResult] = React.useState(true);
@@ -59,8 +81,10 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     setFieldValue(field.name, participantsList);
   };
 
-  const handleAddField = () =>
+  const handleAddField = () => {
     handleInputChange(searchContact, values.participantsContact.length);
+    setSearchContact("");
+  };
 
   const handleChangeText = (val: string) => {
     const isEmptySearchField = val === "";
@@ -70,12 +94,16 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   };
 
   return (
-    <View style={style.rollForm}>
-      <View style={style.autocomplete}>
+    <View style={styles.rollForm}>
+      <Text h1 style={styles.title}>
+        {resources.participants}
+      </Text>
+      <View style={styles.addArea}>
         <Autocomplete
           data={phoneContactData}
           hideResults={isHiddenResult}
           value={searchContact}
+          inputContainerStyle={styles.autocomplete}
           onChangeText={handleChangeText}
           flatListProps={{
             renderItem: ({ item }: { item: Contact }) => (
@@ -94,29 +122,32 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
             )
           }}
         />
-        <Icon
-          type={iconSet.plus.type}
-          name={iconSet.plus.name}
+        <Button
           onPress={handleAddField}
+          buttonStyle={styles.addButton}
+          title={resources.add}
         />
       </View>
-      {values.participantsContact.map(
-        (participant: ParticipantContact, index: number) => (
-          <View key={index} style={style.participantField}>
-            <Input
-              value={participant.phoneNumber}
-              onChangeText={(val) => handleInputChange(val, index)}
-              containerStyle={style.inputParticipant}
-            />
+      <View style={styles.participantsArea}>
+        {values.participantsContact.map(
+          (participant: ParticipantContact, index: number) => (
+            <View key={index} style={styles.participantField}>
+              <Input
+                value={participant.phoneNumber}
+                onChangeText={(val) => handleInputChange(val, index)}
+                containerStyle={styles.inputParticipant}
+              />
 
-            <Icon
-              type={iconSet.minus.type}
-              name={iconSet.minus.name}
-              onPress={() => handleRemoveFields(index)}
-            />
-          </View>
-        )
-      )}
+              <Icon
+                iconStyle={styles.trashButton}
+                type={iconSet.trash.type}
+                name={iconSet.trash.name}
+                onPress={() => handleRemoveFields(index)}
+              />
+            </View>
+          )
+        )}
+      </View>
     </View>
   );
 };

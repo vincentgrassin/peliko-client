@@ -25,7 +25,11 @@ const globalResources = {
   remainingDays: "jours restants",
   remainingHours: "heures restantes",
   remainingHoursShort: "h",
-  remainingDaysShort: "j"
+  remainingDaysShort: "j",
+  nameAndDescription: "Nom et description",
+  closingDate: "Date de clôture",
+  pickDate: "Choisir une date",
+  add: "Ajouter"
 };
 
 export default globalResources;

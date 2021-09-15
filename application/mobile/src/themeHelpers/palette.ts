@@ -10,7 +10,7 @@ export const globalPalette = (color: string, opacity?: number): string => {
   const pink = { r: 255, g: 189, b: 203 };
   const black = { r: 32, g: 32, b: 33 };
   const blue = { r: 174, g: 215, b: 230 };
-  const lightGrey = { r: 229, g: 229, b: 229 };
+  const lightGrey = { r: 155, g: 155, b: 155 };
 
   switch (color) {
     case "grey":

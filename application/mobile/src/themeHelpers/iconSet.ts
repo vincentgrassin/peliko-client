@@ -34,6 +34,10 @@ const globalIconSet = {
   reverseCam: {
     name: "ios-reverse-camera",
     type: "ionicon"
+  },
+  trash: {
+    name: "trash",
+    type: "entypo"
   }
 };
 

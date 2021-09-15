@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import { makeStyles } from "react-native-elements";
-import { View, Button, Stepper, ScrollView } from "../../components";
+import { View, Button, Stepper, ScrollView, Text } from "../../components";
 import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
 import RollFormStep2 from "./RollFormStep2";
@@ -95,12 +95,16 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
               {step === 2 && <RollFormStep2 />}
             </View>
             <View style={styles.formActions}>
-              <Button
-                onPress={handlePrevious}
-                title={resources.previous}
-                containerStyle={styles.actionButton}
-                type="outline"
-              />
+              {step !== 0 ? (
+                <Button
+                  onPress={handlePrevious}
+                  title={resources.previous}
+                  containerStyle={styles.actionButton}
+                  type="outline"
+                />
+              ) : (
+                <View style={styles.actionButton} />
+              )}
               {step === 2 ? (
                 <Button
                   onPress={(e: any) => handleSubmit(e)}

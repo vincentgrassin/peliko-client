@@ -2,6 +2,7 @@ import { DAYS_IN_SECONDS, HOURS } from "./constants";
 import { resources } from "../../themeHelpers";
 
 export const getDateFormat = (s: string) => {
+  console.log(s);
   const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
