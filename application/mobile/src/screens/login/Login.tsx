@@ -3,15 +3,10 @@ import { Formik } from "formik";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Yup from "yup";
 import { BASE_URL } from "@env";
-import {
-  View,
-  StyleSheet,
-  Button,
-  Icon,
-  ScrollView,
-  InputFormik
-} from "../../components";
-import { resources, iconSet } from "../../themeHelpers";
+import { makeStyles } from "react-native-elements";
+import { KeyboardAvoidingView } from "react-native";
+import { View, Button, Icon, ScrollView, InputFormik } from "../../components";
+import { resources, iconSet, shape } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
@@ -25,11 +20,27 @@ export type LoginInformation = {
   passwordConfirm?: string;
 };
 
-const style = StyleSheet.create({
-  rollForm: {
+const useStyles = makeStyles((theme) => ({
+  container: { flex: 1 },
+  scrollContainer: {
+    flexGrow: 1
+  },
+  formArea: {
+    margin: shape.spacing(2),
+    height: "100%"
+  },
+  inputArea: {
     flex: 1
+  },
+  actionArea: {
+    marginBottom: shape.spacing(6),
+    marginLeft: shape.spacing(2),
+    marginRight: shape.spacing(2)
+  },
+  action: {
+    marginTop: shape.spacing(1)
   }
-});
+}));
 
 const LoginSchema = Yup.object().shape({
   phoneNumber: Yup.string()
@@ -46,6 +57,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
     password: "",
     passwordConfirm: ""
   });
+  const styles = useStyles();
+
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
   const [logIn] = useMutation(LOG_IN);
   const [signUp] = useMutation(SIGN_UP);
@@ -109,47 +122,55 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
     }
   };
 
-  const logOut = async () => {
-    await AsyncStorage.setItem("@accessToken", "");
-  };
-
   return (
-    <ScrollView style={style.rollForm}>
-      <Formik
-        initialValues={formValues}
-        onSubmit={handleSubmit}
-        validationSchema={LoginSchema}
-      >
-        {({ handleSubmit }) => (
-          <View>
-            {isSignUpForm && (
-              <InputFormik fieldName="userName" label={resources.userName} />
-            )}
-            <InputFormik
-              fieldName="phoneNumber"
-              label={resources.phoneNumber}
-            />
-            <InputFormik fieldName="password" label={resources.password} />
-            {isSignUpForm && (
-              <InputFormik
-                fieldName="passwordConfirm"
-                label={resources.confirmPassword}
-              />
-            )}
-            <Button
-              onPress={(e: any) => handleSubmit(e)}
-              title={resources.submit}
-              type="outline"
-              icon={<Icon type={iconSet.bell.type} name={iconSet.bell.name} />}
-            />
-            <Button
-              onPress={() => setIsSignUpForm((prev) => !prev)}
-              title={isSignUpForm ? resources.signUp : resources.signIn}
-            />
-            <Button onPress={logOut} title="Log out" />
-          </View>
-        )}
-      </Formik>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <KeyboardAvoidingView style={styles.container} behavior="height">
+        <Formik
+          initialValues={formValues}
+          onSubmit={handleSubmit}
+          validationSchema={LoginSchema}
+        >
+          {({ handleSubmit }) => (
+            <View style={styles.formArea}>
+              <View style={styles.inputArea}>
+                {isSignUpForm && (
+                  <InputFormik
+                    fieldName="userName"
+                    label={resources.userName}
+                  />
+                )}
+                <InputFormik
+                  fieldName="phoneNumber"
+                  label={resources.phoneNumber}
+                />
+                <InputFormik fieldName="password" label={resources.password} />
+                {isSignUpForm && (
+                  <InputFormik
+                    fieldName="passwordConfirm"
+                    label={resources.confirmPassword}
+                  />
+                )}
+              </View>
+              <View style={styles.actionArea}>
+                <Button
+                  onPress={(e: any) => handleSubmit(e)}
+                  title={resources.submit}
+                  buttonStyle={styles.action}
+                  icon={
+                    <Icon type={iconSet.bell.type} name={iconSet.bell.name} />
+                  }
+                />
+                <Button
+                  type="outline"
+                  buttonStyle={styles.action}
+                  onPress={() => setIsSignUpForm((prev) => !prev)}
+                  title={isSignUpForm ? resources.signUp : resources.signIn}
+                />
+              </View>
+            </View>
+          )}
+        </Formik>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
