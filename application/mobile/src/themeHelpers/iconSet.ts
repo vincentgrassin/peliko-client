@@ -8,8 +8,8 @@ const globalIconSet = {
     type: "materialicons"
   },
   plus: {
-    name: "pluscircleo",
-    type: "antdesign"
+    name: "plus",
+    type: "entypo"
   },
   minus: {
     name: "minuscircleo",

@@ -21,12 +21,15 @@ const style = StyleSheet.create({
   notification: {
     position: "absolute",
     top: 0,
-    right: 10
+    right: 0
   },
   badge: {
     backgroundColor: palette("black"),
     paddingLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    height: 20,
+    width: 20,
+    borderRadius: 20
   }
 });
 
@@ -45,7 +48,6 @@ const Avatar: React.FC<AvatarProps> = ({
       />
       {notification && (
         <Badge
-          status="success"
           containerStyle={style.notification}
           badgeStyle={style.badge}
           value={notification}

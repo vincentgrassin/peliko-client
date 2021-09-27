@@ -5,7 +5,7 @@ export const globalPalette = (color: string, opacity?: number): string => {
   const green = { r: 46, g: 177, b: 152 };
   const red = { r: 242, g: 113, b: 83 };
   const white = { r: 255, g: 255, b: 255 };
-  const grey = { r: 154, g: 154, b: 154 };
+  const grey = { r: 70, g: 70, b: 70 };
   const yellow = { r: 247, g: 196, b: 47 };
   const pink = { r: 255, g: 189, b: 203 };
   const black = { r: 32, g: 32, b: 33 };

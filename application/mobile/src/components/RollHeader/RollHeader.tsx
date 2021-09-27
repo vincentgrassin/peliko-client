@@ -51,7 +51,7 @@ const RollHeader: React.FC<RollHeaderProps> = ({
     <View style={styles.root}>
       <HeaderRollSvg backgroundColor={route?.params?.backgroundColor} />
       <View style={styles.rollHeaderContent}>
-        <Text h2>{name}</Text>
+        <Text h1>{name}</Text>
         <Text style={styles.description}>{description}</Text>
         <View style={styles.badges}>
           {remainingTime && (

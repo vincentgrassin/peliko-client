@@ -1,6 +1,7 @@
 import React from "react";
+import { makeStyles } from "react-native-elements";
 import { Button, Text, RollHeader, RollParticipants } from "../../components";
-import { resources } from "../../themeHelpers";
+import { resources, shape } from "../../themeHelpers";
 import {
   RouteProp,
   useNavigation,
@@ -14,7 +15,15 @@ import { RollData } from "../../utils/types/types";
 
 interface RollProps {}
 
+const useStyles = makeStyles((theme) => ({
+  participants: {
+    margin: shape.spacing(2)
+  }
+}));
+
 const Roll: React.FC<RollProps> = ({ ...props }) => {
+  const styles = useStyles();
+
   const { navigate } = useNavigation();
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const rollId = route?.params?.rollId;
@@ -40,7 +49,10 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
         closingDate={roll?.closingDate}
         remainingPictures={roll?.remainingPictures}
       />
-      <RollParticipants participants={roll?.participants} />
+      <RollParticipants
+        participants={roll?.participants}
+        className={styles.participants}
+      />
       <Button
         onPress={() => navigate("CamScreen", { rollId })}
         title={resources.shootPicture}
