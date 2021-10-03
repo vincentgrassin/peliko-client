@@ -49,8 +49,8 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
 
   const { roll }: { roll: RollData } = data;
 
-  return (
-    <ScrollView>
+  const HeaderRollComponent: JSX.Element = (
+    <>
       <RollHeader
         name={roll?.name}
         description={roll?.description}
@@ -61,14 +61,28 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
         participants={roll?.participants}
         className={styles.participants}
       />
-      {isOpenRoll && roll && roll.remainingPictures > 0 && (
-        <Button
-          onPress={() => navigate("CamScreen", { rollId })}
-          title={resources.shootPicture}
+    </>
+  );
+
+  return (
+    <>
+      {isOpenRoll ? (
+        <ScrollView>
+          {HeaderRollComponent}
+          {roll && roll.remainingPictures > 0 && (
+            <Button
+              onPress={() => navigate("CamScreen", { rollId })}
+              title={resources.shootPicture}
+            />
+          )}
+        </ScrollView>
+      ) : (
+        <RollPictures
+          rollId={rollId}
+          listHeaderComponent={HeaderRollComponent}
         />
       )}
-      {!isOpenRoll && <RollPictures rollId={rollId} />}
-    </ScrollView>
+    </>
   );
 };
 

@@ -11,19 +11,12 @@ export type RollData =
       remainingPictures: number;
       openingStatus: boolean;
       participants: Participant[];
-      pictures: Picture[];
     }
   | undefined;
 
 export type Picture = {
+  cloudinaryPublicId: string;
   id: string;
-  name: string;
-  date: Date;
-  url: string;
-  lon: number;
-  lat: number;
-  width: number;
-  height: number;
 };
 
 export type Participant = {
