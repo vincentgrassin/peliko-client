@@ -9,7 +9,7 @@ import { palette, iconSet } from "../themeHelpers";
 import { useNavigationContext } from "./NavigationContext";
 import { Icon } from "../components";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   create: {
     position: "absolute",
     bottom: 10,

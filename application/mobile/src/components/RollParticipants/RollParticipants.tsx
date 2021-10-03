@@ -41,9 +41,8 @@ const RollParticipants: React.FC<RollParticipantsProps> = ({
         {participants &&
           participants?.map((participant, index) => {
             return (
-              <View style={styles.participant}>
+              <View style={styles.participant} key={`avatar-${index}`}>
                 <Avatar
-                  key={`avatar-${index}`}
                   source={
                     participant.avatarImageUri
                       ? {

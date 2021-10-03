@@ -71,3 +71,11 @@ export const GET_INVITATIONS_BY_USER = gql`
     }
   }
 `;
+
+export const GET_PICTURES_BY_ROLL = gql`
+  query GetPicturesByRoll($rollId: Float!) {
+    getPicturesByRoll(rollId: $rollId) {
+      id
+    }
+  }
+`;

@@ -1,6 +1,12 @@
 import React from "react";
 import { makeStyles } from "react-native-elements";
-import { Button, Text, RollHeader, RollParticipants } from "../../components";
+import {
+  Button,
+  Text,
+  RollHeader,
+  RollParticipants,
+  ScrollView
+} from "../../components";
 import { resources, shape } from "../../themeHelpers";
 import {
   RouteProp,
@@ -12,10 +18,11 @@ import { ParamList } from "../../navigation/NavigationContainer";
 import { GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { RollData } from "../../utils/types/types";
+import RollPictures from "../../components/RollPictures";
 
 interface RollProps {}
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   participants: {
     margin: shape.spacing(2)
   }
@@ -27,6 +34,7 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
   const { navigate } = useNavigation();
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const rollId = route?.params?.rollId;
+  const isOpenRoll = route?.params?.isOpenRoll;
   const isFocused = useIsFocused();
   const { loading, error, data, refetch } = useQuery(GET_ROLL_BY_ID, {
     variables: { id: rollId }
@@ -42,7 +50,7 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
   const { roll }: { roll: RollData } = data;
 
   return (
-    <>
+    <ScrollView>
       <RollHeader
         name={roll?.name}
         description={roll?.description}
@@ -53,11 +61,14 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
         participants={roll?.participants}
         className={styles.participants}
       />
-      <Button
-        onPress={() => navigate("CamScreen", { rollId })}
-        title={resources.shootPicture}
-      />
-    </>
+      {isOpenRoll && roll && roll.remainingPictures > 0 && (
+        <Button
+          onPress={() => navigate("CamScreen", { rollId })}
+          title={resources.shootPicture}
+        />
+      )}
+      {!isOpenRoll && <RollPictures rollId={rollId} />}
+    </ScrollView>
   );
 };
 

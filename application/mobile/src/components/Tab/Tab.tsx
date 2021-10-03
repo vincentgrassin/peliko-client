@@ -52,6 +52,7 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
               closingDate={roll?.closingDate}
               hasBeenDiscovered={false}
               rollId={roll?.id}
+              isOpenRoll={isOpenRollTab}
             />
           </View>
         ))}

@@ -17,6 +17,7 @@ interface RollThumbnailProps extends ThumbnailSvgProps {
   closingDate: string | undefined;
   hasBeenDiscovered: boolean;
   rollId: number | undefined;
+  isOpenRoll: boolean;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +46,7 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
   backgroundColor,
   url,
   rollId,
+  isOpenRoll,
   ...props
 }) => {
   const styles = useStyles();
@@ -54,7 +56,9 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
   return (
     <TouchableOpacity
       style={styles.root}
-      onPress={() => navigate("RollScreen", { backgroundColor, rollId })}
+      onPress={() =>
+        navigate("RollScreen", { backgroundColor, rollId, isOpenRoll })
+      }
     >
       <View>
         <ThumbnailSvg backgroundColor={backgroundColor} url={url} {...props} />

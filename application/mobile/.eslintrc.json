@@ -60,6 +60,7 @@
     "indent":"off",
     "no-nested-ternary":"off",
     "react/jsx-wrap-multilines":"off",
-    "global-require":"warn"
+    "global-require":"warn",
+    "react/jsx-curly-newline":"off"
   }
 }

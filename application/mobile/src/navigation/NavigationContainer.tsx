@@ -11,6 +11,7 @@ export type ParamList = {
   RollScreen: {
     backgroundColor: string;
     rollId: number;
+    isOpenRoll: boolean;
   };
 };
 
