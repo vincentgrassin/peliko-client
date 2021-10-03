@@ -1,14 +1,28 @@
 import React from "react";
-import { useWindowDimensions } from "react-native";
-import { TabView, SceneMap } from "react-native-tab-view";
-import { resources } from "../../themeHelpers";
+import { ScaledSize, useWindowDimensions } from "react-native";
+import { TabView, SceneMap, TabBar, TabBarProps } from "react-native-tab-view";
+import { makeStyles } from "react-native-elements";
+import { palette, resources } from "../../themeHelpers";
 import { Tab } from "../../components";
 
 interface HomeProps {}
 
+const useStyles = makeStyles((theme, styleProps: { layout: ScaledSize }) => {
+  const { layout } = styleProps;
+  return {
+    layout: { width: layout.width },
+    indicator: {
+      backgroundColor: palette("black")
+    },
+    tabBar: {
+      backgroundColor: palette("blue")
+    }
+  };
+});
+
 const Home: React.FC<HomeProps> = ({ ...props }) => {
   const layout = useWindowDimensions();
-
+  const styles = useStyles({ layout });
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "openRollList", title: resources.openRollListTabTitle },
@@ -19,12 +33,23 @@ const Home: React.FC<HomeProps> = ({ ...props }) => {
     closedRollList: () => <Tab isOpenRollTab={false} />
   });
 
+  const renderTabBar = (props: any) => (
+    <TabBar
+      {...props}
+      indicatorStyle={styles.indicator}
+      style={styles.tabBar}
+      activeColor={palette("black")}
+      inactiveColor={palette("grey")}
+    />
+  );
+
   return (
     <TabView
       navigationState={{ index, routes }}
       renderScene={renderScene}
+      renderTabBar={renderTabBar}
       onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
+      initialLayout={styles.layout}
     />
   );
 };

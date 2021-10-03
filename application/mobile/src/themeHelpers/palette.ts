@@ -1,4 +1,15 @@
-export const globalPalette = (color: string, opacity?: number): string => {
+type colors =
+  | "grey"
+  | "lightGrey"
+  | "green"
+  | "red"
+  | "blue"
+  | "white"
+  | "pink"
+  | "yellow"
+  | "black";
+
+export const globalPalette = (color: colors, opacity?: number): string => {
   if (opacity === undefined) {
     opacity = 1;
   }

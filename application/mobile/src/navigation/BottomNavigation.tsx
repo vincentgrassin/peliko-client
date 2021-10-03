@@ -12,7 +12,7 @@ import { Icon } from "../components";
 const useStyles = makeStyles((theme) => ({
   create: {
     position: "absolute",
-    bottom: 20,
+    bottom: 10,
     borderRadius: 50,
     backgroundColor: palette("yellow"),
     width: 60,
@@ -33,7 +33,6 @@ export default function BottomNavigation() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        // activeTintColor: palette("red"),
         activeTintColor: palette("black"),
         inactiveTintColor: palette("grey"),
         showLabel: false,
@@ -65,7 +64,8 @@ export default function BottomNavigation() {
               size={20}
               color={color}
             />
-          )
+          ),
+          tabBarVisible: false
         }}
       />
       <Tab.Screen
