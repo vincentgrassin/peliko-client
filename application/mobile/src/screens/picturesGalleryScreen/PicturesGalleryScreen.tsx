@@ -1,9 +1,8 @@
 import * as React from "react";
-import { FlatList } from "react-native";
 import { makeStyles } from "react-native-elements";
 import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
 import { ParamList } from "../../navigation/NavigationContainer";
-import { Picture } from "../../components";
+import { Picture, FlatList } from "../../components";
 import { Picture as PictureType } from "../../utils/types/types";
 import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
 
