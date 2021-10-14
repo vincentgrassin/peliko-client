@@ -6,12 +6,19 @@ import Login from "../screens/login";
 import RollScreen from "../screens/roll";
 import CamScreen from "../screens/cam";
 import BottomNavigation from "./BottomNavigation";
+import PicturesGallery from "../screens/picturesGalleryScreen";
+import { Picture } from "../utils/types/types";
 
 export type ParamList = {
   RollScreen: {
     backgroundColor: string;
     rollId: number;
     isOpenRoll: boolean;
+  };
+  PictureGalleryScreen: {
+    rollId: number;
+    pictures: Picture[];
+    initialScrollValue: number;
   };
 };
 
@@ -25,6 +32,7 @@ export default function MainNavigationContainer() {
         <Stack.Screen name="BottomNavigation" component={BottomNavigation} />
         <Stack.Screen name="RollScreen" component={RollScreen} />
         <Stack.Screen name="CamScreen" component={CamScreen} />
+        <Stack.Screen name="PicturesGallery" component={PicturesGallery} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -14,6 +14,8 @@ export { default as InputFormik } from "./InputFormik";
 export * from "./InputFormik";
 export { default as InvitationRoll } from "./InvitationRoll";
 export * from "./InvitationRoll";
+export { default as Picture } from "./Picture";
+export * from "./Picture";
 export { default as RollHeader } from "./RollHeader";
 export * from "./RollHeader";
 export { default as RollParticipants } from "./RollParticipants";

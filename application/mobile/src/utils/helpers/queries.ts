@@ -77,6 +77,8 @@ export const GET_PICTURES_BY_ROLL = gql`
     getPicturesByRoll(rollId: $rollId) {
       id
       cloudinaryPublicId
+      height
+      width
     }
   }
 `;

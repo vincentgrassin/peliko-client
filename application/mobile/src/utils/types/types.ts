@@ -16,7 +16,9 @@ export type RollData =
 
 export type Picture = {
   cloudinaryPublicId: string;
-  id: string;
+  width: number;
+  height: number;
+  id: number;
 };
 
 export type Participant = {

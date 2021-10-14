@@ -1,12 +1,14 @@
 import * as React from "react";
 import { makeStyles } from "react-native-elements";
-import { Image, ImageSourcePropType } from "react-native";
-import View from "../View";
-import FlatList from "../FlatList";
+import { Image, ImageSourcePropType, FlatList } from "react-native";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { GET_PICTURES_BY_ROLL } from "../../utils/helpers/queries";
 import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
 import { Picture } from "../../utils/types/types";
+import TouchableOpacity from "../TouchableOpacity";
+import { useNavigation } from "../../utils/hooks/useNavigation";
+import { screenWidth } from "../../utils/helpers/constants";
+import { computeScrollToValue } from "../../utils/helpers/galleryHelper";
 
 interface RollPicturesProps {
   rollId: number;
@@ -37,30 +39,42 @@ const RollPictures: React.FC<RollPicturesProps> = ({
 }) => {
   const styles = useStyles();
 
+  const { navigate } = useNavigation();
   const { loading, error, data } = useQuery(GET_PICTURES_BY_ROLL, {
     variables: { rollId }
   });
 
-  const pictures = (data?.getPicturesByRoll as Picture[]).map(
-    ({ cloudinaryPublicId }) => getCloudinaryUrl(cloudinaryPublicId)
-  );
+  const pictures: Picture[] =
+    data && data.getPicturesByRoll && data?.getPicturesByRoll;
 
   return (
     <FlatList
-      data={
-        (pictures as unknown) as readonly React.ReactElement<
-          any,
-          string | React.JSXElementConstructor<any>
-        >[]
-      }
+      data={pictures}
       ListHeaderComponent={listHeaderComponent}
-      renderItem={({ item }) => (
-        <View style={styles.item}>
+      renderItem={({ item, index }) => (
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() =>
+            navigate("PicturesGallery", {
+              rollId,
+              pictures,
+              initialScrollValue: computeScrollToValue(
+                pictures,
+                index,
+                screenWidth
+              )
+            })
+          }
+        >
           <Image
             style={styles.imageThumbnail}
-            source={({ uri: item } as unknown) as ImageSourcePropType}
+            source={
+              ({
+                uri: getCloudinaryUrl(item.cloudinaryPublicId)
+              } as unknown) as ImageSourcePropType
+            }
           />
-        </View>
+        </TouchableOpacity>
       )}
       numColumns={3}
       keyExtractor={(item, index) => index.toString()}

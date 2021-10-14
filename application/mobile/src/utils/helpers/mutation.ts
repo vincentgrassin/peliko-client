@@ -12,8 +12,18 @@ export const CREATE_ROLL = gql`
 `;
 
 export const UPLOAD_PICTURE = gql`
-  mutation UploadPicture($cloudinaryId: String!, $rollId: Float!) {
-    uploadPicture(cloudinaryId: $cloudinaryId, rollId: $rollId)
+  mutation UploadPicture(
+    $cloudinaryId: String!
+    $height: Float!
+    $width: Float!
+    $rollId: Float!
+  ) {
+    uploadPicture(
+      cloudinaryId: $cloudinaryId
+      height: $height
+      width: $width
+      rollId: $rollId
+    )
   }
 `;
 

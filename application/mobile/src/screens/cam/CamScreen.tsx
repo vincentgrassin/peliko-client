@@ -5,7 +5,6 @@ import { Button, Icon, StyleSheet, View } from "../../components";
 import { resources, iconSet, shape } from "../../themeHelpers";
 import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
-import { useNavigationContext } from "../../navigation/NavigationContext";
 import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
 import { ParamList } from "../../navigation/NavigationContainer";
 
@@ -66,7 +65,12 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
         });
         const jsonResponse = await response.json();
         uploadPicture({
-          variables: { cloudinaryId: jsonResponse.public_id, rollId }
+          variables: {
+            cloudinaryId: jsonResponse.public_id,
+            height: jsonResponse.height,
+            width: jsonResponse.width,
+            rollId
+          }
         });
       }
       setIsVisibleModal(false);
