@@ -9,6 +9,7 @@ import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { shape } from "../../themeHelpers";
 import View from "../View";
+import FlatList from "../FlatList";
 
 interface TabProps {
   isOpenRollTab: boolean;
@@ -40,23 +41,25 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const rollList: RollData[] = data?.rollsByUser;
 
   return (
-    <ScrollView style={styles.tab}>
-      {rollList &&
-        rollList.map((roll, index) => (
-          <View style={styles.thumbNail} key={index}>
-            <RollThumbnail
-              backgroundColor={getAlternateColor(index)}
-              rollName={roll?.name}
-              pictureNumber={roll?.remainingPictures}
-              participantNumber={roll?.participants?.length}
-              closingDate={roll?.closingDate}
-              hasBeenDiscovered={false}
-              rollId={roll?.id}
-              isOpenRoll={isOpenRollTab}
-            />
-          </View>
-        ))}
-    </ScrollView>
+    <FlatList
+      data={rollList}
+      renderItem={({ item, index }) => (
+        <View style={styles.thumbNail} key={index}>
+          <RollThumbnail
+            backgroundColor={getAlternateColor(index)}
+            rollName={item?.name}
+            pictureNumber={item?.remainingPictures}
+            participantNumber={item?.participants?.length}
+            closingDate={item?.closingDate}
+            hasBeenDiscovered={false}
+            rollId={item?.id}
+            isOpenRoll={isOpenRollTab}
+          />
+        </View>
+      )}
+      numColumns={1}
+      keyExtractor={(item, index) => index.toString()}
+    />
   );
 };
 
