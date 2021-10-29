@@ -7,6 +7,7 @@ import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
 import { ParamList } from "../../navigation/NavigationContainer";
+import { GET_ROLLS_BY_USER, GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 
 interface CamProps {}
 
@@ -70,7 +71,12 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
             height: jsonResponse.height,
             width: jsonResponse.width,
             rollId
-          }
+          },
+          awaitRefetchQueries: true,
+          refetchQueries: [
+            { query: GET_ROLL_BY_ID, variables: { id: rollId } },
+            { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } }
+          ]
         });
       }
       setIsVisibleModal(false);

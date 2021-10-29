@@ -52,26 +52,26 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
 }) => {
   const styles = useStyles();
 
-  const [joinRoll] = useMutation(JOIN_ROLL, {
-    refetchQueries: [{ query: GET_INVITATIONS_BY_USER }]
-  });
-  const [declineRollInvitation] = useMutation(DECLINE_INVITATION, {
-    refetchQueries: [{ query: GET_INVITATIONS_BY_USER }]
-  });
+  const [joinRoll] = useMutation(JOIN_ROLL);
+  const [declineRollInvitation] = useMutation(DECLINE_INVITATION);
 
   const handleConfirm = () => {
     joinRoll({
       variables: {
         rollId,
         accessCode: "AAA111" // fake code to remove when implementating roll validation
-      }
+      },
+      refetchQueries: [{ query: GET_INVITATIONS_BY_USER }],
+      awaitRefetchQueries: true
     });
   };
   const handleDecline = () => {
     declineRollInvitation({
       variables: {
         rollId
-      }
+      },
+      awaitRefetchQueries: true,
+      refetchQueries: [{ query: GET_INVITATIONS_BY_USER }]
     });
   };
 

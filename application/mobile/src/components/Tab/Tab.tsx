@@ -31,10 +31,6 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
     variables: { isOpenTab: isOpenRollTab }
   });
 
-  React.useEffect(() => {
-    refetch();
-  }, [refetch]);
-
   if (loading) return <Text>Loading...</Text>;
   if (error) return <Text>Oh no... {error.message}</Text>;
 
