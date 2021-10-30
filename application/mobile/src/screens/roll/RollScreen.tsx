@@ -13,11 +13,12 @@ import {
   useNavigation,
   useRoute
 } from "../../utils/hooks/useNavigation";
-import { ParamList } from "../../navigation/NavigationContainer";
+import { ParamList, screenList } from "../../navigation/NavigationContainer";
 import { GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { RollData } from "../../utils/types/types";
 import RollPictures from "../../components/RollPictures";
+import NavigationHeader from "../../components/NavigationHeader";
 
 interface RollProps {}
 
@@ -45,6 +46,11 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
 
   const HeaderRollComponent: JSX.Element = (
     <>
+      <NavigationHeader
+        text={resources.roll}
+        screen={screenList.stackNavigator.BottomNavigation}
+        color={route.params.backgroundColor}
+      />
       <RollHeader
         name={roll?.name}
         description={roll?.description}
@@ -65,7 +71,9 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
           {HeaderRollComponent}
           {roll && roll.remainingPictures > 0 && (
             <Button
-              onPress={() => navigate("CamScreen", { rollId })}
+              onPress={() =>
+                navigate(screenList.stackNavigator.CamScreen, { rollId })
+              }
               title={resources.shootPicture}
             />
           )}

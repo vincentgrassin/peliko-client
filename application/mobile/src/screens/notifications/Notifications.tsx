@@ -4,7 +4,8 @@ import { InvitationRoll, ScrollView, Text } from "../../components";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { InvitationRoll as InvitationRollType } from "../../utils/types/types";
 import { GET_INVITATIONS_BY_USER } from "../../utils/helpers/queries";
-import { shape } from "../../themeHelpers";
+import { palette, resources, shape } from "../../themeHelpers";
+import NavigationHeader from "../../components/NavigationHeader";
 
 interface NotificationsProps {}
 
@@ -25,21 +26,27 @@ const Notifications: React.FC<NotificationsProps> = ({ ...props }) => {
     data?.invitationRollsByUser;
 
   return (
-    <ScrollView style={styles.invitationList}>
-      {invitationRollsByUser &&
-        invitationRollsByUser.length > 0 &&
-        invitationRollsByUser.map((invitation, index) => (
-          <InvitationRoll
-            key={index}
-            adminAvatarSource={undefined}
-            closingDate={invitation.roll.closingDate}
-            adminUserName={invitation.admin.name}
-            rollTitle={invitation.roll.name}
-            rollId={invitation.roll.id}
-            index={index}
-          />
-        ))}
-    </ScrollView>
+    <>
+      <NavigationHeader
+        color={palette("green")}
+        text={resources.notificationScreen}
+      />
+      <ScrollView style={styles.invitationList}>
+        {invitationRollsByUser &&
+          invitationRollsByUser.length > 0 &&
+          invitationRollsByUser.map((invitation, index) => (
+            <InvitationRoll
+              key={index}
+              adminAvatarSource={undefined}
+              closingDate={invitation.roll.closingDate}
+              adminUserName={invitation.admin.name}
+              rollTitle={invitation.roll.name}
+              rollId={invitation.roll.id}
+              index={index}
+            />
+          ))}
+      </ScrollView>
+    </>
   );
 };
 

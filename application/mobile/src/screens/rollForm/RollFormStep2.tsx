@@ -11,8 +11,11 @@ import {
   Button
 } from "../../components";
 import { iconSet, palette, resources, shape } from "../../themeHelpers";
-import { ParticipantContact, FormValues } from "./RollForm";
 import { usePhoneContacts, Contact } from "../../utils/hooks/usePhoneContacts";
+import {
+  ParticipantContact,
+  RollCreationValues
+} from "../../utils/helpers/validationSchema";
 
 interface RollFormStep2Props {}
 
@@ -55,7 +58,11 @@ const useStyles = makeStyles((theme) => ({
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const styles = useStyles();
 
-  const { setFieldValue, values, errors } = useFormikContext<FormValues>();
+  const {
+    setFieldValue,
+    values,
+    errors
+  } = useFormikContext<RollCreationValues>();
   const [field] = useField("participantsContact");
   const [isHiddenResult, setIsHiddenResult] = React.useState(true);
   const [searchContact, setSearchContact] = React.useState("");
@@ -132,12 +139,13 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
         {values.participantsContact.map(
           (participant: ParticipantContact, index: number) => (
             <View key={index} style={styles.participantField}>
-              <Input
-                value={participant.phoneNumber}
-                onChangeText={(val) => handleInputChange(val, index)}
-                containerStyle={styles.inputParticipant}
-              />
-
+              <View style={styles.inputParticipant}>
+                <Input
+                  value={participant.phoneNumber}
+                  onChangeText={(val) => handleInputChange(val, index)}
+                  containerStyle={styles.inputParticipant}
+                />
+              </View>
               <Icon
                 iconStyle={styles.trashButton}
                 type={iconSet.trash.type}

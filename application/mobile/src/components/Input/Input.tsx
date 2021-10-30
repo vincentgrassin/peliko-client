@@ -16,7 +16,7 @@ export interface InputProps extends ReactNativeInputProps {
 }
 
 const Input: React.FC<InputProps> = ({ error, errorText, ...props }) => {
-  return <ReactNativeInput {...props} />;
+  return <ReactNativeInput errorMessage={errorText && undefined} {...props} />;
 };
 
 export default Input;

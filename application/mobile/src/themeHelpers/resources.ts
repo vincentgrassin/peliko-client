@@ -29,7 +29,12 @@ const globalResources = {
   nameAndDescription: "Nom et description",
   closingDate: "Date de clôture",
   pickDate: "Choisir une date",
-  add: "Ajouter"
+  add: "Ajouter",
+  required: "Champs obligatoire",
+  homeScreen: "Mes pelikos",
+  notificationScreen: "Mes invitations",
+  rollCreationScreen: "Créer un peliko",
+  roll: "Peliko"
 };
 
 export default globalResources;

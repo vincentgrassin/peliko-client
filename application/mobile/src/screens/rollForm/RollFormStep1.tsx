@@ -4,9 +4,9 @@ import { Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { makeStyles } from "react-native-elements";
 import { Button, Text, View } from "../../components";
-import { FormValues } from "./RollForm";
 import { resources, shape } from "../../themeHelpers";
 import { getDateFormat } from "../../utils/helpers/dateHelper";
+import { RollCreationValues } from "../../utils/helpers/validationSchema";
 
 interface RollFormStep1Props {}
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
   const styles = useStyles();
-  const { setFieldValue, errors } = useFormikContext<FormValues>();
+  const { setFieldValue, errors } = useFormikContext<RollCreationValues>();
   const [field] = useField("date");
   const [show, setShow] = React.useState(false);
 

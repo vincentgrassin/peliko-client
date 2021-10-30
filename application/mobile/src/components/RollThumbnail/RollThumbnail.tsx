@@ -9,6 +9,7 @@ import { shape } from "../../themeHelpers";
 import RollBadge from "../RollBadge";
 import Badge from "../Badge";
 import { getRemainingTimeOnDate } from "../../utils/helpers/dateHelper";
+import { screenList } from "../../navigation/NavigationContainer";
 
 interface RollThumbnailProps extends ThumbnailSvgProps {
   rollName: string | undefined;
@@ -57,7 +58,11 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
     <TouchableOpacity
       style={styles.root}
       onPress={() =>
-        navigate("RollScreen", { backgroundColor, rollId, isOpenRoll })
+        navigate(screenList.stackNavigator.RollScreen, {
+          backgroundColor,
+          rollId,
+          isOpenRoll
+        })
       }
     >
       <View>

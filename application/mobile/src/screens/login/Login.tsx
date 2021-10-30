@@ -6,10 +6,12 @@ import { BASE_URL } from "@env";
 import { makeStyles } from "react-native-elements";
 import { KeyboardAvoidingView } from "react-native";
 import { View, Button, Icon, ScrollView, InputFormik } from "../../components";
-import { resources, iconSet, shape } from "../../themeHelpers";
+import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
+import { screenList } from "../../navigation/NavigationContainer";
+import NavigationHeader from "../../components/NavigationHeader";
 
 interface LoginFormProps {}
 export type LoginInformation = {
@@ -77,7 +79,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
           });
           const responseJson = await response.json();
           if (responseJson.ok) {
-            navigate("BottomNavigation");
+            navigate(screenList.stackNavigator.BottomNavigation);
             try {
               await AsyncStorage.setItem(
                 "@refreshToken",
@@ -113,7 +115,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
       await AsyncStorage.setItem("@accessToken", data.accessToken);
       await AsyncStorage.setItem("@refreshToken", data.refreshToken);
 
-      navigate("BottomNavigation");
+      navigate(screenList.stackNavigator.BottomNavigation);
       try {
         await AsyncStorage.setItem("@refreshToken", data.refreshToken);
       } catch (e) {
@@ -123,55 +125,61 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <KeyboardAvoidingView style={styles.container} behavior="height">
-        <Formik
-          initialValues={formValues}
-          onSubmit={handleSubmit}
-          validationSchema={LoginSchema}
-        >
-          {({ handleSubmit }) => (
-            <View style={styles.formArea}>
-              <View style={styles.inputArea}>
-                {isSignUpForm && (
+    <>
+      <NavigationHeader color={palette("white", 0)} />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <KeyboardAvoidingView style={styles.container} behavior="height">
+          <Formik
+            initialValues={formValues}
+            onSubmit={handleSubmit}
+            validationSchema={LoginSchema}
+          >
+            {({ handleSubmit }) => (
+              <View style={styles.formArea}>
+                <View style={styles.inputArea}>
+                  {isSignUpForm && (
+                    <InputFormik
+                      fieldName="userName"
+                      label={resources.userName}
+                    />
+                  )}
                   <InputFormik
-                    fieldName="userName"
-                    label={resources.userName}
+                    fieldName="phoneNumber"
+                    label={resources.phoneNumber}
                   />
-                )}
-                <InputFormik
-                  fieldName="phoneNumber"
-                  label={resources.phoneNumber}
-                />
-                <InputFormik fieldName="password" label={resources.password} />
-                {isSignUpForm && (
                   <InputFormik
-                    fieldName="passwordConfirm"
-                    label={resources.confirmPassword}
+                    fieldName="password"
+                    label={resources.password}
                   />
-                )}
+                  {isSignUpForm && (
+                    <InputFormik
+                      fieldName="passwordConfirm"
+                      label={resources.confirmPassword}
+                    />
+                  )}
+                </View>
+                <View style={styles.actionArea}>
+                  <Button
+                    onPress={(e: any) => handleSubmit(e)}
+                    title={resources.submit}
+                    buttonStyle={styles.action}
+                    icon={
+                      <Icon type={iconSet.bell.type} name={iconSet.bell.name} />
+                    }
+                  />
+                  <Button
+                    type="outline"
+                    buttonStyle={styles.action}
+                    onPress={() => setIsSignUpForm((prev) => !prev)}
+                    title={isSignUpForm ? resources.signUp : resources.signIn}
+                  />
+                </View>
               </View>
-              <View style={styles.actionArea}>
-                <Button
-                  onPress={(e: any) => handleSubmit(e)}
-                  title={resources.submit}
-                  buttonStyle={styles.action}
-                  icon={
-                    <Icon type={iconSet.bell.type} name={iconSet.bell.name} />
-                  }
-                />
-                <Button
-                  type="outline"
-                  buttonStyle={styles.action}
-                  onPress={() => setIsSignUpForm((prev) => !prev)}
-                  title={isSignUpForm ? resources.signUp : resources.signIn}
-                />
-              </View>
-            </View>
-          )}
-        </Formik>
-      </KeyboardAvoidingView>
-    </ScrollView>
+            )}
+          </Formik>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </>
   );
 };
 

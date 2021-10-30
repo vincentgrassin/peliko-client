@@ -4,6 +4,7 @@ import { TabView, SceneMap, TabBar, TabBarProps } from "react-native-tab-view";
 import { makeStyles } from "react-native-elements";
 import { palette, resources } from "../../themeHelpers";
 import { Tab } from "../../components";
+import NavigationHeader from "../../components/NavigationHeader";
 
 interface HomeProps {}
 
@@ -44,13 +45,16 @@ const Home: React.FC<HomeProps> = ({ ...props }) => {
   );
 
   return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      renderTabBar={renderTabBar}
-      onIndexChange={setIndex}
-      initialLayout={styles.layout}
-    />
+    <>
+      <NavigationHeader color={palette("blue")} size="small" />
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        renderTabBar={renderTabBar}
+        onIndexChange={setIndex}
+        initialLayout={styles.layout}
+      />
+    </>
   );
 };
 

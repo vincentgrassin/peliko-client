@@ -38,6 +38,10 @@ const globalIconSet = {
   trash: {
     name: "trash",
     type: "entypo"
+  },
+  arrowLeft: {
+    name: "arrowleft",
+    type: "antdesign"
   }
 };
 

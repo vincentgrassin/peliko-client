@@ -6,22 +6,19 @@ import { View, Button, Stepper, ScrollView, Text } from "../../components";
 import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
 import RollFormStep2 from "./RollFormStep2";
-import { resources, shape } from "../../themeHelpers";
+import { palette, resources, shape } from "../../themeHelpers";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { CREATE_ROLL } from "../../utils/helpers/mutation";
+import {
+  rollCreationSchema,
+  RollCreationValues
+} from "../../utils/helpers/validationSchema";
+import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
+import { useNavigation } from "../../utils/hooks/useNavigation";
+import NavigationHeader from "../../components/NavigationHeader";
+import { screenList } from "../../navigation/NavigationContainer";
 
 interface RollFormWizardProps {}
-export type ParticipantContact = {
-  name: string;
-  phoneNumber: string | undefined;
-};
-
-export type FormValues = {
-  rollName: string;
-  description: string;
-  date: Date;
-  participantsContact: ParticipantContact[];
-};
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -51,7 +48,8 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const styles = useStyles();
 
   const [createRoll, { data }] = useMutation(CREATE_ROLL);
-  const [formValues, setFormValues] = React.useState<FormValues>({
+  const { navigate } = useNavigation();
+  const [formValues, setFormValues] = React.useState<RollCreationValues>({
     rollName: "",
     description: "",
     date: new Date(Date.now()),
@@ -74,8 +72,10 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
     setStep(step);
   };
 
-  const handleSubmit = (values: FormValues) => {
+  const handleSubmit = (values: RollCreationValues) => {
     const { date, description, participantsContact, rollName } = values;
+
+    // console.log({ date, description, participantsContact, rollName });
     // will have to manage error validation and duplicates
     createRoll({
       variables: {
@@ -86,52 +86,68 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
           closingDate: date,
           participants: participantsContact
         }
-      }
+      },
+      refetchQueries: [
+        { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } }
+      ],
+      awaitRefetchQueries: true
+    });
+    navigate(screenList.stackNavigator.RollScreen, {
+      backgroundColor: palette("blue"),
+      rollId: data.createRoll.id,
+      isOpenRoll: true
     });
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Stepper step={step} onStepChange={handleStep} />
-        <Formik initialValues={formValues} onSubmit={handleSubmit}>
-          {({ handleSubmit }) => (
-            <>
-              <View style={styles.formStep}>
-                {step === 0 && <RollFormStep0 />}
-                {step === 1 && <RollFormStep1 />}
-                {step === 2 && <RollFormStep2 />}
-              </View>
-              <View style={styles.formActions}>
-                {step !== 0 ? (
-                  <Button
-                    onPress={handlePrevious}
-                    title={resources.previous}
-                    containerStyle={styles.actionButton}
-                    type="outline"
-                  />
-                ) : (
-                  <View style={styles.actionButton} />
-                )}
-                {step === 2 ? (
-                  <Button
-                    onPress={(e: any) => handleSubmit(e)}
-                    title={resources.submit}
-                    containerStyle={styles.actionButton}
-                  />
-                ) : (
-                  <Button
-                    onPress={handleNext}
-                    title={resources.next}
-                    containerStyle={styles.actionButton}
-                  />
-                )}
-              </View>
-            </>
-          )}
-        </Formik>
-      </ScrollView>
-    </KeyboardAvoidingView>
+    <>
+      <NavigationHeader
+        text={resources.rollCreationScreen}
+        screen={screenList.bottomNavigator.Home}
+        color={palette("yellow")}
+      />
+      <KeyboardAvoidingView style={styles.container} behavior="height">
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Stepper step={step} onStepChange={handleStep} />
+          <Formik initialValues={formValues} onSubmit={handleSubmit}>
+            {({ handleSubmit }) => (
+              <>
+                <View style={styles.formStep}>
+                  {step === 0 && <RollFormStep0 />}
+                  {step === 1 && <RollFormStep1 />}
+                  {step === 2 && <RollFormStep2 />}
+                </View>
+                <View style={styles.formActions}>
+                  {step !== 0 ? (
+                    <Button
+                      onPress={handlePrevious}
+                      title={resources.previous}
+                      containerStyle={styles.actionButton}
+                      type="outline"
+                    />
+                  ) : (
+                    <View style={styles.actionButton} />
+                  )}
+                  {step === 2 ? (
+                    <Button
+                      onPress={handleSubmit}
+                      title={resources.submit}
+                      containerStyle={styles.actionButton}
+                    />
+                  ) : (
+                    <Button
+                      onPress={handleNext}
+                      title={resources.next}
+                      containerStyle={styles.actionButton}
+                    />
+                  )}
+                </View>
+              </>
+            )}
+          </Formik>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 
