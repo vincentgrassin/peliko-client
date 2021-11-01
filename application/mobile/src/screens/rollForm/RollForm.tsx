@@ -17,6 +17,8 @@ import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import NavigationHeader from "../../components/NavigationHeader";
 import { screenList } from "../../navigation/NavigationContainer";
+import Modal from "../../components/Modal";
+import { useModal } from "../../utils/hooks/useModal";
 
 interface RollFormWizardProps {}
 
@@ -49,6 +51,8 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
 
   const [createRoll, { data }] = useMutation(CREATE_ROLL);
   const { navigate } = useNavigation();
+  const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
+
   const [formValues, setFormValues] = React.useState<RollCreationValues>({
     rollName: "",
     description: "",
@@ -72,12 +76,13 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
     setStep(step);
   };
 
-  const handleSubmit = (values: RollCreationValues) => {
+  const handleSubmit = async (values: RollCreationValues) => {
     const { date, description, participantsContact, rollName } = values;
 
     // console.log({ date, description, participantsContact, rollName });
     // will have to manage error validation and duplicates
-    createRoll({
+    openModal();
+    await createRoll({
       variables: {
         rollData: {
           name: rollName,
@@ -92,6 +97,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       ],
       awaitRefetchQueries: true
     });
+    closeModal();
     navigate(screenList.stackNavigator.RollScreen, {
       backgroundColor: palette("blue"),
       rollId: data.createRoll.id,
@@ -147,6 +153,13 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
           </Formik>
         </ScrollView>
       </KeyboardAvoidingView>
+      <Modal
+        isVisible={isVisibleModal}
+        color={palette("green")}
+        text={resources.processingRoll}
+        modalType="loading"
+        image="eye"
+      />
     </>
   );
 };

@@ -34,7 +34,9 @@ const globalResources = {
   homeScreen: "Mes pelikos",
   notificationScreen: "Mes invitations",
   rollCreationScreen: "Créer un peliko",
-  roll: "Peliko"
+  roll: "Pellicule",
+  processingPicture: "Enregistrement de la photo !",
+  processingRoll: "Enregistrement de la pellicule !"
 };
 
 export default globalResources;
