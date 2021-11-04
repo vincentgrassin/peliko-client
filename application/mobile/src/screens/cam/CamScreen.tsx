@@ -6,7 +6,7 @@ import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
-import { ParamList, screenList } from "../../navigation/NavigationContainer";
+import { ParamList, ScreenList } from "../../navigation/NavigationContainer";
 import { GET_ROLLS_BY_USER, GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
@@ -100,7 +100,7 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
         <>
           <NavigationHeader
             color={palette("blue")}
-            screen={screenList.stackNavigator.RollScreen}
+            screen="RollScreen"
             text={resources.roll}
           />
           <Camera

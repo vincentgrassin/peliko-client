@@ -9,7 +9,7 @@ import TouchableOpacity from "../TouchableOpacity";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { screenWidth } from "../../utils/helpers/constants";
 import { computeScrollToValue } from "../../utils/helpers/galleryHelper";
-import { screenList } from "../../navigation/NavigationContainer";
+import { ScreenList } from "../../navigation/NavigationContainer";
 
 interface RollPicturesProps {
   rollId: number;
@@ -56,7 +56,7 @@ const RollPictures: React.FC<RollPicturesProps> = ({
         <TouchableOpacity
           style={styles.item}
           onPress={() =>
-            navigate(screenList.stackNavigator.PicturesGallery, {
+            navigate<ScreenList>("PicturesGallery", {
               rollId,
               pictures,
               initialScrollValue: computeScrollToValue(

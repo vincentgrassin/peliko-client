@@ -24,14 +24,10 @@ const useStyles = makeStyles((theme, styleProps: { color: string }) => {
     modal: {
       flex: 1,
       justifyContent: "center",
-      alignItems: "center"
-    },
-    modalContent: {
+      alignItems: "center",
       height: screenHeight,
       width: screenWidth,
-      backgroundColor: color,
-      alignItems: "center",
-      justifyContent: "center"
+      backgroundColor: color
     }
   };
 });
@@ -52,13 +48,11 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <RNModal animationType="slide" transparent visible={isVisible}>
       <View style={styles.modal}>
-        <View style={styles.modalContent}>
-          {image && imageModalMapping[image]}
-          {text && <Text h2>{text}</Text>}
-          {modalType === "loading" && (
-            <ActivityIndicator size="large" color={palette("black")} />
-          )}
-        </View>
+        {image && imageModalMapping[image]}
+        {text && <Text h2>{text}</Text>}
+        {modalType === "loading" && (
+          <ActivityIndicator size="large" color={palette("black")} />
+        )}
       </View>
     </RNModal>
   );

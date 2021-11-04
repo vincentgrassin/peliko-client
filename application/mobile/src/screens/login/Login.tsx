@@ -10,7 +10,7 @@ import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
-import { screenList } from "../../navigation/NavigationContainer";
+import { ScreenList } from "../../navigation/NavigationContainer";
 import NavigationHeader from "../../components/NavigationHeader";
 
 interface LoginFormProps {}
@@ -79,7 +79,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
           });
           const responseJson = await response.json();
           if (responseJson.ok) {
-            navigate(screenList.stackNavigator.BottomNavigation);
+            navigate<ScreenList>("BottomNavigation");
             try {
               await AsyncStorage.setItem(
                 "@refreshToken",
@@ -115,7 +115,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
       await AsyncStorage.setItem("@accessToken", data.accessToken);
       await AsyncStorage.setItem("@refreshToken", data.refreshToken);
 
-      navigate(screenList.stackNavigator.BottomNavigation);
+      navigate<ScreenList>("BottomNavigation");
       try {
         await AsyncStorage.setItem("@refreshToken", data.refreshToken);
       } catch (e) {

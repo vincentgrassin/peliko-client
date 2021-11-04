@@ -5,10 +5,11 @@ import { iconSet, shape } from "../../themeHelpers";
 import Icon from "../Icon";
 import Text from "../Text";
 import { useNavigation } from "../../utils/hooks/useNavigation";
+import { ScreenList } from "../../navigation/NavigationContainer";
 
 interface NavigationHeaderProps {
   text?: string;
-  screen?: string;
+  screen?: ScreenList;
   color: string;
   size?: "small";
 }
@@ -45,7 +46,7 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   const { navigate } = useNavigation();
 
   const navigatedToPreviousScreen = () => {
-    screen && navigate(screen);
+    screen && navigate<ScreenList>(screen);
   };
 
   return (
