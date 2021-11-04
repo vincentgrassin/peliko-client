@@ -19,6 +19,7 @@ import NavigationHeader from "../../components/NavigationHeader";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
+import RollFormStep3 from "./RollFormStep3";
 
 interface RollFormWizardProps {}
 
@@ -67,7 +68,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
     }
   };
   const handleNext = () => {
-    if (step < 2) {
+    if (step < 3) {
       setStep(step + 1);
     }
   };
@@ -79,7 +80,6 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const handleSubmit = async (values: RollCreationValues) => {
     const { date, description, participantsContact, rollName } = values;
 
-    // console.log({ date, description, participantsContact, rollName });
     // will have to manage error validation and duplicates
     openModal();
     await createRoll({
@@ -115,13 +115,18 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Stepper step={step} onStepChange={handleStep} />
-          <Formik initialValues={formValues} onSubmit={handleSubmit}>
-            {({ handleSubmit }) => (
+          <Formik
+            initialValues={formValues}
+            onSubmit={handleSubmit}
+            validationSchema={rollCreationSchema}
+          >
+            {({ handleSubmit, errors }) => (
               <>
                 <View style={styles.formStep}>
                   {step === 0 && <RollFormStep0 />}
                   {step === 1 && <RollFormStep1 />}
                   {step === 2 && <RollFormStep2 />}
+                  {step === 3 && <RollFormStep3 />}
                 </View>
                 <View style={styles.formActions}>
                   {step !== 0 ? (
@@ -134,11 +139,12 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
                   ) : (
                     <View style={styles.actionButton} />
                   )}
-                  {step === 2 ? (
+                  {step === 3 ? (
                     <Button
-                      onPress={handleSubmit}
+                      onPress={handleSubmit as any}
                       title={resources.submit}
                       containerStyle={styles.actionButton}
+                      disabled={Object.keys(errors).length > 0}
                     />
                   ) : (
                     <Button

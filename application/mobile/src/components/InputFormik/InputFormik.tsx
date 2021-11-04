@@ -20,8 +20,7 @@ const InputFormik: React.FC<InputFormikProps> = ({ fieldName, ...props }) => {
       {...props}
       value={values[fieldName]}
       onChangeText={(val) => onChange(val, field.name)}
-      error={!!errors[fieldName]}
-      errorText={errors[fieldName]}
+      errorText={errors[fieldName] as string}
     />
   );
 };

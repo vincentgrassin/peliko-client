@@ -36,7 +36,10 @@ const globalResources = {
   rollCreationScreen: "Créer un peliko",
   roll: "Pellicule",
   processingPicture: "Enregistrement de la photo !",
-  processingRoll: "Enregistrement de la pellicule !"
+  processingRoll: "Enregistrement de la pellicule !",
+  phoneNumberValidityErrorMessage: "Téléphone non valide",
+  participantEmptyErrorMessage: "Must have friends",
+  participantMinimunNumberErrorMessage: "Minimum of 1 friends"
 };
 
 export default globalResources;

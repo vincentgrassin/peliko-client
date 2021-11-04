@@ -18,6 +18,17 @@ const globalTheme = {
         fontFamily: "Windsor",
         fontSize: typography.fontSize.xm
       }
+    ],
+    errorStyle: [
+      {
+        color: globalPalette("red")
+      }
+    ],
+    errorProps: [
+      {
+        fontFamily: "WorkSansRegular",
+        fontSize: typography.fontSize.s
+      }
     ]
   },
   Text: {

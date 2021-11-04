@@ -1,9 +1,10 @@
+import { FormikValues, useFormikContext } from "formik";
 import React from "react";
 import { makeStyles } from "react-native-elements";
-import { View, InputFormik, Text } from "../../components";
+import { View, Text } from "../../components";
 import { resources, shape } from "../../themeHelpers";
 
-interface RollFormStep0Props {}
+interface RollFormStep3Props {}
 
 const useStyles = makeStyles((theme) => ({
   formStep: {
@@ -16,18 +17,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const RollFormStep0: React.FC<RollFormStep0Props> = ({}) => {
+const RollFormStep3: React.FC<RollFormStep3Props> = ({}) => {
   const styles = useStyles();
+
+  const { errors } = useFormikContext<FormikValues>();
 
   return (
     <View style={styles.formStep}>
       <Text h1 style={styles.title}>
-        {resources.nameAndDescription}
+        {resources.submit}
       </Text>
-      <InputFormik fieldName="rollName" label={resources.name} />
-      <InputFormik fieldName="description" label={resources.description} />
+      {errors && Object.values(errors).map((e) => <Text>{e}</Text>)}
     </View>
   );
 };
 
-export default RollFormStep0;
+export default RollFormStep3;

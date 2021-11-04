@@ -64,6 +64,7 @@ const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
           mode="date"
           display="default"
           onChange={onChange}
+          minimumDate={new Date(Date.now())}
         />
       )}
     </View>

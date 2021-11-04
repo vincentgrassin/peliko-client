@@ -1,5 +1,5 @@
 import React from "react";
-import { useField, useFormikContext } from "formik";
+import { isString, useField, useFormikContext } from "formik";
 import { makeStyles } from "react-native-elements";
 import {
   View,
@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
   },
   trashButton: {
     color: palette("lightGrey")
+  },
+  errorText: {
+    color: palette("red")
   }
 }));
 
@@ -63,7 +66,8 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     values,
     errors
   } = useFormikContext<RollCreationValues>();
-  const [field] = useField("participantsContact");
+  const [field, meta] = useField("participantsContact");
+
   const [isHiddenResult, setIsHiddenResult] = React.useState(true);
   const [searchContact, setSearchContact] = React.useState("");
   const {
@@ -144,6 +148,15 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
                   value={participant.phoneNumber}
                   onChangeText={(val) => handleInputChange(val, index)}
                   containerStyle={styles.inputParticipant}
+                  errorText={
+                    meta.error &&
+                    meta.error[index] &&
+                    //@ts-ignore
+                    meta.error[index].phoneNumber
+                      ? //@ts-ignore
+                        meta.error[index].phoneNumber
+                      : ""
+                  }
                 />
               </View>
               <Icon
@@ -156,6 +169,9 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           )
         )}
       </View>
+      {meta.error && isString(meta.error) && (
+        <Text style={styles.errorText}>{meta.error}</Text>
+      )}
     </View>
   );
 };

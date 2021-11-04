@@ -8,12 +8,14 @@ export const rollCreationSchema = Yup.object().shape({
   participantsContact: Yup.array()
     .of(
       Yup.object().shape({
-        // name: Yup.string().min(4, 'too short').required('Required'), // these constraints take precedence
-        phoneNumber: Yup.string().min(3, "cmon").required("Required") // these constraints take precedence
+        phoneNumber: Yup.string().min(
+          3,
+          resources.phoneNumberValidityErrorMessage
+        )
       })
     )
-    .required("Must have friends") // these constraints are shown if and only if inner constraints are satisfied
-    .min(3, "Minimum of 3 friends")
+    .required(resources.participantEmptyErrorMessage)
+    .min(1, resources.participantMinimunNumberErrorMessage)
 });
 
 export type ParticipantContact = {
