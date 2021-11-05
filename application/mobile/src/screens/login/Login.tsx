@@ -12,7 +12,7 @@ import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import NavigationHeader from "../../components/NavigationHeader";
-import { LoginValues } from "../../utils/helpers/validationSchema";
+import { loginSchema, LoginValues } from "../../utils/helpers/validationSchema";
 
 interface LoginFormProps {}
 
@@ -37,13 +37,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: shape.spacing(1)
   }
 }));
-
-const LoginSchema = Yup.object().shape({
-  phoneNumber: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required")
-});
 
 const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   const [formValues, setFormValues] = React.useState<LoginValues>({
@@ -126,9 +119,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
           <Formik
             initialValues={formValues}
             onSubmit={handleSubmit}
-            validationSchema={LoginSchema}
+            validationSchema={loginSchema}
           >
-            {({ handleSubmit }) => (
+            {({ handleSubmit, errors, resetForm }) => (
               <View style={styles.formArea}>
                 <View style={styles.inputArea}>
                   {isSignUpForm && (
@@ -158,11 +151,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
                     title={resources.submit}
                     buttonStyle={styles.action}
                     icon={<Icon {...iconSet.bell} />}
+                    disabled={errors && Object.keys(errors).length > 0}
                   />
                   <Button
                     type="outline"
                     buttonStyle={styles.action}
-                    onPress={() => setIsSignUpForm((prev) => !prev)}
+                    onPress={() => {
+                      resetForm();
+                      setIsSignUpForm((prev) => !prev);
+                    }}
                     title={isSignUpForm ? resources.signUp : resources.signIn}
                   />
                 </View>
