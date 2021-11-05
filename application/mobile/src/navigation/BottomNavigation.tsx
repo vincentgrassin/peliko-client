@@ -43,13 +43,7 @@ export default function BottomNavigation() {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({ color }) => (
-            <Icon
-              type={iconSet.roll.type}
-              name={iconSet.roll.name}
-              color={color}
-            />
-          )
+          tabBarIcon: ({ color }) => <Icon {...iconSet.roll} color={color} />
         }}
       />
       <Tab.Screen
@@ -58,8 +52,7 @@ export default function BottomNavigation() {
         options={{
           tabBarIcon: ({ color }) => (
             <Icon
-              type={iconSet.plus.type}
-              name={iconSet.plus.name}
+              {...iconSet.plus}
               containerStyle={styles.create}
               size={20}
               color={color}
@@ -73,13 +66,7 @@ export default function BottomNavigation() {
         component={Notifications}
         options={{
           tabBarBadge: notification,
-          tabBarIcon: ({ color }) => (
-            <Icon
-              type={iconSet.bell.type}
-              name={iconSet.bell.name}
-              color={color}
-            />
-          )
+          tabBarIcon: ({ color }) => <Icon {...iconSet.bell} color={color} />
         }}
       />
     </Tab.Navigator>

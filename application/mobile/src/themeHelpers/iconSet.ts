@@ -42,6 +42,10 @@ const globalIconSet = {
   arrowLeft: {
     name: "arrowleft",
     type: "antdesign"
+  },
+  cog: {
+    name: "cog",
+    type: "entypo"
   }
 };
 

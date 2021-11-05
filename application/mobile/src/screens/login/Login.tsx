@@ -12,15 +12,9 @@ import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import NavigationHeader from "../../components/NavigationHeader";
+import { LoginValues } from "../../utils/helpers/validationSchema";
 
 interface LoginFormProps {}
-export type LoginInformation = {
-  phoneNumber: string | undefined;
-  password: string;
-  email?: string;
-  userName?: string;
-  passwordConfirm?: string;
-};
 
 const useStyles = makeStyles((theme) => ({
   container: { flex: 1 },
@@ -52,7 +46,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
-  const [formValues, setFormValues] = React.useState<LoginInformation>({
+  const [formValues, setFormValues] = React.useState<LoginValues>({
     userName: "",
     phoneNumber: "",
     email: "",
@@ -99,7 +93,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
     getRefreshToken();
   }, [navigate]);
 
-  const handleSubmit = async (values: LoginInformation) => {
+  const handleSubmit = async (values: LoginValues) => {
     const { userName, password, phoneNumber } = values;
     let data: { accessToken: string; refreshToken: string };
     if (isSignUpForm) {
@@ -163,9 +157,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
                     onPress={(e: any) => handleSubmit(e)}
                     title={resources.submit}
                     buttonStyle={styles.action}
-                    icon={
-                      <Icon type={iconSet.bell.type} name={iconSet.bell.name} />
-                    }
+                    icon={<Icon {...iconSet.bell} />}
                   />
                   <Button
                     type="outline"

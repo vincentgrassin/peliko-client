@@ -120,16 +120,8 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
           >
             <View style={style.actions}>
               <View style={style.cameraOptions}>
-                <Icon
-                  name={iconSet.flash.name}
-                  type={iconSet.flash.type}
-                  onPress={toggleFlash}
-                />
-                <Icon
-                  name={iconSet.reverseCam.name}
-                  type={iconSet.reverseCam.type}
-                  onPress={reverseCam}
-                />
+                <Icon {...iconSet.flash} onPress={toggleFlash} />
+                <Icon {...iconSet.reverseCam} onPress={reverseCam} />
               </View>
               <Button onPress={takePicture} title={resources.shootPicture} />
             </View>

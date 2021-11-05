@@ -1,5 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "react-native-elements";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import View from "../View";
 import { iconSet, shape } from "../../themeHelpers";
 import Icon from "../Icon";
@@ -12,6 +13,7 @@ interface NavigationHeaderProps {
   screen?: ScreenList;
   color: string;
   size?: "small";
+  showParameters?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -40,7 +42,8 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   text,
   screen,
   color,
-  size
+  size,
+  showParameters = false
 }) => {
   const styles = useStyles({ color, size });
   const { navigate } = useNavigation();
@@ -49,13 +52,18 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
     screen && navigate<ScreenList>(screen);
   };
 
+  const handleLogOut = async () => {
+    navigate<ScreenList>("Login");
+    await AsyncStorage.setItem("@accessToken", "");
+    await AsyncStorage.setItem("@refreshToken", "");
+  };
+
   return (
     <View style={styles.root}>
       {screen && (
         <Icon
           containerStyle={styles.icon}
-          name={iconSet.arrowLeft.name}
-          type={iconSet.arrowLeft.type}
+          {...iconSet.arrowLeft}
           onPress={navigatedToPreviousScreen}
         />
       )}
@@ -64,6 +72,7 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
           {text}
         </Text>
       )}
+      {showParameters && <Icon {...iconSet.cog} onPress={handleLogOut} />}
     </View>
   );
 };

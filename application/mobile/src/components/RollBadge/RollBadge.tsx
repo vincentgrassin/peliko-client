@@ -28,18 +28,9 @@ const RollBadge: React.FC<RollBadgeProps> = ({
   secondaryValue
 }) => {
   const iconComponent = {
-    date: {
-      type: iconSet.calendar.type,
-      name: iconSet.calendar.name
-    },
-    pictureNumber: {
-      type: iconSet.picture.type,
-      name: iconSet.picture.name
-    },
-    participantNumber: {
-      type: iconSet.people.type,
-      name: iconSet.people.name
-    }
+    date: iconSet.calendar,
+    pictureNumber: iconSet.picture,
+    participantNumber: iconSet.people
   };
 
   return (

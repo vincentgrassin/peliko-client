@@ -171,8 +171,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
               </View>
               <Icon
                 iconStyle={styles.trashButton}
-                type={iconSet.trash.type}
-                name={iconSet.trash.name}
+                {...iconSet.trash}
                 onPress={() => handleRemoveFields(index)}
               />
             </View>
