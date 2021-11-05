@@ -27,7 +27,9 @@ const RollFormStep3: React.FC<RollFormStep3Props> = ({}) => {
       <Text h1 style={styles.title}>
         {resources.submit}
       </Text>
-      {errors && Object.values(errors).map((e) => <Text>{e}</Text>)}
+      {errors && Object.keys(errors).length > 0 && (
+        <Text>{resources.formErrors}</Text>
+      )}
     </View>
   );
 };

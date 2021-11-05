@@ -39,7 +39,8 @@ const globalResources = {
   processingRoll: "Enregistrement de la pellicule !",
   phoneNumberValidityErrorMessage: "Téléphone non valide",
   participantEmptyErrorMessage: "Must have friends",
-  participantMinimunNumberErrorMessage: "Minimum of 1 friends"
+  participantMinimunNumberErrorMessage: "Minimum of 1 friends",
+  formErrors: "Erreurs dans le formulaire"
 };
 
 export default globalResources;

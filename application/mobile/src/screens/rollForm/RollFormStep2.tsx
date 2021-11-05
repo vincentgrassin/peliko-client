@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Text,
   Icon,
-  Button
+  Button,
+  ScrollView
 } from "../../components";
 import { iconSet, palette, resources, shape } from "../../themeHelpers";
 import { usePhoneContacts, Contact } from "../../utils/hooks/usePhoneContacts";
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center"
   },
   autocomplete: {
-    width: "90%"
+    // width: "90%"
   },
   addButton: {
     height: 30
@@ -93,6 +94,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   };
 
   const handleAddField = () => {
+    setIsHiddenResult(true);
     handleInputChange(searchContact, values.participantsContact.length);
     setSearchContact("");
   };
@@ -102,6 +104,25 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     setIsHiddenResult(isEmptySearchField);
     setSearchContact(val);
     findContact(val);
+  };
+
+  const renderFlatListItem = ({ item }: { item: Contact }) => (
+    <TouchableOpacity
+      onPress={() => {
+        setIsHiddenResult(true);
+        item.phoneNumbers &&
+          item.phoneNumbers[0].number &&
+          setSearchContact(item.phoneNumbers[0].number);
+      }}
+    >
+      <Text>
+        {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
+      </Text>
+    </TouchableOpacity>
+  );
+
+  const handleAutocompleteBlur = () => {
+    setIsHiddenResult(true);
   };
 
   return (
@@ -116,21 +137,10 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           value={searchContact}
           inputContainerStyle={styles.autocomplete}
           onChangeText={handleChangeText}
+          onBlur={handleAutocompleteBlur}
           flatListProps={{
-            renderItem: ({ item }: { item: Contact }) => (
-              <TouchableOpacity
-                onPress={() => {
-                  setIsHiddenResult(true);
-                  item.phoneNumbers &&
-                    item.phoneNumbers[0].number &&
-                    setSearchContact(item.phoneNumbers[0].number);
-                }}
-              >
-                <Text>
-                  {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
-                </Text>
-              </TouchableOpacity>
-            )
+            renderItem: renderFlatListItem,
+            nestedScrollEnabled: true
           }}
         />
         <Button
