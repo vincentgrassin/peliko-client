@@ -2,13 +2,21 @@ import * as Yup from "yup";
 import { resources } from "../../themeHelpers";
 
 export const loginSchema = Yup.object().shape({
-  userName: Yup.string().required(resources.required),
+  isSignUpForm: Yup.boolean(),
+  userName: Yup.string().when("isSignUpForm", {
+    is: true,
+    then: Yup.string().required(resources.required),
+    otherwise: Yup.string()
+  }),
   phoneNumber: Yup.string().min(3, resources.phoneNumberValidityErrorMessage),
   password: Yup.string().required(resources.required),
-  passwordConfirm: Yup.string().oneOf(
-    [Yup.ref("password"), null],
-    resources.errorNotMatchingPassword
-  )
+  passwordConfirm: Yup.string().when("isSignUpForm", {
+    is: true,
+    then: Yup.string()
+      .oneOf([Yup.ref("password"), null], resources.errorNotMatchingPassword)
+      .required(resources.required),
+    otherwise: Yup.string()
+  })
 });
 
 export type LoginValues = {
@@ -17,6 +25,7 @@ export type LoginValues = {
   email?: string;
   userName?: string;
   passwordConfirm?: string;
+  isSignUpForm: boolean;
 };
 
 export const rollCreationSchema = Yup.object().shape({

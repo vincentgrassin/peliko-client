@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Yup from "yup";
 import { BASE_URL } from "@env";
 import { makeStyles } from "react-native-elements";
 import { KeyboardAvoidingView } from "react-native";
@@ -44,7 +43,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
     phoneNumber: "",
     email: "",
     password: "",
-    passwordConfirm: ""
+    passwordConfirm: "",
+    isSignUpForm: true
   });
   const styles = useStyles();
 
@@ -120,8 +120,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
             initialValues={formValues}
             onSubmit={handleSubmit}
             validationSchema={loginSchema}
+            enableReinitialize
           >
-            {({ handleSubmit, errors, resetForm }) => (
+            {({ handleSubmit, errors, resetForm, setFieldValue }) => (
               <View style={styles.formArea}>
                 <View style={styles.inputArea}>
                   {isSignUpForm && (
@@ -158,6 +159,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
                     buttonStyle={styles.action}
                     onPress={() => {
                       resetForm();
+                      setFieldValue("isSignUpForm", !isSignUpForm);
                       setIsSignUpForm((prev) => !prev);
                     }}
                     title={isSignUpForm ? resources.signUp : resources.signIn}

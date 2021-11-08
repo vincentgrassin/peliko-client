@@ -13,7 +13,7 @@ const InputFormik: React.FC<InputFormikProps> = ({ fieldName, ...props }) => {
     setFieldValue(fieldName, val);
   };
 
-  const [field] = useField(fieldName);
+  const [field, meta, helpers] = useField(fieldName);
 
   return (
     <Input
