@@ -4,7 +4,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "@env";
 import { makeStyles } from "react-native-elements";
 import { KeyboardAvoidingView } from "react-native";
-import { View, Button, Icon, ScrollView, InputFormik } from "../../components";
+import {
+  View,
+  Button,
+  Icon,
+  ScrollView,
+  InputFormik,
+  PhoneNumberInput
+} from "../../components";
 import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
@@ -40,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   const [formValues, setFormValues] = React.useState<LoginValues>({
     userName: "",
-    phoneNumber: "",
+    phoneNumber: { value: "", isValid: false },
     email: "",
     password: "",
     passwordConfirm: "",
@@ -91,11 +98,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
     let data: { accessToken: string; refreshToken: string };
     if (isSignUpForm) {
       const response = await signUp({
-        variables: { name: userName, password, phoneNumber }
+        variables: { name: userName, password, phoneNumber: phoneNumber.value }
       });
       data = response.data.createUser;
     } else {
-      const response = await logIn({ variables: { password, phoneNumber } });
+      const response = await logIn({
+        variables: { password, phoneNumber: phoneNumber.value }
+      });
       data = response.data.login;
     }
     if (data) {
@@ -132,13 +141,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
                     />
                   )}
                   <InputFormik
-                    fieldName="phoneNumber"
-                    label={resources.phoneNumber}
-                  />
-                  <InputFormik
                     fieldName="password"
                     label={resources.password}
                   />
+                  <PhoneNumberInput fieldName="phoneNumber" />
                   {isSignUpForm && (
                     <InputFormik
                       fieldName="passwordConfirm"

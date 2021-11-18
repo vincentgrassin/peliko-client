@@ -62,11 +62,7 @@ const useStyles = makeStyles((theme) => ({
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const styles = useStyles();
 
-  const {
-    setFieldValue,
-    values,
-    errors
-  } = useFormikContext<RollCreationValues>();
+  const { setFieldValue, values } = useFormikContext<RollCreationValues>();
   const [field, meta] = useField("participantsContact");
 
   const [isHiddenResult, setIsHiddenResult] = React.useState(true);

@@ -8,7 +8,10 @@ export const loginSchema = Yup.object().shape({
     then: Yup.string().required(resources.required),
     otherwise: Yup.string()
   }),
-  phoneNumber: Yup.string().min(3, resources.phoneNumberValidityErrorMessage),
+  phoneNumber: Yup.object().shape({
+    isValid: Yup.bool().isTrue(resources.phoneNumberValidityErrorMessage),
+    value: Yup.string().required(resources.required)
+  }),
   password: Yup.string().required(resources.required),
   passwordConfirm: Yup.string().when("isSignUpForm", {
     is: true,
@@ -20,7 +23,10 @@ export const loginSchema = Yup.object().shape({
 });
 
 export type LoginValues = {
-  phoneNumber: string | undefined;
+  phoneNumber: {
+    value: string;
+    isValid: boolean;
+  };
   password: string;
   email?: string;
   userName?: string;

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
   const styles = useStyles();
-  const { setFieldValue, errors } = useFormikContext<RollCreationValues>();
+  const { setFieldValue } = useFormikContext<RollCreationValues>();
   const [field] = useField("date");
   const [show, setShow] = React.useState(false);
 

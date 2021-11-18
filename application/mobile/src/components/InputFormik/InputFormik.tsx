@@ -7,20 +7,18 @@ interface InputFormikProps extends InputProps {
 }
 
 const InputFormik: React.FC<InputFormikProps> = ({ fieldName, ...props }) => {
-  const { setFieldValue, values, errors } = useFormikContext<FormikValues>();
-
-  const onChange = (val: string, fieldName: string) => {
-    setFieldValue(fieldName, val);
-  };
-
   const [field, meta, helpers] = useField(fieldName);
+
+  const handleChange = (val: string) => {
+    helpers.setValue(val);
+  };
 
   return (
     <Input
       {...props}
-      value={values[fieldName]}
-      onChangeText={(val) => onChange(val, field.name)}
-      errorText={errors[fieldName] as string}
+      value={field.value}
+      onChangeText={handleChange}
+      errorText={meta.error as string}
     />
   );
 };
