@@ -79,8 +79,6 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
 
   const handleSubmit = async (values: RollCreationValues) => {
     const { date, description, participantsContact, rollName } = values;
-
-    // will have to manage error validation and duplicates
     openModal();
     await createRoll({
       variables: {
@@ -89,7 +87,12 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
           deliveryType: "digital",
           description,
           closingDate: date,
-          participants: participantsContact
+          participants: participantsContact.map(({ name, phoneNumber }) => {
+            return {
+              phoneNumber: phoneNumber.value,
+              name
+            };
+          })
         }
       },
       refetchQueries: [

@@ -1,31 +1,39 @@
 import React from "react";
+import { makeStyles } from "react-native-elements";
 import PhoneInput, { PhoneInputProps } from "react-native-phone-number-input";
+import { palette, typography } from "../../themeHelpers";
+import { defaultCountryCode } from "../../utils/helpers/constants";
+import Text from "../Text";
 
-export interface CustomPhoneInputProps extends PhoneInputProps {}
+export interface CustomPhoneInputProps extends PhoneInputProps {
+  errorMessage?: {
+    isValid: string;
+    value: string;
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  errorText: {
+    color: palette("red"),
+    fontSize: typography.fontSize.xs
+  }
+}));
 
 const CustomPhoneInputProps: React.FC<CustomPhoneInputProps> = ({
-  onChangeText,
-  value,
+  errorMessage,
   ...props
 }) => {
-  const phoneInput = React.useRef<PhoneInput>(null);
-
-  // const [value, setValue] = React.useState("");
-  // const checkValid = phoneInput.current?.isValidNumber(value);
-
-  // const handleChangeText = React.useCallback((text) => {
-  //   setValue(text);
-  // }, []);
-
+  const styles = useStyles();
   return (
-    <PhoneInput
-      ref={phoneInput}
-      // defaultValue={value}
-      defaultCode="FR"
-      layout="first"
-      value={value}
-      onChangeText={onChangeText}
-    />
+    <>
+      <PhoneInput defaultCode={defaultCountryCode} layout="first" {...props} />
+      {errorMessage?.isValid && (
+        <Text style={styles.errorText}>{errorMessage?.isValid}</Text>
+      )}
+      {errorMessage?.value && (
+        <Text style={styles.errorText}>{errorMessage?.value}</Text>
+      )}
+    </>
   );
 };
 

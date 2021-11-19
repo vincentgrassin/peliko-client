@@ -26,6 +26,7 @@ export type LoginValues = {
   phoneNumber: {
     value: string;
     isValid: boolean;
+    countryCode: string;
   };
   password: string;
   email?: string;
@@ -41,10 +42,10 @@ export const rollCreationSchema = Yup.object().shape({
   participantsContact: Yup.array()
     .of(
       Yup.object().shape({
-        phoneNumber: Yup.string().min(
-          3,
-          resources.phoneNumberValidityErrorMessage
-        )
+        phoneNumber: Yup.object().shape({
+          isValid: Yup.bool().isTrue(resources.phoneNumberValidityErrorMessage),
+          value: Yup.string().required(resources.required)
+        })
       })
     )
     .required(resources.participantEmptyErrorMessage)
@@ -56,6 +57,7 @@ export type ParticipantContact = {
   phoneNumber: {
     value: string;
     isValid: boolean;
+    countryCode: string;
   };
 };
 

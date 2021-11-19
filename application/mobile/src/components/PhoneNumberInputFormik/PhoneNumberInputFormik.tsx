@@ -1,65 +1,47 @@
 import React from "react";
-import PhoneInput, { PhoneInputProps } from "react-native-phone-number-input";
+import { isValidNumber } from "react-native-phone-number-input";
 import { FormikValues, useFormikContext } from "formik";
-import { makeStyles } from "react-native-elements";
-import Text from "../Text";
-import { palette, typography } from "../../themeHelpers";
+import { defaultCountryCode } from "../../utils/helpers/constants";
+import PhoneNumberInput, { CustomPhoneInputProps } from "../PhoneNumberInput";
 
-interface PhoneNumberInputPropsFormik extends PhoneInputProps {
+interface PhoneNumberInputPropsFormik extends CustomPhoneInputProps {
   fieldName: string;
 }
-
-const useStyles = makeStyles((theme) => ({
-  errorText: {
-    color: palette("red"),
-    fontSize: typography.fontSize.xs
-  }
-}));
 
 const PhoneNumberInputFormik: React.FC<PhoneNumberInputPropsFormik> = ({
   fieldName
 }) => {
-  const {
-    setFieldValue,
-    errors,
-    setFieldError
-  } = useFormikContext<FormikValues>();
-  const [value, setValue] = React.useState("");
-  const phoneInput = React.useRef<PhoneInput>(null);
-  const styles = useStyles();
+  const { setFieldValue, errors, values } = useFormikContext<FormikValues>();
 
-  React.useEffect(() => {
-    const checkValid = phoneInput.current?.isValidNumber(value);
-    setFieldValue(fieldName, { value, isValid: checkValid || false });
-  }, [fieldName, value, setFieldValue, setFieldError]);
+  const updatePhoneNumberValue = (value: string, countryCode: any) => {
+    const check = isValidNumber(value, countryCode);
+    setFieldValue(fieldName, {
+      value,
+      isValid: check,
+      countryCode
+    });
+  };
 
-  const handleChangeText = React.useCallback((text) => {
-    setValue(text);
-  }, []);
+  const handleInputChange = (value: string) => {
+    const countryCode = values[fieldName].countryCode ?? defaultCountryCode;
+    updatePhoneNumberValue(value, countryCode);
+  };
+
+  const handleCountryChange = (country: any) => {
+    const value = values[fieldName].value ?? "";
+    const countryCode = country.cca2;
+    updatePhoneNumberValue(value, countryCode);
+  };
 
   return (
     <>
-      <PhoneInput
-        ref={phoneInput}
-        defaultValue={value}
-        defaultCode="FR"
-        layout="first"
-        onChangeText={handleChangeText}
+      <PhoneNumberInput
+        onChangeText={handleInputChange}
+        value={values[fieldName].value}
+        onChangeCountry={handleCountryChange}
+        //@ts-ignore
+        errorMessage={errors.phoneNumber}
       />
-      {
-        //@ts-ignore
-        errors[fieldName]?.isValid && (
-          //@ts-ignore
-          <Text style={styles.errorText}>{errors[fieldName]?.isValid}</Text>
-        )
-      }
-      {
-        //@ts-ignore
-        errors[fieldName]?.value && (
-          //@ts-ignore
-          <Text style={styles.errorText}>{errors[fieldName]?.value}</Text>
-        )
-      }
     </>
   );
 };

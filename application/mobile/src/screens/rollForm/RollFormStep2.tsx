@@ -4,13 +4,11 @@ import { makeStyles } from "react-native-elements";
 import { isValidNumber } from "react-native-phone-number-input";
 import {
   View,
-  Input,
   Autocomplete,
   TouchableOpacity,
   Text,
   Icon,
   Button,
-  ScrollView,
   PhoneNumberInput
 } from "../../components";
 import { iconSet, palette, resources, shape } from "../../themeHelpers";
@@ -19,6 +17,7 @@ import {
   ParticipantContact,
   RollCreationValues
 } from "../../utils/helpers/validationSchema";
+import { defaultCountryCode } from "../../utils/helpers/constants";
 
 interface RollFormStep2Props {}
 
@@ -44,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center"
   },
-  autocomplete: {
-    // width: "90%"
-  },
   addButton: {
     height: 30
   },
@@ -64,11 +60,14 @@ const useStyles = makeStyles((theme) => ({
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const styles = useStyles();
 
-  const { setFieldValue, values } = useFormikContext<RollCreationValues>();
+  const {
+    setFieldValue,
+    values,
+    errors
+  } = useFormikContext<RollCreationValues>();
   const [field, meta] = useField("participantsContact");
 
   const [isHiddenResult, setIsHiddenResult] = React.useState(true);
-  const [countryCode, setContryCode] = React.useState("FR");
   const [searchContact, setSearchContact] = React.useState("");
   const {
     phoneContactData,
@@ -80,29 +79,48 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     loadPhoneContacts();
   }, [loadPhoneContacts]);
 
-  const handleRemoveFields = (index: number) => {
+  const updateParticipantList = (
+    value: string,
+    countryCode: any,
+    index: number
+  ) => {
+    const check = isValidNumber(value, countryCode);
     const participantsList = values.participantsContact;
-    participantsList.splice(index, 1);
-    setFieldValue(field.name, participantsList);
-  };
-
-  const handleInputChange = (val: string, index: number) => {
-    const participantsList = values.participantsContact;
-    console.log({ val, participantsList });
-    const check = isValidNumber(val, countryCode);
-
     participantsList[index] = {
       name: "",
-      phoneNumber: { value: val, isValid: check }
+      phoneNumber: {
+        value,
+        isValid: check,
+        countryCode
+      }
     };
     setFieldValue(field.name, participantsList);
   };
 
+  const handleInputChange = (value: string, index: number) => {
+    const participantsList = values.participantsContact;
+    const countryCode =
+      participantsList[index]?.phoneNumber?.countryCode ?? defaultCountryCode;
+    updateParticipantList(value, countryCode, index);
+  };
+
+  const handleCountryChange = (country: any, index: number) => {
+    const participantsList = values.participantsContact;
+    const value = participantsList[index].phoneNumber.value ?? "";
+    const countryCode = country.cca2;
+    updateParticipantList(value, countryCode, index);
+  };
+
   const handleAddField = () => {
     setIsHiddenResult(true);
-    console.log("1", searchContact);
     handleInputChange(searchContact, values.participantsContact.length);
     setSearchContact("");
+  };
+
+  const handleRemoveFields = (index: number) => {
+    const participantsList = values.participantsContact;
+    participantsList.splice(index, 1);
+    setFieldValue(field.name, participantsList);
   };
 
   const handleChangeText = (val: string) => {
@@ -115,7 +133,6 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const renderFlatListItem = ({ item }: { item: Contact }) => (
     <TouchableOpacity
       onPress={() => {
-        console.log("here", item);
         setIsHiddenResult(true);
         item.phoneNumbers &&
           item.phoneNumbers[0].number &&
@@ -128,9 +145,9 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     </TouchableOpacity>
   );
 
-  const handleAutocompleteBlur = () => {
-    setIsHiddenResult(true);
-  };
+  // const handleAutocompleteBlur = () => {
+  //   setIsHiddenResult(true);
+  // };
 
   return (
     <View style={styles.rollForm}>
@@ -142,25 +159,10 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           data={phoneContactData}
           hideResults={isHiddenResult}
           value={searchContact}
-          inputContainerStyle={styles.autocomplete}
           onChangeText={handleChangeText}
-          onBlur={handleAutocompleteBlur}
+          // onBlur={handleAutocompleteBlur}
           flatListProps={{
-            renderItem: ({ item }: { item: Contact }) => (
-              <TouchableOpacity
-                onPress={() => {
-                  console.log("here", item);
-                  setIsHiddenResult(true);
-                  item.phoneNumbers &&
-                    item.phoneNumbers[0].number &&
-                    setSearchContact(item.phoneNumbers[0].number);
-                }}
-              >
-                <Text>
-                  {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
-                </Text>
-              </TouchableOpacity>
-            ),
+            renderItem: renderFlatListItem,
             nestedScrollEnabled: true
           }}
         />
@@ -179,23 +181,15 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
                   onChangeText={(val) => handleInputChange(val, index)}
                   value={participant.phoneNumber.value}
                   onChangeCountry={(country) => {
-                    setContryCode(country.cca2);
+                    handleCountryChange(country, index);
                   }}
-                />
-                {/* <Input
-                  value={participant.phoneNumber}
-                  onChangeText={(val) => handleInputChange(val, index)}
-                  containerStyle={styles.inputParticipant}
-                  errorText={
-                    meta.error &&
-                    meta.error[index] &&
+                  //@ts-ignore
+                  errorMessage={
+                    errors.participantsContact &&
                     //@ts-ignore
-                    meta.error[index].phoneNumber
-                      ? //@ts-ignore
-                        meta.error[index].phoneNumber
-                      : ""
+                    errors.participantsContact[index].phoneNumber
                   }
-                /> */}
+                />
               </View>
               <Icon
                 iconStyle={styles.trashButton}

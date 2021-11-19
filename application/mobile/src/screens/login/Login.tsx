@@ -19,6 +19,7 @@ import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import NavigationHeader from "../../components/NavigationHeader";
 import { loginSchema, LoginValues } from "../../utils/helpers/validationSchema";
+import { defaultCountryCode } from "../../utils/helpers/constants";
 
 interface LoginFormProps {}
 
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   const [formValues, setFormValues] = React.useState<LoginValues>({
     userName: "",
-    phoneNumber: { value: "", isValid: false },
+    phoneNumber: { value: "", isValid: false, countryCode: defaultCountryCode },
     email: "",
     password: "",
     passwordConfirm: "",
@@ -94,8 +95,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   }, [navigate]);
 
   const handleSubmit = async (values: LoginValues) => {
-    console.log(values);
-
     const { userName, password, phoneNumber } = values;
     let data: { accessToken: string; refreshToken: string };
     if (isSignUpForm) {
