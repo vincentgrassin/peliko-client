@@ -1,5 +1,5 @@
 import React from "react";
-import { useField, useFormikContext, FormikValues } from "formik";
+import { useField } from "formik";
 import Input, { InputProps } from "../Input";
 
 interface InputFormikProps extends InputProps {

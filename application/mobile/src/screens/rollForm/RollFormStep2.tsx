@@ -1,6 +1,7 @@
 import React from "react";
 import { isString, useField, useFormikContext } from "formik";
 import { makeStyles } from "react-native-elements";
+import { isValidNumber } from "react-native-phone-number-input";
 import {
   View,
   Input,
@@ -9,7 +10,8 @@ import {
   Text,
   Icon,
   Button,
-  ScrollView
+  ScrollView,
+  PhoneNumberInput
 } from "../../components";
 import { iconSet, palette, resources, shape } from "../../themeHelpers";
 import { usePhoneContacts, Contact } from "../../utils/hooks/usePhoneContacts";
@@ -66,6 +68,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const [field, meta] = useField("participantsContact");
 
   const [isHiddenResult, setIsHiddenResult] = React.useState(true);
+  const [countryCode, setContryCode] = React.useState("FR");
   const [searchContact, setSearchContact] = React.useState("");
   const {
     phoneContactData,
@@ -83,14 +86,21 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     setFieldValue(field.name, participantsList);
   };
 
-  const handleInputChange = (val: string | undefined, index: number) => {
+  const handleInputChange = (val: string, index: number) => {
     const participantsList = values.participantsContact;
-    participantsList[index] = { name: "", phoneNumber: val };
+    console.log({ val, participantsList });
+    const check = isValidNumber(val, countryCode);
+
+    participantsList[index] = {
+      name: "",
+      phoneNumber: { value: val, isValid: check }
+    };
     setFieldValue(field.name, participantsList);
   };
 
   const handleAddField = () => {
     setIsHiddenResult(true);
+    console.log("1", searchContact);
     handleInputChange(searchContact, values.participantsContact.length);
     setSearchContact("");
   };
@@ -105,6 +115,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const renderFlatListItem = ({ item }: { item: Contact }) => (
     <TouchableOpacity
       onPress={() => {
+        console.log("here", item);
         setIsHiddenResult(true);
         item.phoneNumbers &&
           item.phoneNumbers[0].number &&
@@ -135,7 +146,21 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           onChangeText={handleChangeText}
           onBlur={handleAutocompleteBlur}
           flatListProps={{
-            renderItem: renderFlatListItem,
+            renderItem: ({ item }: { item: Contact }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  console.log("here", item);
+                  setIsHiddenResult(true);
+                  item.phoneNumbers &&
+                    item.phoneNumbers[0].number &&
+                    setSearchContact(item.phoneNumbers[0].number);
+                }}
+              >
+                <Text>
+                  {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
+                </Text>
+              </TouchableOpacity>
+            ),
             nestedScrollEnabled: true
           }}
         />
@@ -150,7 +175,14 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           (participant: ParticipantContact, index: number) => (
             <View key={index} style={styles.participantField}>
               <View style={styles.inputParticipant}>
-                <Input
+                <PhoneNumberInput
+                  onChangeText={(val) => handleInputChange(val, index)}
+                  value={participant.phoneNumber.value}
+                  onChangeCountry={(country) => {
+                    setContryCode(country.cca2);
+                  }}
+                />
+                {/* <Input
                   value={participant.phoneNumber}
                   onChangeText={(val) => handleInputChange(val, index)}
                   containerStyle={styles.inputParticipant}
@@ -163,7 +195,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
                         meta.error[index].phoneNumber
                       : ""
                   }
-                />
+                /> */}
               </View>
               <Icon
                 iconStyle={styles.trashButton}

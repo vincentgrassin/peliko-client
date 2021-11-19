@@ -18,6 +18,8 @@ export { default as Picture } from "./Picture";
 export * from "./Picture";
 export { default as PhoneNumberInput } from "./PhoneNumberInput";
 export * from "./PhoneNumberInput";
+export { default as PhoneNumberInputFormik } from "./PhoneNumberInputFormik";
+export * from "./PhoneNumberInputFormik";
 export { default as RollHeader } from "./RollHeader";
 export * from "./RollHeader";
 export { default as RollParticipants } from "./RollParticipants";

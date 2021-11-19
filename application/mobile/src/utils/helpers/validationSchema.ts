@@ -53,7 +53,10 @@ export const rollCreationSchema = Yup.object().shape({
 
 export type ParticipantContact = {
   name: string;
-  phoneNumber: string | undefined;
+  phoneNumber: {
+    value: string;
+    isValid: boolean;
+  };
 };
 
 export type RollCreationValues = {

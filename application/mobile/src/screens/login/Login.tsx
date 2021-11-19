@@ -10,7 +10,7 @@ import {
   Icon,
   ScrollView,
   InputFormik,
-  PhoneNumberInput
+  PhoneNumberInputFormik
 } from "../../components";
 import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
@@ -94,6 +94,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
   }, [navigate]);
 
   const handleSubmit = async (values: LoginValues) => {
+    console.log(values);
+
     const { userName, password, phoneNumber } = values;
     let data: { accessToken: string; refreshToken: string };
     if (isSignUpForm) {
@@ -140,11 +142,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
                       label={resources.userName}
                     />
                   )}
+                  <PhoneNumberInputFormik fieldName="phoneNumber" />
                   <InputFormik
                     fieldName="password"
                     label={resources.password}
                   />
-                  <PhoneNumberInput fieldName="phoneNumber" />
                   {isSignUpForm && (
                     <InputFormik
                       fieldName="passwordConfirm"
