@@ -7,6 +7,7 @@ import Icon from "../Icon";
 import Text from "../Text";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
+import { client } from "../../utils/hooks/useApolloClient";
 
 interface NavigationHeaderProps {
   text?: string;
@@ -53,9 +54,10 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   };
 
   const handleLogOut = async () => {
-    navigate<ScreenList>("Login");
     await AsyncStorage.setItem("@accessToken", "");
     await AsyncStorage.setItem("@refreshToken", "");
+    client.cache.reset();
+    navigate<ScreenList>("Login");
   };
 
   return (
