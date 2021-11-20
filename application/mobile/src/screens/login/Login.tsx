@@ -165,7 +165,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
                     type="outline"
                     buttonStyle={styles.action}
                     onPress={() => {
-                      resetForm();
                       setFieldValue("isSignUpForm", !isSignUpForm);
                       setIsSignUpForm((prev) => !prev);
                     }}
