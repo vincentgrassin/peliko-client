@@ -2,7 +2,13 @@ import React from "react";
 import { Formik } from "formik";
 import { makeStyles } from "react-native-elements";
 import { KeyboardAvoidingView } from "react-native";
-import { View, Button, Stepper, ScrollView, Text } from "../../components";
+import {
+  View,
+  Button,
+  Stepper,
+  ScrollView,
+  NavigationHeader
+} from "../../components";
 import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
 import RollFormStep2 from "./RollFormStep2";
@@ -15,7 +21,6 @@ import {
 } from "../../utils/helpers/validationSchema";
 import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useNavigation } from "../../utils/hooks/useNavigation";
-import NavigationHeader from "../../components/NavigationHeader";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";

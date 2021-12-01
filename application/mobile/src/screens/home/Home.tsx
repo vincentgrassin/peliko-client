@@ -3,8 +3,7 @@ import { ScaledSize, useWindowDimensions } from "react-native";
 import { TabView, SceneMap, TabBar, TabBarProps } from "react-native-tab-view";
 import { makeStyles } from "react-native-elements";
 import { palette, resources } from "../../themeHelpers";
-import { Tab } from "../../components";
-import NavigationHeader from "../../components/NavigationHeader";
+import { Tab, NavigationHeader } from "../../components";
 
 interface HomeProps {}
 

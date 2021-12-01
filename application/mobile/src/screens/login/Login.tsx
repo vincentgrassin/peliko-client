@@ -10,14 +10,14 @@ import {
   Icon,
   ScrollView,
   InputFormik,
-  PhoneNumberInputFormik
+  PhoneNumberInputFormik,
+  NavigationHeader
 } from "../../components";
 import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
 import { ScreenList } from "../../navigation/NavigationContainer";
-import NavigationHeader from "../../components/NavigationHeader";
 import { loginSchema, LoginValues } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 

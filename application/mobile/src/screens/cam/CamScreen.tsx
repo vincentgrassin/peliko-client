@@ -1,7 +1,13 @@
 import React from "react";
 import { Camera } from "expo-camera";
 import { CLOUDINARY_UPLOAD_URL, CLOUDINARY_UPLOAD_PRESET } from "@env";
-import { Button, Icon, StyleSheet, View } from "../../components";
+import {
+  Button,
+  Icon,
+  StyleSheet,
+  View,
+  NavigationHeader
+} from "../../components";
 import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
@@ -10,7 +16,6 @@ import { ParamList, ScreenList } from "../../navigation/NavigationContainer";
 import { GET_ROLLS_BY_USER, GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
-import NavigationHeader from "../../components/NavigationHeader";
 
 interface CamProps {}
 

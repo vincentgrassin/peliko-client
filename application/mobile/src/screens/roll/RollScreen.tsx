@@ -6,6 +6,7 @@ import {
   RollHeader,
   RollParticipants,
   ScrollView,
+  NavigationHeader,
   Loader
 } from "../../components";
 import { resources, shape } from "../../themeHelpers";
@@ -19,7 +20,6 @@ import { GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { RollData } from "../../utils/types/types";
 import RollPictures from "../../components/RollPictures";
-import NavigationHeader from "../../components/NavigationHeader";
 
 interface RollProps {}
 

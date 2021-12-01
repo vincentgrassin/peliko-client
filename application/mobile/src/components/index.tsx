@@ -18,6 +18,8 @@ export { default as InvitationRoll } from "./InvitationRoll";
 export * from "./InvitationRoll";
 export { default as Loader } from "./Loader";
 export * from "./Loader";
+export { default as NavigationHeader } from "./NavigationHeader";
+export * from "./NavigationHeader";
 export { default as Picture } from "./Picture";
 export * from "./Picture";
 export { default as PhoneNumberInput } from "./PhoneNumberInput";
