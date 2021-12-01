@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const styles = useStyles();
 
-  const [createRoll, { data }] = useMutation(CREATE_ROLL);
+  const [createRoll] = useMutation(CREATE_ROLL);
   const { navigate } = useNavigation();
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
 
@@ -80,7 +80,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const handleSubmit = async (values: RollCreationValues) => {
     const { date, description, participantsContact, rollName } = values;
     openModal();
-    await createRoll({
+    const response = await createRoll({
       variables: {
         rollData: {
           name: rollName,
@@ -101,11 +101,12 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       awaitRefetchQueries: true
     });
     closeModal();
-    navigate<ScreenList>("RollScreen", {
-      backgroundColor: palette("blue"),
-      rollId: data.createRoll.id,
-      isOpenRoll: true
-    });
+    response?.data &&
+      navigate<ScreenList>("RollScreen", {
+        backgroundColor: palette("blue"),
+        rollId: response.data.createRoll.id,
+        isOpenRoll: true
+      });
   };
 
   return (

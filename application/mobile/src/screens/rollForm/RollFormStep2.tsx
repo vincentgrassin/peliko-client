@@ -18,6 +18,7 @@ import {
   RollCreationValues
 } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
+import { getNumberAfterPossiblyEliminatingZero } from "../../utils/helpers/dataCheckHelper";
 
 interface RollFormStep2Props {}
 
@@ -85,11 +86,12 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     index: number
   ) => {
     const check = isValidNumber(value, countryCode);
+    const formattedNumber = getNumberAfterPossiblyEliminatingZero(value);
     const participantsList = values.participantsContact;
     participantsList[index] = {
       name: "",
       phoneNumber: {
-        value,
+        value: formattedNumber,
         isValid: check,
         countryCode
       }
