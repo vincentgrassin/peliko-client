@@ -1,7 +1,9 @@
 import React from "react";
 import Svg, { G, Path } from "react-native-svg";
 
-const SvgComponent = (props) => (
+export interface BoxProps {}
+
+const Box: React.FC<BoxProps> = (props) => (
   <Svg width="197px" height="170px" viewBox="0 0 197 170" {...props}>
     <G
       transform="translate(-81 -236) translate(84 238)"
@@ -74,4 +76,4 @@ const SvgComponent = (props) => (
   </Svg>
 );
 
-export default SvgComponent;
+export default Box;

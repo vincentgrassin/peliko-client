@@ -8,6 +8,8 @@ export { default as FlatList } from "./FlatList";
 export * from "./FlatList";
 export { default as Icon } from "./Icon";
 export * from "./Icon";
+export { default as Illustration } from "./Illustration";
+export * from "./Illustration";
 export { default as Input } from "./Input";
 export * from "./Input";
 export { default as InputFormik } from "./InputFormik";

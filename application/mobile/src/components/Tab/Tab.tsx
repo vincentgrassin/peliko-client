@@ -7,15 +7,16 @@ import { RollData } from "../../utils/types/types";
 import { getAlternateColor } from "../../utils/helpers/colorHelper";
 import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
-import { shape } from "../../themeHelpers";
+import { resources, shape } from "../../themeHelpers";
 import View from "../View";
 import FlatList from "../FlatList";
+import Illustration from "../Illustration";
 
 interface TabProps {
   isOpenRollTab: boolean;
 }
 const useStyles = makeStyles((theme) => ({
-  tab: {
+  emptyIllustration: {
     flex: 1
   },
   thumbNail: {
@@ -37,25 +38,33 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const rollList: RollData[] = data?.rollsByUser;
 
   return (
-    <FlatList
-      data={rollList}
-      renderItem={({ item, index }) => (
-        <View style={styles.thumbNail} key={index}>
-          <RollThumbnail
-            backgroundColor={getAlternateColor(index)}
-            rollName={item?.name}
-            pictureNumber={item?.remainingPictures}
-            participantNumber={item?.participants?.length}
-            closingDate={item?.closingDate}
-            hasBeenDiscovered={false}
-            rollId={item?.id}
-            isOpenRoll={isOpenRollTab}
-          />
+    <>
+      {rollList && rollList.length > 0 ? (
+        <FlatList
+          data={rollList}
+          renderItem={({ item, index }) => (
+            <View style={styles.thumbNail} key={index}>
+              <RollThumbnail
+                backgroundColor={getAlternateColor(index)}
+                rollName={item?.name}
+                pictureNumber={item?.remainingPictures}
+                participantNumber={item?.participants?.length}
+                closingDate={item?.closingDate}
+                hasBeenDiscovered={false}
+                rollId={item?.id}
+                isOpenRoll={isOpenRollTab}
+              />
+            </View>
+          )}
+          numColumns={1}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      ) : (
+        <View style={styles.emptyIllustration}>
+          <Illustration image="box" text={resources.emptyRolls} />
         </View>
       )}
-      numColumns={1}
-      keyExtractor={(item, index) => index.toString()}
-    />
+    </>
   );
 };
 
