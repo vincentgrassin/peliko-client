@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "react-native-elements";
-import { InvitationRoll, ScrollView, Text } from "../../components";
+import { InvitationRoll, Loader, ScrollView, Text } from "../../components";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { InvitationRoll as InvitationRollType } from "../../utils/types/types";
 import { GET_INVITATIONS_BY_USER } from "../../utils/helpers/queries";
@@ -19,7 +19,7 @@ const Notifications: React.FC<NotificationsProps> = ({ ...props }) => {
   const { loading, error, data } = useQuery(GET_INVITATIONS_BY_USER);
   const styles = useStyles();
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <Loader />;
   if (error) return <Text>Oh no... {error.message}</Text>;
 
   const invitationRollsByUser: InvitationRollType[] =

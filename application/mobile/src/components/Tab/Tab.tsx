@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "react-native-elements";
 import Text from "../Text";
 import RollThumbnail from "../RollThumbnail";
-import ScrollView from "../ScrollView";
+import Loader from "../Loader";
 import { RollData } from "../../utils/types/types";
 import { getAlternateColor } from "../../utils/helpers/colorHelper";
 import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
@@ -27,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const styles = useStyles();
-  const { loading, error, data, refetch } = useQuery(GET_ROLLS_BY_USER, {
+  const { loading, error, data } = useQuery(GET_ROLLS_BY_USER, {
     variables: { isOpenTab: isOpenRollTab }
   });
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <Loader />;
   if (error) return <Text>Oh no... {error.message}</Text>;
 
   const rollList: RollData[] = data?.rollsByUser;

@@ -5,7 +5,8 @@ import {
   Text,
   RollHeader,
   RollParticipants,
-  ScrollView
+  ScrollView,
+  Loader
 } from "../../components";
 import { resources, shape } from "../../themeHelpers";
 import {
@@ -39,7 +40,7 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
     variables: { id: rollId }
   });
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <Loader />;
   if (error) return <Text>Oh no... {error.message}</Text>;
 
   const { roll }: { roll: RollData } = data;

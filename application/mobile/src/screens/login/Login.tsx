@@ -115,8 +115,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
       navigate<ScreenList>("BottomNavigation");
       try {
         await AsyncStorage.setItem("@refreshToken", data.refreshToken);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
       }
     }
   };

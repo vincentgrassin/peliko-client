@@ -105,6 +105,7 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
           />
           <Camera
             style={{ flex: 1 }}
+            ratio="16:9"
             type={
               isCameraBack
                 ? Camera.Constants.Type.back
