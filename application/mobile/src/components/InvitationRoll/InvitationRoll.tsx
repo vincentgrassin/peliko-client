@@ -8,7 +8,10 @@ import Button from "../Button";
 import { resources, shape } from "../../themeHelpers";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { DECLINE_INVITATION, JOIN_ROLL } from "../../utils/helpers/mutation";
-import { GET_INVITATIONS_BY_USER } from "../../utils/helpers/queries";
+import {
+  GET_INVITATIONS_BY_USER,
+  GET_ROLLS_BY_USER
+} from "../../utils/helpers/queries";
 import { getDateFormat } from "../../utils/helpers/dateHelper";
 
 interface InvitationRollProps {
@@ -61,7 +64,10 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
         rollId,
         accessCode: "AAA111" // fake code to remove when implementating roll validation
       },
-      refetchQueries: [{ query: GET_INVITATIONS_BY_USER }],
+      refetchQueries: [
+        { query: GET_INVITATIONS_BY_USER },
+        { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } }
+      ],
       awaitRefetchQueries: true
     });
   };
