@@ -13,11 +13,11 @@ const ThumbnailSvg: React.FC<ThumbnailSvgProps> = ({
 }) => {
   return (
     <Svg
-      width="328px"
+      width="100%"
       height="156px"
       viewBox="0 0 328 156"
       {...props}
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="none"
     >
       <Defs>
         <Rect id="rect" x="0" y="0" width="100%" height="100%" rx="25" />

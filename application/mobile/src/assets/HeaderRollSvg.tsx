@@ -13,11 +13,11 @@ const HeaderRollSvg: React.FC<HeaderRollSvgProps> = ({
 }) => {
   return (
     <Svg
-      width="360px"
+      width="100%"
       height="220px"
       viewBox="0 0 360 220"
       {...props}
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="none"
     >
       <Defs>
         <Rect id="rect" x="0" y="0" width="100%" height="100%" rx="25" />
