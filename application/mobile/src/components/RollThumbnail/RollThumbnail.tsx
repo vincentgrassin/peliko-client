@@ -4,7 +4,7 @@ import { useNavigation } from "../../utils/hooks/useNavigation";
 import View from "../View";
 import Text from "../Text";
 import TouchableOpacity from "../TouchableOpacity";
-import ThumbnailSvg, { ThumbnailSvgProps } from "../../assets/ThumbnailSvg";
+import { Thumbnail, ThumbnailSvgProps } from "../../assets";
 import { shape } from "../../themeHelpers";
 import RollBadge from "../RollBadge";
 import Badge from "../Badge";
@@ -66,7 +66,7 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
       }
     >
       <View>
-        <ThumbnailSvg backgroundColor={backgroundColor} url={url} {...props} />
+        <Thumbnail backgroundColor={backgroundColor} url={url} {...props} />
         <View style={styles.thumbnailContent}>
           <Text h1>{rollName}</Text>
           <View style={styles.badgeArea}>

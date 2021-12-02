@@ -1,17 +1,27 @@
 import React from "react";
 import { makeStyles } from "react-native-elements";
-import { InvitationRoll, Loader, ScrollView, Text } from "../../components";
+import {
+  Illustration,
+  InvitationRoll,
+  Loader,
+  ScrollView,
+  NavigationHeader,
+  Text,
+  View
+} from "../../components";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { InvitationRoll as InvitationRollType } from "../../utils/types/types";
 import { GET_INVITATIONS_BY_USER } from "../../utils/helpers/queries";
 import { palette, resources, shape } from "../../themeHelpers";
-import NavigationHeader from "../../components/NavigationHeader";
 
 interface NotificationsProps {}
 
 const useStyles = makeStyles((theme) => ({
   invitationList: {
     marginTop: shape.spacing(2)
+  },
+  emptyIllustration: {
+    flex: 1
   }
 }));
 
@@ -31,10 +41,9 @@ const Notifications: React.FC<NotificationsProps> = ({ ...props }) => {
         color={palette("green")}
         text={resources.notificationScreen}
       />
-      <ScrollView style={styles.invitationList}>
-        {invitationRollsByUser &&
-          invitationRollsByUser.length > 0 &&
-          invitationRollsByUser.map((invitation, index) => (
+      {invitationRollsByUser?.length > 0 ? (
+        <ScrollView style={styles.invitationList}>
+          {invitationRollsByUser.map((invitation, index) => (
             <InvitationRoll
               key={index}
               adminAvatarSource={undefined}
@@ -45,7 +54,12 @@ const Notifications: React.FC<NotificationsProps> = ({ ...props }) => {
               index={index}
             />
           ))}
-      </ScrollView>
+        </ScrollView>
+      ) : (
+        <View style={styles.emptyIllustration}>
+          <Illustration image="mailbox" text={resources.emptyNotifications} />
+        </View>
+      )}
     </>
   );
 };

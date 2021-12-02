@@ -42,3 +42,5 @@ export type InvitationRoll = {
     closingDate: string;
   };
 };
+
+export type SvgType = "eye" | "box" | "mailbox";

@@ -42,7 +42,8 @@ const globalResources = {
   participantMinimunNumberErrorMessage: "Minimum of 1 friends",
   formErrors: "Erreurs dans le formulaire",
   errorNotMatchingPassword: "Les mots de passe ne sont pas identiques",
-  emptyRolls: "Pas encore de pellicule"
+  emptyRolls: "Pas encore de pellicules",
+  emptyNotifications: "Pas d'invitations"
 };
 
 export default globalResources;

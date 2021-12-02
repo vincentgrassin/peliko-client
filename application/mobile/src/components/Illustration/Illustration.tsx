@@ -2,12 +2,11 @@ import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import Text from "../Text";
 import View from "../View";
-import Eye from "../../assets/Eye";
-import Box from "../../assets/Box";
-import { shape } from "../../themeHelpers";
+import { svgMapping } from "../../utils/helpers/constants";
+import { SvgType } from "../../utils/types/types";
 
 interface IllustrationProps {
-  image: string;
+  image: SvgType;
   text?: string;
 }
 
@@ -23,14 +22,9 @@ const useStyles = makeStyles((theme) => ({
 const Illustration: React.FC<IllustrationProps> = ({ image, text }) => {
   const styles = useStyles();
 
-  const imageMapping: { [key: string]: JSX.Element } = {
-    mailBox: <Eye />,
-    box: <Box />
-  };
-
   return (
     <View style={styles.container}>
-      {imageMapping[image]}
+      {svgMapping[image]}
       <Text h1>{text}</Text>
     </View>
   );

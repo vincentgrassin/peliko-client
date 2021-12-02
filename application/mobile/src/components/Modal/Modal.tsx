@@ -1,21 +1,24 @@
 import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import { ActivityIndicator, Modal as RNModal } from "react-native";
-import { screenHeight, screenWidth } from "../../utils/helpers/constants";
+import {
+  screenHeight,
+  screenWidth,
+  svgMapping
+} from "../../utils/helpers/constants";
 import View from "../View";
 import Text from "../Text";
-import Eye from "../../assets/Eye";
 import { palette } from "../../themeHelpers";
+import { SvgType } from "../../utils/types/types";
 
 interface ModalProps {
-  image?: ImageModal;
+  image?: SvgType;
   text?: string;
   isVisible: boolean;
   color: string;
   modalType?: ModalType;
 }
 type ModalType = "loading";
-type ImageModal = "eye";
 
 const useStyles = makeStyles((theme, styleProps: { color: string }) => {
   const { color } = styleProps;
@@ -41,14 +44,10 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const styles = useStyles({ color });
 
-  const imageModalMapping: { [key: string]: JSX.Element } = {
-    eye: <Eye />
-  };
-
   return (
     <RNModal animationType="slide" transparent visible={isVisible}>
       <View style={styles.modal}>
-        {image && imageModalMapping[image]}
+        {image && svgMapping[image]}
         {text && <Text h2>{text}</Text>}
         {modalType === "loading" && (
           <ActivityIndicator size="large" color={palette("black")} />

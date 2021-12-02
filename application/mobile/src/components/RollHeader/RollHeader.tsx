@@ -4,7 +4,7 @@ import { useRoute, RouteProp } from "../../utils/hooks/useNavigation";
 import Text from "../Text";
 import View from "../View";
 import { resources, shape } from "../../themeHelpers";
-import HeaderRollSvg from "../../assets/HeaderRollSvg";
+import { HeaderRoll } from "../../assets";
 import { ParamList } from "../../navigation/NavigationContainer";
 import RollBadge from "../RollBadge";
 import Badge from "../Badge";
@@ -49,7 +49,7 @@ const RollHeader: React.FC<RollHeaderProps> = ({
 
   return (
     <View style={styles.root}>
-      <HeaderRollSvg backgroundColor={route?.params?.backgroundColor} />
+      <HeaderRoll backgroundColor={route?.params?.backgroundColor} />
       <View style={styles.rollHeaderContent}>
         <Text h1>{name}</Text>
         <Text style={styles.description}>{description}</Text>
