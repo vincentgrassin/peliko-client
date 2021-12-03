@@ -10,6 +10,7 @@ import { useMutation } from "../../utils/hooks/useApolloClient";
 import { DECLINE_INVITATION, JOIN_ROLL } from "../../utils/helpers/mutation";
 import {
   GET_INVITATIONS_BY_USER,
+  GET_INVITATION_COUNT_BY_USER,
   GET_ROLLS_BY_USER
 } from "../../utils/helpers/queries";
 import { getDateFormat } from "../../utils/helpers/dateHelper";
@@ -66,7 +67,8 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
       },
       refetchQueries: [
         { query: GET_INVITATIONS_BY_USER },
-        { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } }
+        { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } },
+        { query: GET_INVITATION_COUNT_BY_USER }
       ],
       awaitRefetchQueries: true
     });
@@ -77,7 +79,10 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
         rollId
       },
       awaitRefetchQueries: true,
-      refetchQueries: [{ query: GET_INVITATIONS_BY_USER }]
+      refetchQueries: [
+        { query: GET_INVITATIONS_BY_USER },
+        { query: GET_INVITATION_COUNT_BY_USER }
+      ]
     });
   };
 

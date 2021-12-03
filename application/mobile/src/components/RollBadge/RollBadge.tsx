@@ -44,7 +44,7 @@ const RollBadge: React.FC<RollBadgeProps> = ({
         />
       )}
       <Text>{value}</Text>
-      {secondaryValue && <Text>{secondaryValue}</Text>}
+      {secondaryValue && <Text> {secondaryValue}</Text>}
     </View>
   );
 };

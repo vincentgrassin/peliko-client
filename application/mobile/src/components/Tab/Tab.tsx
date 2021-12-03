@@ -5,12 +5,16 @@ import RollThumbnail from "../RollThumbnail";
 import Loader from "../Loader";
 import { RollData } from "../../utils/types/types";
 import { getAlternateColor } from "../../utils/helpers/colorHelper";
-import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
+import {
+  GET_INVITATION_COUNT_BY_USER,
+  GET_ROLLS_BY_USER
+} from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { resources, shape } from "../../themeHelpers";
 import View from "../View";
 import FlatList from "../FlatList";
 import Illustration from "../Illustration";
+import { useNavigationContext } from "../../navigation/NavigationContext";
 
 interface TabProps {
   isOpenRollTab: boolean;
@@ -31,6 +35,13 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const { loading, error, data } = useQuery(GET_ROLLS_BY_USER, {
     variables: { isOpenTab: isOpenRollTab }
   });
+
+  const { updateNotificationNumber } = useNavigationContext();
+  const { data: count } = useQuery(GET_INVITATION_COUNT_BY_USER);
+
+  React.useEffect(() => {
+    count && updateNotificationNumber(count.invitationNotificationByUser);
+  }, [count, updateNotificationNumber]);
 
   if (loading) return <Loader />;
   if (error) return <Text>Oh no... {error.message}</Text>;
