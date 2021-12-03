@@ -30,6 +30,7 @@ export type Participant = {
   isRemoved: boolean;
   hasDiscoverRoll: boolean;
   avatarImageUri?: string;
+  pictureCount: number;
 };
 
 export type InvitationRoll = {

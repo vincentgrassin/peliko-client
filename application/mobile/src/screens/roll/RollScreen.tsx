@@ -47,21 +47,25 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
 
   const HeaderRollComponent: JSX.Element = (
     <>
-      <NavigationHeader
-        text={resources.roll}
-        screen="BottomNavigation"
-        color={route.params.backgroundColor}
-      />
-      <RollHeader
-        name={roll?.name}
-        description={roll?.description}
-        closingDate={roll?.closingDate}
-        remainingPictures={roll?.remainingPictures}
-      />
-      <RollParticipants
-        participants={roll?.participants}
-        className={styles.participants}
-      />
+      {roll && (
+        <>
+          <NavigationHeader
+            text={resources.roll}
+            screen="BottomNavigation"
+            color={route.params.backgroundColor}
+          />
+          <RollHeader
+            name={roll?.name}
+            description={roll.description}
+            closingDate={roll.closingDate}
+            remainingPictures={roll.remainingPictures}
+          />
+          <RollParticipants
+            participants={roll.participants}
+            className={styles.participants}
+          />
+        </>
+      )}
     </>
   );
 

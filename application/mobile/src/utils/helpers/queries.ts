@@ -52,6 +52,7 @@ export const GET_ROLL_BY_ID = gql`
         phoneNumber
         id
         rollId
+        pictureCount
       }
     }
   }

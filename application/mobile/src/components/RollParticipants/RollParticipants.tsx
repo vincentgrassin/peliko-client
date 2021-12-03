@@ -52,7 +52,7 @@ const RollParticipants: React.FC<RollParticipantsProps> = ({
                   }
                   index={index}
                   size="large"
-                  notification={1}
+                  notification={participant.pictureCount}
                 />
               </View>
             );

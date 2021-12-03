@@ -46,7 +46,7 @@ const Avatar: React.FC<AvatarProps> = ({
         source={source || { uri: getDefaultAvatarUri(index) }}
         {...props}
       />
-      {notification && (
+      {(notification || notification === 0) && (
         <Badge
           containerStyle={style.notification}
           badgeStyle={style.badge}
