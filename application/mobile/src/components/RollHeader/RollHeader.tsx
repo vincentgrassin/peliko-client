@@ -17,12 +17,10 @@ interface RollHeaderProps {
   remainingPictures: number | undefined;
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: { position: "relative" },
+const useStyles = makeStyles((theme, color: string) => ({
   rollHeaderContent: {
-    position: "absolute",
-    top: 0,
-    padding: shape.spacing(2)
+    padding: shape.spacing(2),
+    backgroundColor: color
   },
   description: {
     marginTop: shape.spacing(1),
@@ -31,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
   badges: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-evenly"
+    paddingTop: shape.spacing(2),
+    justifyContent: "space-evenly",
+    width: "100%"
   }
 }));
 
@@ -43,13 +43,12 @@ const RollHeader: React.FC<RollHeaderProps> = ({
   ...props
 }) => {
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
-  const styles = useStyles();
+  const styles = useStyles(route?.params?.backgroundColor);
 
   const remainingTime = getRemainingTimeOnDate(closingDate, false);
 
   return (
-    <View style={styles.root}>
-      <HeaderRoll backgroundColor={route?.params?.backgroundColor} />
+    <>
       <View style={styles.rollHeaderContent}>
         <Text h1>{name}</Text>
         <Text style={styles.description}>{description}</Text>
@@ -74,7 +73,8 @@ const RollHeader: React.FC<RollHeaderProps> = ({
           />
         </View>
       </View>
-    </View>
+      <HeaderRoll backgroundColor={route?.params?.backgroundColor} />
+    </>
   );
 };
 

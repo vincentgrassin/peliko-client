@@ -81,13 +81,7 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
               containerStyle={styles.badge}
             />
             <Badge
-              value={
-                <RollBadge
-                  value={remainingTime?.value}
-                  secondaryValue={remainingTime?.text}
-                  icon="date"
-                />
-              }
+              value={<RollBadge value={remainingTime?.value} icon="date" />}
             />
           </View>
         </View>
