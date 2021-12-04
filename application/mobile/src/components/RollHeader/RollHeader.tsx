@@ -29,9 +29,12 @@ const useStyles = makeStyles((theme, color: string) => ({
   badges: {
     display: "flex",
     flexDirection: "row",
-    paddingTop: shape.spacing(2),
-    justifyContent: "space-evenly",
+    padding: shape.spacing(2),
+    justifyContent: "space-between",
     width: "100%"
+  },
+  rollText: {
+    paddingLeft: shape.spacing(2)
   }
 }));
 
@@ -50,8 +53,10 @@ const RollHeader: React.FC<RollHeaderProps> = ({
   return (
     <>
       <View style={styles.rollHeaderContent}>
-        <Text h1>{name}</Text>
-        <Text style={styles.description}>{description}</Text>
+        <View style={styles.rollText}>
+          <Text h1>{name}</Text>
+          <Text style={styles.description}>{description}</Text>
+        </View>
         <View style={styles.badges}>
           {remainingTime && (
             <Badge

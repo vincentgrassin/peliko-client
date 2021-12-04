@@ -1,15 +1,6 @@
-type colors =
-  | "grey"
-  | "lightGrey"
-  | "green"
-  | "red"
-  | "blue"
-  | "white"
-  | "pink"
-  | "yellow"
-  | "black";
+import { Colors } from "../utils/types/types";
 
-export const globalPalette = (color: colors, opacity?: number): string => {
+export const globalPalette = (color: Colors, opacity?: number): string => {
   if (opacity === undefined) {
     opacity = 1;
   }

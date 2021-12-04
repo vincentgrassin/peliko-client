@@ -7,9 +7,10 @@ import {
   RollParticipants,
   ScrollView,
   NavigationHeader,
-  Loader
+  Loader,
+  Icon
 } from "../../components";
-import { resources, shape } from "../../themeHelpers";
+import { iconSet, resources, shape } from "../../themeHelpers";
 import {
   RouteProp,
   useNavigation,
@@ -26,6 +27,15 @@ interface RollProps {}
 const useStyles = makeStyles(() => ({
   participants: {
     margin: shape.spacing(2)
+  },
+  shootButton: {
+    width: "75%",
+    marginBottom: shape.spacing(6),
+    alignSelf: "center"
+  },
+  rollContainer: {
+    display: "flex",
+    flex: 1
   }
 }));
 
@@ -72,12 +82,14 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
   return (
     <>
       {isOpenRoll ? (
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.rollContainer}>
           {HeaderRollComponent}
           {roll && roll.remainingPictures > 0 && (
             <Button
+              containerStyle={styles.shootButton}
               onPress={() => navigate<ScreenList>("CamScreen", { rollId })}
-              title={resources.shootPicture}
+              title={<Icon {...iconSet.camera} />}
+              color={route.params.backgroundColor}
             />
           )}
         </ScrollView>

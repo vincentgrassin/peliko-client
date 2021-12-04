@@ -5,9 +5,11 @@ import {
   makeStyles
 } from "react-native-elements";
 import { shape, palette, typography } from "../../themeHelpers";
+import { Colors } from "../../utils/types/types";
 
 interface ButtonProps extends ReactNativeButtonProps {
   size?: "small" | "large";
+  color?: Colors;
 }
 
 const useStyles = makeStyles(
@@ -16,19 +18,20 @@ const useStyles = makeStyles(
     styleProps: {
       size: "large" | "small";
       type: "outline" | "solid" | "clear" | undefined;
+      color: string | undefined;
     }
   ) => {
-    const { size, type } = styleProps;
+    const { size, type, color } = styleProps;
     return {
       button: {
         borderRadius: shape.radius[30],
         borderWidth: shape.width.buttonBorder,
-        borderColor: palette("yellow"),
+        borderColor: color || palette("yellow"),
         height: size === "large" ? 50 : 25,
         paddingLeft: shape.spacing(2),
         paddingRight: shape.spacing(2),
         backgroundColor:
-          type === "outline" ? palette("white") : palette("yellow")
+          color || (type === "outline" ? palette("white") : palette("yellow"))
       },
       buttonTitle: {
         color: type === "outline" ? palette("yellow") : palette("black"),
@@ -44,9 +47,10 @@ const Button: React.FC<ButtonProps> = ({
   buttonStyle,
   titleStyle,
   size = "large",
+  color,
   ...props
 }) => {
-  const styles = useStyles({ size, type });
+  const styles = useStyles({ size, type, color });
 
   return (
     <ReactNativeButton

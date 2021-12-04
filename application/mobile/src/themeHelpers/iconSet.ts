@@ -46,6 +46,10 @@ const globalIconSet = {
   cog: {
     name: "cog",
     type: "entypo"
+  },
+  camera: {
+    name: "camera",
+    type: "entypo"
   }
 };
 

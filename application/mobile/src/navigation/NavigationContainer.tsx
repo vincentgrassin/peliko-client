@@ -7,11 +7,11 @@ import RollScreen from "../screens/roll";
 import CamScreen from "../screens/cam";
 import BottomNavigation from "./BottomNavigation";
 import PicturesGallery from "../screens/picturesGalleryScreen";
-import { Picture } from "../utils/types/types";
+import { Colors, Picture } from "../utils/types/types";
 
 export type ParamList = {
   RollScreen: {
-    backgroundColor: string;
+    backgroundColor: Colors;
     rollId: number;
     isOpenRoll: boolean;
   };

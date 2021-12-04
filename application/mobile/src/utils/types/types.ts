@@ -45,3 +45,14 @@ export type InvitationRoll = {
 };
 
 export type SvgType = "eye" | "box" | "mailbox";
+
+export type Colors =
+  | "grey"
+  | "lightGrey"
+  | "green"
+  | "red"
+  | "blue"
+  | "white"
+  | "pink"
+  | "yellow"
+  | "black";
