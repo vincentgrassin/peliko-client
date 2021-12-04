@@ -23,11 +23,7 @@ export const pickImageFromGallery = async () => {
 
   if (!result.cancelled && result.base64) {
     const jsonResponse = await uploadToCloudinary(result.base64);
-    return {
-      cloudinaryId: jsonResponse.public_id,
-      height: jsonResponse.height,
-      width: jsonResponse.width
-    };
+    return jsonResponse.public_id;
   }
   return undefined;
 };

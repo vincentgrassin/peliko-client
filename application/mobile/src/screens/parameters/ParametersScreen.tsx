@@ -15,11 +15,14 @@ import {
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import { resources, palette, shape } from "../../themeHelpers";
-import { client } from "../../utils/hooks/useApolloClient";
+import { client, useQuery } from "../../utils/hooks/useApolloClient";
 import { ImageProfile } from "../../assets";
 import { ProfileValues } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import { pickImageFromGallery } from "../../utils/helpers/pictureHelper";
+import { GET_USER_BY_ID } from "../../utils/helpers/queries";
+import { UserCard } from "../../utils/types/types";
+import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
 
 interface ParametersProps {}
 
@@ -43,25 +46,33 @@ const useStyles = makeStyles(() => ({
 
 const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
   const styles = useStyles();
-
-  const url =
-    "https://cdn.radiofrance.fr/s3/cruiser-production/2021/08/44f71fe7-5732-4515-a2f3-02d14f302380/1136_rapport-liens-nature-societe.jpg";
+  const { loading, error, data } = useQuery(GET_USER_BY_ID);
+  console.log(data);
+  const userInformations: UserCard | undefined = data?.getUserById;
 
   // au chargement get user info
   // edit > update form values
   // save > post form values
   // get updated user info
+  // TODO:
+  // pb de type ur l
+  // pb de nullable de avatarCloudinary coté back
+  // brancher l'update avec le back
+  // gérer le reset du formrulaire
+  // style
 
   const { navigate } = useNavigation();
   const [isEditingProfile, setIsEditingProfile] = React.useState<boolean>(
     false
   );
   const [formValues, setFormValues] = React.useState<ProfileValues>({
-    userName: "",
-    phoneNumber: { value: "", isValid: false, countryCode: defaultCountryCode },
-    profilePicture: {
-      cloudinaryId: ""
-    }
+    userName: userInformations?.name,
+    phoneNumber: {
+      value: userInformations?.phoneNumber || "",
+      isValid: false,
+      countryCode: defaultCountryCode
+    },
+    profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId
   });
 
   const handleLogOut = async () => {
@@ -87,10 +98,19 @@ const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
         screen="BottomNavigation"
         text={resources.myProfile}
       />
-      <ImageProfile url={url as ImageURISource} />
+      <ImageProfile
+        url={
+          userInformations?.avatarCloudinaryPublicId &&
+          (getCloudinaryUrl(
+            userInformations?.avatarCloudinaryPublicId
+          ) as ImageURISource)
+        }
+      />
       <View style={styles.buttonContainer}>
         {!isEditingProfile && (
           <>
+            <Text>{userInformations?.name}</Text>
+            <Text>{userInformations?.phoneNumber}</Text>
             <Button
               onPress={openProfileUpdater}
               containerStyle={styles.button}
@@ -133,7 +153,7 @@ const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
                       title={resources.pickProfilePicture}
                       type="outline"
                     />
-                    <Text>{values?.profilePicture?.cloudinaryId}</Text>
+                    <Text>{values?.profilePictureCloudinaryId}</Text>
                   </>
                 </View>
               )}

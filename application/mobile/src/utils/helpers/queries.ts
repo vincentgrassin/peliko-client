@@ -34,9 +34,12 @@ export const GET_USERS = gql`
 `;
 
 export const GET_USER_BY_ID = gql`
-  query GetUserById($id: ID) {
-    user(id: $id) {
+  query GetUserById {
+    getUserById {
       id
+      name
+      phoneNumber
+      avatarCloudinaryPublicId
     }
   }
 `;

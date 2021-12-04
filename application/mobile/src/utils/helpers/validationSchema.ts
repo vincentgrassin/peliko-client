@@ -22,12 +22,14 @@ export const loginSchema = Yup.object().shape({
   })
 });
 
+export type PhoneNumberCard = {
+  value: string;
+  isValid: boolean;
+  countryCode: string;
+};
+
 export type LoginValues = {
-  phoneNumber: {
-    value: string;
-    isValid: boolean;
-    countryCode: string;
-  };
+  phoneNumber: PhoneNumberCard;
   password: string;
   email?: string;
   userName?: string;
@@ -54,11 +56,7 @@ export const rollCreationSchema = Yup.object().shape({
 
 export type ParticipantContact = {
   name: string;
-  phoneNumber: {
-    value: string;
-    isValid: boolean;
-    countryCode: string;
-  };
+  phoneNumber: PhoneNumberCard;
 };
 
 export type RollCreationValues = {
@@ -71,9 +69,5 @@ export type RollCreationValues = {
 export type ProfileValues = Partial<
   Pick<LoginValues, "phoneNumber" | "userName">
 > & {
-  profilePicture: {
-    cloudinaryId: string;
-    height?: number;
-    width?: number;
-  };
+  profilePictureCloudinaryId?: string;
 };

@@ -56,3 +56,10 @@ export type Colors =
   | "pink"
   | "yellow"
   | "black";
+
+export type UserCard = {
+  id: number;
+  name?: string;
+  avatarCloudinaryPublicId?: string;
+  phoneNumber?: string;
+};
