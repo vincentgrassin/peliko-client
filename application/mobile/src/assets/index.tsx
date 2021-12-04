@@ -4,6 +4,8 @@ export { default as Eye } from "./Eye";
 export * from "./Eye";
 export { default as HeaderRoll } from "./HeaderRollSvg";
 export * from "./HeaderRollSvg";
+export { default as ImageProfile } from "./ImageProfile";
+export * from "./ImageProfile";
 export { default as MailBox } from "./MailBox";
 export * from "./MailBox";
 export { default as Thumbnail } from "./ThumbnailSvg";

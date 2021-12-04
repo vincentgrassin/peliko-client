@@ -8,6 +8,7 @@ import CamScreen from "../screens/cam";
 import BottomNavigation from "./BottomNavigation";
 import PicturesGallery from "../screens/picturesGalleryScreen";
 import { Colors, Picture } from "../utils/types/types";
+import ParametersScreen from "../screens/parameters/ParametersScreen";
 
 export type ParamList = {
   RollScreen: {
@@ -30,7 +31,8 @@ export type ScreenList =
   | "PicturesGallery"
   | "Notifications"
   | "RollCreationForm"
-  | "Home";
+  | "Home"
+  | "Parameters";
 
 export default function MainNavigationContainer() {
   const Stack = createStackNavigator();
@@ -43,6 +45,7 @@ export default function MainNavigationContainer() {
         <Stack.Screen name="RollScreen" component={RollScreen} />
         <Stack.Screen name="CamScreen" component={CamScreen} />
         <Stack.Screen name="PicturesGallery" component={PicturesGallery} />
+        <Stack.Screen name="Parameters" component={ParametersScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

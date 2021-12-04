@@ -67,3 +67,13 @@ export type RollCreationValues = {
   date: Date;
   participantsContact: ParticipantContact[];
 };
+
+export type ProfileValues = Partial<
+  Pick<LoginValues, "phoneNumber" | "userName">
+> & {
+  profilePicture: {
+    cloudinaryId: string;
+    height?: number;
+    width?: number;
+  };
+};

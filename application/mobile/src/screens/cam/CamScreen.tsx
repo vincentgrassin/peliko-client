@@ -1,6 +1,5 @@
 import React from "react";
 import { Camera } from "expo-camera";
-import { CLOUDINARY_UPLOAD_URL, CLOUDINARY_UPLOAD_PRESET } from "@env";
 import {
   Button,
   Icon,
@@ -12,10 +11,11 @@ import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
-import { ParamList, ScreenList } from "../../navigation/NavigationContainer";
+import { ParamList } from "../../navigation/NavigationContainer";
 import { GET_ROLLS_BY_USER, GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
+import { uploadToCloudinary } from "../../utils/helpers/cloudinaryHelper";
 
 interface CamProps {}
 
@@ -61,18 +61,7 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
         exif: true
       });
       if (picture.base64) {
-        const data = {
-          file: `data:image/jpg;base64,${picture.base64}`,
-          upload_preset: CLOUDINARY_UPLOAD_PRESET
-        };
-        const response = await fetch(CLOUDINARY_UPLOAD_URL, {
-          body: JSON.stringify(data),
-          headers: {
-            "content-type": "application/json"
-          },
-          method: "POST"
-        });
-        const jsonResponse = await response.json();
+        const jsonResponse = await uploadToCloudinary(picture.base64);
         uploadPicture({
           variables: {
             cloudinaryId: jsonResponse.public_id,

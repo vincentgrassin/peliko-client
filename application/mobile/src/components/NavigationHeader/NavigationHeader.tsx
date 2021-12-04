@@ -1,13 +1,11 @@
 import * as React from "react";
 import { makeStyles } from "react-native-elements";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import View from "../View";
 import { iconSet, shape } from "../../themeHelpers";
 import Icon from "../Icon";
 import Text from "../Text";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
-import { client } from "../../utils/hooks/useApolloClient";
 
 interface NavigationHeaderProps {
   text?: string;
@@ -49,15 +47,8 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   const styles = useStyles({ color, size });
   const { navigate } = useNavigation();
 
-  const navigatedToPreviousScreen = () => {
+  const navigateToScreen = (screen: ScreenList) => {
     screen && navigate<ScreenList>(screen);
-  };
-
-  const handleLogOut = async () => {
-    await AsyncStorage.setItem("@accessToken", "");
-    await AsyncStorage.setItem("@refreshToken", "");
-    client.cache.reset();
-    navigate<ScreenList>("Login");
   };
 
   return (
@@ -66,7 +57,7 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
         <Icon
           containerStyle={styles.icon}
           {...iconSet.arrowLeft}
-          onPress={navigatedToPreviousScreen}
+          onPress={() => navigateToScreen(screen)}
         />
       )}
       {text && (
@@ -74,7 +65,9 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
           {text}
         </Text>
       )}
-      {showParameters && <Icon {...iconSet.cog} onPress={handleLogOut} />}
+      {showParameters && (
+        <Icon {...iconSet.cog} onPress={() => navigateToScreen("Parameters")} />
+      )}
     </View>
   );
 };

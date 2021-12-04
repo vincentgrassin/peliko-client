@@ -43,7 +43,13 @@ const globalResources = {
   formErrors: "Erreurs dans le formulaire",
   errorNotMatchingPassword: "Les mots de passe ne sont pas identiques",
   emptyRolls: "Pas encore de pellicules",
-  emptyNotifications: "Pas d'invitations"
+  emptyNotifications: "Pas d'invitations",
+  logOut: "Se déconnecter",
+  updateProfile: "Modifier mon profil",
+  saveProfile: "Enregistrer mon profil",
+  myParameters: "Mes paramètres",
+  myProfile: "Mon profil",
+  pickProfilePicture: "Choisir une photo"
 };
 
 export default globalResources;
