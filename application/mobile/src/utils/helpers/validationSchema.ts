@@ -71,3 +71,11 @@ export type ProfileValues = Partial<
 > & {
   profilePictureCloudinaryId?: string;
 };
+
+export const userProfileSchema = Yup.object().shape({
+  userName: Yup.string().required(resources.required),
+  phoneNumber: Yup.object().shape({
+    isValid: Yup.bool().isTrue(resources.phoneNumberValidityErrorMessage),
+    value: Yup.string().required(resources.required)
+  })
+});

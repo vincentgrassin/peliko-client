@@ -1,12 +1,12 @@
 import React from "react";
 import { makeStyles } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ImageURISource } from "react-native";
+import { ImageSourcePropType } from "react-native";
 import { Formik } from "formik";
-
 import {
   Button,
   InputFormik,
+  Loader,
   NavigationHeader,
   PhoneNumberInputFormik,
   Text,
@@ -14,15 +14,26 @@ import {
 } from "../../components";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
-import { resources, palette, shape } from "../../themeHelpers";
-import { client, useQuery } from "../../utils/hooks/useApolloClient";
+import { resources, palette, shape, iconSet } from "../../themeHelpers";
+import {
+  client,
+  useMutation,
+  useQuery
+} from "../../utils/hooks/useApolloClient";
 import { ImageProfile } from "../../assets";
-import { ProfileValues } from "../../utils/helpers/validationSchema";
+import {
+  ProfileValues,
+  userProfileSchema
+} from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import { pickImageFromGallery } from "../../utils/helpers/pictureHelper";
 import { GET_USER_BY_ID } from "../../utils/helpers/queries";
 import { UserCard } from "../../utils/types/types";
-import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
+import {
+  getCloudinaryUrl,
+  uploadToCloudinary
+} from "../../utils/helpers/cloudinaryHelper";
+import { UPDATE_USER } from "../../utils/helpers/mutation";
 
 interface ParametersProps {}
 
@@ -32,39 +43,53 @@ const useStyles = makeStyles(() => ({
     flex: 1
   },
   button: {
-    width: "75%",
-    marginTop: shape.spacing(3)
+    width: "75%"
   },
-  buttonContainer: {
+  userInformation: {
     marginTop: shape.spacing(3),
     alignItems: "center"
   },
   inputArea: {
-    width: "100%"
+    width: "80%",
+    marginTop: shape.spacing(3)
+  },
+  profilePicturePicker: {
+    position: "absolute",
+    top: shape.spacing(4),
+    right: shape.spacing(1)
+  },
+  logOut: {
+    marginTop: "auto",
+    marginBottom: shape.spacing(8),
+    alignSelf: "center"
+  },
+  userDetail: {
+    marginTop: 30
+  },
+  cancelButton: {
+    marginTop: shape.spacing(2)
   }
 }));
 
 const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
   const styles = useStyles();
-  const { loading, error, data } = useQuery(GET_USER_BY_ID);
-  console.log(data);
-  const userInformations: UserCard | undefined = data?.getUserById;
+  const { data } = useQuery(GET_USER_BY_ID);
+  const [updateUser] = useMutation(UPDATE_USER);
 
-  // au chargement get user info
-  // edit > update form values
-  // save > post form values
-  // get updated user info
-  // TODO:
-  // pb de type ur l
-  // pb de nullable de avatarCloudinary coté back
-  // brancher l'update avec le back
-  // gérer le reset du formrulaire
-  // style
+  const userInformations: UserCard | undefined = data?.getUserById;
 
   const { navigate } = useNavigation();
   const [isEditingProfile, setIsEditingProfile] = React.useState<boolean>(
     false
   );
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [profilePicture, setProfilePicture] = React.useState<{
+    base64: string | undefined;
+    uri: string;
+  }>({
+    base64: "",
+    uri: ""
+  });
   const [formValues, setFormValues] = React.useState<ProfileValues>({
     userName: userInformations?.name,
     phoneNumber: {
@@ -74,6 +99,28 @@ const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
     },
     profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId
   });
+
+  React.useEffect(() => {
+    if (userInformations?.avatarCloudinaryPublicId) {
+      setProfilePicture((prevState) => {
+        return {
+          ...prevState,
+          uri: userInformations.avatarCloudinaryPublicId
+            ? getCloudinaryUrl(userInformations.avatarCloudinaryPublicId)
+            : ""
+        };
+      });
+    }
+    setFormValues({
+      userName: userInformations?.name,
+      phoneNumber: {
+        value: userInformations?.phoneNumber || "",
+        isValid: false,
+        countryCode: defaultCountryCode
+      },
+      profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId
+    });
+  }, [userInformations]);
 
   const handleLogOut = async () => {
     await AsyncStorage.setItem("@accessToken", "");
@@ -87,7 +134,31 @@ const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
   };
 
   const saveProfile = async (values: ProfileValues) => {
-    console.log(values);
+    const { phoneNumber, userName } = values;
+    let response;
+    setLoading(true);
+    if (profilePicture.base64) {
+      response = await uploadToCloudinary(profilePicture.base64);
+    }
+    await updateUser({
+      variables: {
+        phoneNumber: phoneNumber?.value,
+        name: userName,
+        profilePicture:
+          response?.public_id ||
+          userInformations?.avatarCloudinaryPublicId ||
+          ""
+      },
+      update(cache, { data }) {
+        cache.writeQuery({
+          query: GET_USER_BY_ID,
+          data: {
+            getUserById: data.updateUser
+          }
+        });
+      }
+    });
+    setLoading(false);
     setIsEditingProfile(false);
   };
 
@@ -98,26 +169,40 @@ const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
         screen="BottomNavigation"
         text={resources.myProfile}
       />
-      <ImageProfile
-        url={
-          userInformations?.avatarCloudinaryPublicId &&
-          (getCloudinaryUrl(
-            userInformations?.avatarCloudinaryPublicId
-          ) as ImageURISource)
-        }
-      />
-      <View style={styles.buttonContainer}>
+      <View>
+        {profilePicture?.uri ? (
+          <ImageProfile url={profilePicture.uri as ImageSourcePropType} />
+        ) : (
+          <ImageProfile backgroundColor={palette("yellow")} />
+        )}
+        {isEditingProfile && (
+          <Button
+            onPress={async () => {
+              const picture = await pickImageFromGallery();
+              picture && setProfilePicture(picture);
+            }}
+            type="outline"
+            containerStyle={styles.profilePicturePicker}
+            title={resources.pickProfilePicture}
+          />
+        )}
+      </View>
+      {loading && <Loader />}
+      <View style={styles.userInformation}>
         {!isEditingProfile && (
           <>
-            <Text>{userInformations?.name}</Text>
-            <Text>{userInformations?.phoneNumber}</Text>
             <Button
               onPress={openProfileUpdater}
               containerStyle={styles.button}
               title={resources.updateProfile}
               disabled={isEditingProfile}
-              type="outline"
             />
+            <Text h3 style={styles.userDetail}>
+              {resources.userName} {userInformations?.name}
+            </Text>
+            <Text h3 style={styles.userDetail}>
+              {resources.phoneNumber} {userInformations?.phoneNumber}
+            </Text>
           </>
         )}
         {isEditingProfile && (
@@ -125,48 +210,45 @@ const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
             <Formik
               initialValues={formValues}
               onSubmit={saveProfile}
-              // validationSchema={loginSchema}
+              validationSchema={userProfileSchema}
               enableReinitialize
             >
-              {({ handleSubmit, setFieldValue, values }) => (
-                <View style={styles.inputArea}>
+              {({ handleSubmit }) => (
+                <>
                   <Button
-                    onPress={(e: any) => handleSubmit(e)}
+                    onPress={(e: any) => {
+                      handleSubmit(e);
+                    }}
                     containerStyle={styles.button}
                     title={resources.saveProfile}
+                  />
+                  <View style={styles.inputArea}>
+                    <InputFormik
+                      fieldName="userName"
+                      label={resources.userName}
+                    />
+                    <PhoneNumberInputFormik fieldName="phoneNumber" />
+                  </View>
+                  <Button
+                    onPress={() => setIsEditingProfile(false)}
+                    containerStyle={{
+                      ...styles.button,
+                      ...styles.cancelButton
+                    }}
+                    title={resources.cancel}
                     type="outline"
                   />
-                  <InputFormik
-                    fieldName="userName"
-                    label={resources.userName}
-                  />
-                  <PhoneNumberInputFormik fieldName="phoneNumber" />
-                  <>
-                    <Button
-                      onPress={async () =>
-                        setFieldValue(
-                          "profilePicture",
-                          await pickImageFromGallery()
-                        )
-                      }
-                      containerStyle={styles.button}
-                      title={resources.pickProfilePicture}
-                      type="outline"
-                    />
-                    <Text>{values?.profilePictureCloudinaryId}</Text>
-                  </>
-                </View>
+                </>
               )}
             </Formik>
           </>
         )}
-        <Button
-          onPress={handleLogOut}
-          containerStyle={styles.button}
-          title={resources.logOut}
-          type="outline"
-        />
       </View>
+      <Button
+        onPress={handleLogOut}
+        containerStyle={{ ...styles.button, ...styles.logOut }}
+        title={resources.logOut}
+      />
     </View>
   );
 };

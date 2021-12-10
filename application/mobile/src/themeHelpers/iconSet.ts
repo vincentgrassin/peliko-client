@@ -50,6 +50,14 @@ const globalIconSet = {
   camera: {
     name: "camera",
     type: "entypo"
+  },
+  edit: {
+    name: "edit",
+    type: "entypo"
+  },
+  image: {
+    name: "image",
+    type: "entypo"
   }
 };
 

@@ -3,7 +3,7 @@ import { ImageSourcePropType } from "react-native";
 import Svg, { Defs, G, Rect, Image, Use, ClipPath } from "react-native-svg";
 
 export interface ImageProfileProps {
-  url?: ImageSourcePropType | undefined;
+  url?: ImageSourcePropType;
   backgroundColor?: string;
 }
 const ImageProfile: React.FC<ImageProfileProps> = ({

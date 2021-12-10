@@ -49,7 +49,8 @@ const globalResources = {
   saveProfile: "Enregistrer mon profil",
   myParameters: "Mes paramètres",
   myProfile: "Mon profil",
-  pickProfilePicture: "Choisir une photo"
+  pickProfilePicture: "Choisir une photo",
+  cancel: "Annuler"
 };
 
 export default globalResources;
