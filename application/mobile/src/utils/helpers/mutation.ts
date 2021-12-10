@@ -56,3 +56,21 @@ export const DECLINE_INVITATION = gql`
     declineRollInvitation(rollId: $rollId)
   }
 `;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser(
+    $profilePicture: String!
+    $phoneNumber: String!
+    $name: String!
+  ) {
+    updateUser(
+      profilePicture: $profilePicture
+      phoneNumber: $phoneNumber
+      name: $name
+    ) {
+      name
+      phoneNumber
+      avatarCloudinaryPublicId
+    }
+  }
+`;

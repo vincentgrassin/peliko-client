@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { uploadToCloudinary } from "./cloudinaryHelper";
 
 const getPermissions = async () => {
   if (Platform.OS !== "web") {
@@ -21,9 +20,14 @@ export const pickImageFromGallery = async () => {
     base64: true
   });
 
-  if (!result.cancelled && result.base64) {
-    const jsonResponse = await uploadToCloudinary(result.base64);
-    return jsonResponse.public_id;
+  if (!result.cancelled) {
+    return {
+      base64: result.base64,
+      uri: result.uri
+    };
   }
-  return undefined;
+  return {
+    base64: "",
+    uri: ""
+  };
 };

@@ -8,7 +8,6 @@ import defaultPelikoFacePink from "../../assets/pelikoface-pink.png";
 import defaultPelikoFaceOrange from "../../assets/pelikoface-orange.png";
 //@ts-ignore
 import defaultPelikoFaceYellow from "../../assets/pelikoface-yellow.png";
-//@ts-ignore
 
 const defaultPelikoFaceBlueUri = Image.resolveAssetSource(defaultPelikoFaceBlue)
   .uri;

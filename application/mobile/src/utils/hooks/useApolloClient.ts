@@ -1,6 +1,7 @@
 import { BASE_URL } from "@env";
 import {
   useQuery,
+  useLazyQuery,
   useMutation,
   ApolloClient,
   InMemoryCache,
@@ -31,5 +32,5 @@ export const client = new ApolloClient({
   credentials: "include"
 });
 
-export { useQuery, useMutation, gql };
+export { useQuery, useLazyQuery, useMutation, gql };
 export { ApolloProvider };
