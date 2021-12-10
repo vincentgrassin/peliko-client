@@ -54,8 +54,8 @@ export const GET_ROLL_BY_ID = gql`
       participants {
         phoneNumber
         id
-        rollId
         pictureCount
+        userId
       }
     }
   }
@@ -90,5 +90,16 @@ export const GET_PICTURES_BY_ROLL = gql`
 export const GET_INVITATION_COUNT_BY_USER = gql`
   query GetInvitationCountByUser {
     invitationNotificationCountByUser
+  }
+`;
+
+export const GET_USERS_BY_IDS = gql`
+  query GetUsersByIds($ids: [Float!]!) {
+    getUsersByIds(ids: $ids) {
+      id
+      name
+      avatarCloudinaryPublicId
+      phoneNumber
+    }
   }
 `;

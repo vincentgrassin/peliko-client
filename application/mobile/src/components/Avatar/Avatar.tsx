@@ -1,23 +1,23 @@
 import React from "react";
 import {
   Avatar as ReactNativeAvatar,
-  AvatarProps as ReactNativeAvatarProps
+  AvatarProps as ReactNativeAvatarProps,
+  makeStyles
 } from "react-native-elements";
-import StyleSheet from "../StyleSheet";
+
 import { palette } from "../../themeHelpers";
 import Badge from "../Badge";
 import View from "../View";
+import Text from "../Text";
 import { getDefaultAvatarUri } from "../../utils/helpers/colorHelper";
 
 interface AvatarProps extends ReactNativeAvatarProps {
   notification?: number;
   index?: number;
+  name?: string;
 }
 
-const style = StyleSheet.create({
-  root: {
-    position: "relative"
-  },
+const useStyles = makeStyles((theme) => ({
   notification: {
     position: "absolute",
     top: 0,
@@ -30,17 +30,24 @@ const style = StyleSheet.create({
     height: 20,
     width: 20,
     borderRadius: 20
+  },
+  name: {
+    width: 60,
+    textAlign: "center"
   }
-});
+}));
 
 const Avatar: React.FC<AvatarProps> = ({
   notification,
   index = 0,
   source,
+  name,
   ...props
 }) => {
+  const styles = useStyles();
+
   return (
-    <View style={style.root}>
+    <>
       <ReactNativeAvatar
         rounded
         source={source || { uri: getDefaultAvatarUri(index) }}
@@ -48,12 +55,13 @@ const Avatar: React.FC<AvatarProps> = ({
       />
       {(notification || notification === 0) && (
         <Badge
-          containerStyle={style.notification}
-          badgeStyle={style.badge}
+          containerStyle={styles.notification}
+          badgeStyle={styles.badge}
           value={notification}
         />
       )}
-    </View>
+      <Text style={styles.name}>{name}</Text>
+    </>
   );
 };
 

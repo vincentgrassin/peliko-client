@@ -5,8 +5,11 @@ import ScrollView from "../ScrollView";
 import Avatar from "../Avatar";
 import Text from "../Text";
 import View from "../View";
-import { Participant } from "../../utils/types/types";
+import { Participant, User } from "../../utils/types/types";
 import { resources, shape } from "../../themeHelpers";
+import { useQuery } from "../../utils/hooks/useApolloClient";
+import { GET_USERS_BY_IDS } from "../../utils/helpers/queries";
+import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
 
 interface RollParticipantsProps {
   participants: Participant[] | undefined;
@@ -27,10 +30,14 @@ const useStyles = makeStyles((theme) => ({
 
 const RollParticipants: React.FC<RollParticipantsProps> = ({
   participants,
-  className,
-  ...props
+  className
 }) => {
   const styles = useStyles();
+  const ids = participants?.map((p) => p.userId);
+  const { data } = useQuery(GET_USERS_BY_IDS, {
+    variables: { ids }
+  });
+  const users: User[] = data?.getUsersByIds;
 
   return (
     <View style={[styles.participants, className]}>
@@ -40,19 +47,26 @@ const RollParticipants: React.FC<RollParticipantsProps> = ({
       <ScrollView horizontal>
         {participants &&
           participants?.map((participant, index) => {
+            const associatedUser = users?.find(
+              (u) => u.id === participant.userId
+            );
+            const profilePictureUrl =
+              associatedUser?.avatarCloudinaryPublicId &&
+              getCloudinaryUrl(associatedUser?.avatarCloudinaryPublicId);
             return (
               <View style={styles.participant} key={`avatar-${index}`}>
                 <Avatar
                   source={
-                    participant.avatarImageUri
+                    profilePictureUrl
                       ? {
-                          uri: participant.avatarImageUri
+                          uri: profilePictureUrl
                         }
                       : undefined
                   }
                   index={index}
                   size="large"
                   notification={participant.pictureCount}
+                  name={associatedUser?.name || associatedUser?.phoneNumber}
                 />
               </View>
             );

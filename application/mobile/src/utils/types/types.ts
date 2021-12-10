@@ -1,18 +1,22 @@
-export type RollData =
-  | {
-      id: number;
-      name: string;
-      description: string;
-      accessCodeRoll: string;
-      creationDate: string;
-      closingDate: string;
-      deliveryType: string;
-      pictureNumber: number;
-      remainingPictures: number;
-      openingStatus: boolean;
-      participants: Participant[];
-    }
-  | undefined;
+export type User = {
+  id: number;
+  name: string;
+  phoneNumber: string;
+  avatarCloudinaryPublicId?: string;
+};
+export type RollData = {
+  id: number;
+  name: string;
+  description: string;
+  accessCodeRoll: string;
+  creationDate: string;
+  closingDate: string;
+  deliveryType: string;
+  pictureNumber: number;
+  remainingPictures: number;
+  openingStatus: boolean;
+  participants: Participant[];
+};
 
 export type Picture = {
   cloudinaryPublicId: string;
@@ -31,6 +35,7 @@ export type Participant = {
   hasDiscoverRoll: boolean;
   avatarImageUri?: string;
   pictureCount: number;
+  userId: number;
 };
 
 export type InvitationRoll = {

@@ -188,6 +188,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
                   //@ts-ignore
                   errorMessage={
                     errors.participantsContact &&
+                    errors.participantsContact[index] &&
                     //@ts-ignore
                     errors.participantsContact[index].phoneNumber
                   }
