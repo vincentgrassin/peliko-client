@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   Avatar as ReactNativeAvatar,
   AvatarProps as ReactNativeAvatarProps,
@@ -7,7 +7,6 @@ import {
 
 import { palette } from "../../themeHelpers";
 import Badge from "../Badge";
-import View from "../View";
 import Text from "../Text";
 import { getDefaultAvatarUri } from "../../utils/helpers/colorHelper";
 
@@ -17,7 +16,7 @@ interface AvatarProps extends ReactNativeAvatarProps {
   name?: string;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   notification: {
     position: "absolute",
     top: 0,

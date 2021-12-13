@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { isValidNumber } from "react-native-phone-number-input";
 import { FormikValues, useFormikContext } from "formik";
 import { defaultCountryCode } from "../../utils/helpers/constants";

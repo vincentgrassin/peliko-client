@@ -50,7 +50,8 @@ const globalResources = {
   myParameters: "Mes paramètres",
   myProfile: "Mon profil",
   pickProfilePicture: "Choisir une photo",
-  cancel: "Annuler"
+  cancel: "Annuler",
+  baseErrorMessage: "¯|_(ツ)_/¯ Oh no..."
 };
 
 export default globalResources;

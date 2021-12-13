@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Formik } from "formik";
 import { makeStyles } from "react-native-elements";
 import { KeyboardAvoidingView } from "react-native";
@@ -28,7 +28,7 @@ import RollFormStep3 from "./RollFormStep3";
 
 interface RollFormWizardProps {}
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     flex: 1
   },

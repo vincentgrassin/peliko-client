@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useField, useFormikContext } from "formik";
 import { Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -10,7 +10,7 @@ import { RollCreationValues } from "../../utils/helpers/validationSchema";
 
 interface RollFormStep1Props {}
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   formStep: {
     marginTop: shape.spacing(3),
     marginLeft: shape.spacing(2),

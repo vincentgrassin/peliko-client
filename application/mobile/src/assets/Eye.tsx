@@ -1,8 +1,8 @@
-import React from "react";
+import * as React from "react";
 import Svg, { G, Path } from "react-native-svg";
 
 export interface EyeProps {}
-const Eye: React.FC<EyeProps> = ({ ...props }) => {
+const Eye: React.FC<EyeProps> = ({}) => {
   return (
     <Svg width="255" height="149" viewBox="0 0 255 149">
       <G fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">

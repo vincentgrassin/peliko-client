@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { isString, useField, useFormikContext } from "formik";
 import { makeStyles } from "react-native-elements";
 import { isValidNumber } from "react-native-phone-number-input";
@@ -22,7 +22,7 @@ import { getNumberAfterPossiblyEliminatingZero } from "../../utils/helpers/dataC
 
 interface RollFormStep2Props {}
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   rollForm: {
     marginTop: shape.spacing(3),
     marginLeft: shape.spacing(2),

@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React from "react";
+import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { makeStyles } from "react-native-elements";
 import Home from "../screens/home";

@@ -1,6 +1,6 @@
-import React from "react";
+import * as React from "react";
 import { ImageSourcePropType } from "react-native";
-import Svg, { Defs, G, Rect, Image, Use, ClipPath } from "react-native-svg";
+import Svg, { Defs, G, Rect, Use, ClipPath } from "react-native-svg";
 
 export interface HeaderRollSvgProps {
   url?: ImageSourcePropType | undefined;

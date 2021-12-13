@@ -1,11 +1,11 @@
-import React from "react";
+import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import { View, InputFormik, Text } from "../../components";
 import { resources, shape } from "../../themeHelpers";
 
 interface RollFormStep0Props {}
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   formStep: {
     marginTop: shape.spacing(3),
     marginLeft: shape.spacing(2),

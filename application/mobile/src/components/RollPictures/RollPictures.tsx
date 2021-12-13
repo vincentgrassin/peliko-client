@@ -16,7 +16,7 @@ interface RollPicturesProps {
   listHeaderComponent: JSX.Element;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     flex: 1,
     justifyContent: "center",
@@ -41,7 +41,7 @@ const RollPictures: React.FC<RollPicturesProps> = ({
   const styles = useStyles();
 
   const { navigate } = useNavigation();
-  const { loading, error, data } = useQuery(GET_PICTURES_BY_ROLL, {
+  const { data } = useQuery(GET_PICTURES_BY_ROLL, {
     variables: { rollId }
   });
 

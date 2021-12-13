@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import PhoneInput, { PhoneInputProps } from "react-native-phone-number-input";
 import { palette, typography } from "../../themeHelpers";
@@ -12,7 +12,7 @@ export interface CustomPhoneInputProps extends PhoneInputProps {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   errorText: {
     color: palette("red"),
     fontSize: typography.fontSize.xs

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Formik } from "formik";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "@env";
@@ -23,7 +23,7 @@ import { defaultCountryCode } from "../../utils/helpers/constants";
 
 interface LoginFormProps {}
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: { flex: 1 },
   scrollContainer: {
     flexGrow: 1
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
+const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const [formValues, setFormValues] = React.useState<LoginValues>({
     userName: "",
     phoneNumber: { value: "", isValid: false, countryCode: defaultCountryCode },
@@ -115,8 +115,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
       navigate<ScreenList>("BottomNavigation");
       try {
         await AsyncStorage.setItem("@refreshToken", data.refreshToken);
-      } catch (err) {
-        console.log(err);
+      } catch (e) {
+        console.log(e);
       }
     }
   };
@@ -132,7 +132,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ ...props }) => {
             validationSchema={loginSchema}
             enableReinitialize
           >
-            {({ handleSubmit, errors, resetForm, setFieldValue }) => (
+            {({ handleSubmit, errors, setFieldValue }) => (
               <View style={styles.formArea}>
                 <View style={styles.inputArea}>
                   {isSignUpForm && (

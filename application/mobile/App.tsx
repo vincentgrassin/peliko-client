@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { client, ApolloProvider } from "./src/utils/hooks/useApolloClient";

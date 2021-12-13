@@ -42,8 +42,7 @@ const RollHeader: React.FC<RollHeaderProps> = ({
   name,
   description,
   closingDate,
-  remainingPictures,
-  ...props
+  remainingPictures
 }) => {
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const styles = useStyles(route?.params?.backgroundColor);

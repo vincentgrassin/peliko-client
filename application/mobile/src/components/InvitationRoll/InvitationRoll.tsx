@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { makeStyles } from "react-native-elements";
 import View from "../View";
@@ -24,7 +24,7 @@ interface InvitationRollProps {
   index: number;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   content: {
     display: "flex",
     flexDirection: "row",
@@ -51,8 +51,7 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
   closingDate,
   rollTitle,
   rollId,
-  index,
-  ...props
+  index
 }) => {
   const styles = useStyles();
 

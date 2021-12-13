@@ -1,17 +1,17 @@
-import React, { ReactNode } from "react";
+import * as React from "react";
+import { makeStyles } from "react-native-elements";
 import Text from "../Text";
 import View from "../View";
 import Icon from "../Icon";
 import { shape, iconSet } from "../../themeHelpers";
-import StyleSheet from "../StyleSheet";
 
 interface RollBadgeProps {
-  value: ReactNode;
-  secondaryValue?: ReactNode;
+  value: React.ReactNode;
+  secondaryValue?: React.ReactNode;
   icon?: "date" | "participantNumber" | "pictureNumber";
 }
 
-const style = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "row",
@@ -20,7 +20,7 @@ const style = StyleSheet.create({
   iconStyle: {
     marginRight: shape.spacing(0.5)
   }
-});
+}));
 
 const RollBadge: React.FC<RollBadgeProps> = ({
   value,
@@ -32,15 +32,16 @@ const RollBadge: React.FC<RollBadgeProps> = ({
     pictureNumber: iconSet.picture,
     participantNumber: iconSet.people
   };
+  const styles = useStyles();
 
   return (
-    <View style={style.root}>
+    <View style={styles.root}>
       {icon && iconComponent[icon] && (
         <Icon
           type={iconComponent[icon].type}
           name={iconComponent[icon].name}
           size={shape.spacing(2)}
-          style={style.iconStyle}
+          style={styles.iconStyle}
         />
       )}
       <Text>{value}</Text>

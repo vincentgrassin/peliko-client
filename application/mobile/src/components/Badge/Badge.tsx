@@ -1,14 +1,14 @@
-import React from "react";
+import * as React from "react";
 import {
   Badge as ReactNativeBadge,
-  BadgeProps as ReactNativeBadgeProps
+  BadgeProps as ReactNativeBadgeProps,
+  makeStyles
 } from "react-native-elements";
-import StyleSheet from "../StyleSheet";
 import { shape, palette } from "../../themeHelpers";
 
 interface BadgeProps extends ReactNativeBadgeProps {}
 
-const style = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   badge: {
     backgroundColor: palette("white", 0.7),
     borderWidth: 0,
@@ -16,10 +16,13 @@ const style = StyleSheet.create({
     paddingRight: shape.spacing(1),
     height: shape.spacing(3)
   }
-});
+}));
 
-const Badge: React.FC<BadgeProps> = ({ badgeStyle, ...props }) => (
-  <ReactNativeBadge badgeStyle={[style.badge, badgeStyle]} {...props} />
-);
+const Badge: React.FC<BadgeProps> = ({ badgeStyle, ...props }) => {
+  const styles = useStyles();
+  return (
+    <ReactNativeBadge badgeStyle={[styles.badge, badgeStyle]} {...props} />
+  );
+};
 
 export default Badge;

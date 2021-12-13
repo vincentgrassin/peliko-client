@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import View from "../View";
 import Text from "../Text";
@@ -44,12 +44,7 @@ const useStyles = makeStyles((theme, step: number) => {
   };
 });
 
-const Step: React.FC<StepProps> = ({
-  isActive,
-  step,
-  onStepChange,
-  ...props
-}) => {
+const Step: React.FC<StepProps> = ({ isActive, step, onStepChange }) => {
   const styles = useStyles(step);
   return (
     <View style={styles.step}>

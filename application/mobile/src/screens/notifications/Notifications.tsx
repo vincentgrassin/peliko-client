@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import {
   Illustration,
@@ -6,8 +6,8 @@ import {
   Loader,
   ScrollView,
   NavigationHeader,
-  Text,
-  View
+  View,
+  ErrorMessage
 } from "../../components";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { InvitationRoll as InvitationRollType } from "../../utils/types/types";
@@ -16,7 +16,7 @@ import { palette, resources, shape } from "../../themeHelpers";
 
 interface NotificationsProps {}
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   invitationList: {
     marginTop: shape.spacing(2)
   },
@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Notifications: React.FC<NotificationsProps> = ({ ...props }) => {
+const Notifications: React.FC<NotificationsProps> = ({}) => {
   const { loading, error, data } = useQuery(GET_INVITATIONS_BY_USER);
   const styles = useStyles();
 
   if (loading) return <Loader />;
-  if (error) return <Text>Oh no... {error.message}</Text>;
+  if (error) return <ErrorMessage message={error.message} />;
 
   const invitationRollsByUser: InvitationRollType[] =
     data?.invitationRollsByUser;

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ImageSourcePropType } from "react-native";
@@ -14,7 +14,7 @@ import {
 } from "../../components";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
-import { resources, palette, shape, iconSet } from "../../themeHelpers";
+import { resources, palette, shape } from "../../themeHelpers";
 import {
   client,
   useMutation,
@@ -71,7 +71,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Parameters: React.FC<ParametersProps> = ({ ...props }) => {
+const Parameters: React.FC<ParametersProps> = ({}) => {
   const styles = useStyles();
   const { data } = useQuery(GET_USER_BY_ID);
   const [updateUser] = useMutation(UPDATE_USER);

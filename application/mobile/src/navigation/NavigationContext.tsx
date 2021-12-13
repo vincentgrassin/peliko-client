@@ -10,7 +10,7 @@ export const NavigationContext = React.createContext<NavigationContextProps>({
   updateNotificationNumber: () => {}
 });
 
-export const NavigationProvider: React.FC = ({ children, ...props }) => {
+export const NavigationProvider: React.FC = ({ children }) => {
   const [notification, setNotifications] = React.useState<number>(0);
   const updateNotificationNumber = (n: number) => setNotifications(n);
 

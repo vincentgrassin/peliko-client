@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   Divider as ReactNativeDivider,
   DividerProps as ReactNativeDividerProps

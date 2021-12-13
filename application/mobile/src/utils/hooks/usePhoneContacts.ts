@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import * as Contacts from "expo-contacts";
 
 export type PhoneContact = Contacts.Contact[];

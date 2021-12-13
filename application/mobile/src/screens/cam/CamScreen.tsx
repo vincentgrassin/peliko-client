@@ -1,12 +1,7 @@
-import React from "react";
+import * as React from "react";
 import { Camera } from "expo-camera";
-import {
-  Button,
-  Icon,
-  StyleSheet,
-  View,
-  NavigationHeader
-} from "../../components";
+import { makeStyles } from "react-native-elements";
+import { Button, Icon, View, NavigationHeader } from "../../components";
 import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
@@ -19,7 +14,7 @@ import { uploadToCloudinary } from "../../utils/helpers/cloudinaryHelper";
 
 interface CamProps {}
 
-const style = StyleSheet.create({
+const useStyles = makeStyles(() => ({
   actions: {
     marginTop: "auto"
   },
@@ -29,14 +24,15 @@ const style = StyleSheet.create({
     justifyContent: "space-around",
     marginBottom: shape.spacing(3)
   }
-});
+}));
 
-const Cam: React.FC<CamProps> = ({ ...props }) => {
+const Cam: React.FC<CamProps> = ({}) => {
+  const styles = useStyles();
   let camera = React.useRef(null);
   const [hasPermission, setHasPermission] = React.useState<boolean>(false);
   const [isCameraBack, setIsCameraBack] = React.useState<boolean>(true);
   const [isFlashOn, setIsFlashOn] = React.useState<boolean>(false);
-  const [uploadPicture, { data }] = useMutation(UPLOAD_PICTURE);
+  const [uploadPicture] = useMutation(UPLOAD_PICTURE);
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const rollId = route?.params?.rollId;
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
@@ -113,8 +109,8 @@ const Cam: React.FC<CamProps> = ({ ...props }) => {
             //@ts-ignore
             ref={(ref) => (camera = ref)}
           >
-            <View style={style.actions}>
-              <View style={style.cameraOptions}>
+            <View style={styles.actions}>
+              <View style={styles.cameraOptions}>
                 <Icon {...iconSet.flash} onPress={toggleFlash} />
                 <Icon {...iconSet.reverseCam} onPress={reverseCam} />
               </View>

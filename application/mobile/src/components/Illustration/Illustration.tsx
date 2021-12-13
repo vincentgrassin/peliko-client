@@ -10,7 +10,7 @@ interface IllustrationProps {
   text?: string;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: "flex",
     alignItems: "center",

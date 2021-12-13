@@ -1,14 +1,14 @@
-import React from "react";
+import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import {
   Button,
-  Text,
   RollHeader,
   RollParticipants,
   ScrollView,
   NavigationHeader,
   Loader,
-  Icon
+  Icon,
+  ErrorMessage
 } from "../../components";
 import { iconSet, resources, shape } from "../../themeHelpers";
 import {
@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Roll: React.FC<RollProps> = ({ ...props }) => {
+const Roll: React.FC<RollProps> = ({}) => {
   const styles = useStyles();
 
   const { navigate } = useNavigation();
@@ -51,7 +51,7 @@ const Roll: React.FC<RollProps> = ({ ...props }) => {
   });
 
   if (loading) return <Loader />;
-  if (error) return <Text>Oh no... {error.message}</Text>;
+  if (error) return <ErrorMessage message={error.message} />;
 
   const { roll }: { roll: RollData } = data;
 

@@ -16,7 +16,7 @@ interface RollParticipantsProps {
   className: StyleProp<ViewStyle>;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   participants: {
     flex: 1
   },

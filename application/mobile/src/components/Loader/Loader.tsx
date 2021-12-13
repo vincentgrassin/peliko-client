@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   ActivityIndicator as ReactNativeLoader,
   ActivityIndicatorProps as ReactNativeLoaderProps

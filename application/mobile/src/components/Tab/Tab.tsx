@@ -1,6 +1,5 @@
-import React from "react";
+import * as React from "react";
 import { makeStyles } from "react-native-elements";
-import Text from "../Text";
 import RollThumbnail from "../RollThumbnail";
 import Loader from "../Loader";
 import { RollData } from "../../utils/types/types";
@@ -15,11 +14,12 @@ import View from "../View";
 import FlatList from "../FlatList";
 import Illustration from "../Illustration";
 import { useNavigationContext } from "../../navigation/NavigationContext";
+import ErrorMessage from "../ErrorMessage";
 
 interface TabProps {
   isOpenRollTab: boolean;
 }
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   emptyIllustration: {
     flex: 1
   },
@@ -44,7 +44,7 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   }, [count, updateNotificationNumber]);
 
   if (loading) return <Loader />;
-  if (error) return <Text>Oh no... {error.message}</Text>;
+  if (error) return <ErrorMessage message={error.message} />;
 
   const rollList: RollData[] = data?.rollsByUser;
 

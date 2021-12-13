@@ -1,5 +1,4 @@
 import { globalPalette } from "./palette";
-import shape from "./shape";
 import typography from "./typography";
 
 const globalTheme = {

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import View from "../View";
@@ -21,7 +21,7 @@ interface RollThumbnailProps extends ThumbnailSvgProps {
   isOpenRoll: boolean;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: { position: "relative" },
   thumbnailContent: {
     position: "absolute",
@@ -43,7 +43,6 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
   pictureNumber,
   participantNumber,
   closingDate,
-  hasBeenDiscovered,
   backgroundColor,
   url,
   rollId,
