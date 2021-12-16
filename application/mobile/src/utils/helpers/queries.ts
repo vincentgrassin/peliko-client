@@ -16,6 +16,7 @@ export const GET_ROLLS_BY_USER = gql`
       name
       closingDate
       remainingPictures
+      coverPictureId
       participants {
         id
       }
