@@ -3,6 +3,6 @@ module.exports = {
     assetPlugins: ['expo-asset/tools/hashAssetFiles'],
   },
   resolver: {
-    sourceExts: ['jsx', 'js', 'ts', 'tsx']
+    sourceExts: ['jsx', 'js', 'ts', 'tsx', 'cjs']
   },
 };
