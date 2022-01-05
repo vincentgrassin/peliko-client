@@ -39,7 +39,7 @@ const Cam: React.FC<CamProps> = ({}) => {
 
   React.useEffect(() => {
     const requestPermission = async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       if (status === "granted") {
         setHasPermission(true);
       }

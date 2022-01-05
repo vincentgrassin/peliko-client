@@ -71,6 +71,7 @@ export const UPDATE_USER = gql`
       name
       phoneNumber
       avatarCloudinaryPublicId
+      id
     }
   }
 `;

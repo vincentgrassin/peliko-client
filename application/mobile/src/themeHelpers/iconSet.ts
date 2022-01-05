@@ -32,7 +32,7 @@ const globalIconSet = {
     type: "entypo"
   },
   reverseCam: {
-    name: "ios-reverse-camera",
+    name: "camera-reverse",
     type: "ionicon"
   },
   trash: {

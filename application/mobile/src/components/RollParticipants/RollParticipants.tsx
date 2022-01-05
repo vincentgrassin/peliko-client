@@ -33,7 +33,7 @@ const RollParticipants: React.FC<RollParticipantsProps> = ({
   className
 }) => {
   const styles = useStyles();
-  const ids = participants?.map((p) => p.userId);
+  const ids = participants?.map((p) => p.userId).filter(Boolean);
   const { data } = useQuery(GET_USERS_BY_IDS, {
     variables: { ids }
   });
