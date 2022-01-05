@@ -1,7 +1,7 @@
 import { gql } from "../hooks/useApolloClient";
 
 export const CREATE_ROLL = gql`
-  mutation CreateRoll($rollData: RollInputType!) {
+  mutation CreateRoll($rollData: RollInputViewModel!) {
     createRoll(rollData: $rollData) {
       id
       name
