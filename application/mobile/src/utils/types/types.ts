@@ -16,6 +16,7 @@ export type RollData = {
   remainingPictures: number;
   openingStatus: boolean;
   participants: Participant[];
+  coverPictureId: string;
 };
 
 export type Picture = {

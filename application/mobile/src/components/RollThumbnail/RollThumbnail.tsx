@@ -1,5 +1,6 @@
 import * as React from "react";
 import { makeStyles } from "react-native-elements";
+import { ImageSourcePropType } from "react-native";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import View from "../View";
 import Text from "../Text";
@@ -10,15 +11,17 @@ import RollBadge from "../RollBadge";
 import Badge from "../Badge";
 import { getRemainingTimeOnDate } from "../../utils/helpers/dateHelper";
 import { ScreenList } from "../../navigation/NavigationContainer";
+import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
 
 interface RollThumbnailProps extends ThumbnailSvgProps {
-  rollName: string | undefined;
-  pictureNumber: number | undefined;
-  participantNumber: number | undefined;
-  closingDate: string | undefined;
+  rollName: string;
+  pictureNumber: number;
+  participantNumber: number;
+  closingDate: string;
   hasBeenDiscovered: boolean;
-  rollId: number | undefined;
+  rollId: number;
   isOpenRoll: boolean;
+  coverPictureId?: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -44,9 +47,9 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
   participantNumber,
   closingDate,
   backgroundColor,
-  url,
   rollId,
   isOpenRoll,
+  coverPictureId,
   ...props
 }) => {
   const styles = useStyles();
@@ -65,7 +68,15 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
       }
     >
       <View>
-        <Thumbnail backgroundColor={backgroundColor} url={url} {...props} />
+        <Thumbnail
+          backgroundColor={backgroundColor}
+          url={
+            !isOpenRoll && coverPictureId
+              ? (getCloudinaryUrl(coverPictureId) as ImageSourcePropType)
+              : undefined
+          }
+          {...props}
+        />
         <View style={styles.thumbnailContent}>
           <Text h1>{rollName}</Text>
           <View style={styles.badgeArea}>

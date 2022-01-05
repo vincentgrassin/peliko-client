@@ -57,13 +57,14 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
             <View style={styles.thumbNail} key={index}>
               <RollThumbnail
                 backgroundColor={getAlternateColor(index)}
-                rollName={item?.name}
-                pictureNumber={item?.remainingPictures}
-                participantNumber={item?.participants?.length}
-                closingDate={item?.closingDate}
+                rollName={item.name}
+                pictureNumber={item.remainingPictures}
+                participantNumber={item.participants?.length}
+                closingDate={item.closingDate}
                 hasBeenDiscovered={false}
                 rollId={item?.id}
                 isOpenRoll={isOpenRollTab}
+                coverPictureId={item.coverPictureId}
               />
             </View>
           )}

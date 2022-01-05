@@ -40,7 +40,7 @@ const ThumbnailSvg: React.FC<ThumbnailSvgProps> = ({
           rx={25}
         />
         <Rect
-          fill={backgroundColor}
+          fill={!url ? backgroundColor : "transparent"}
           x={0}
           y={0}
           width={328}
