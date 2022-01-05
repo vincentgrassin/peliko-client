@@ -7,6 +7,8 @@ export const HOURS = 24;
 export const screenWidth = Dimensions.get("window").width;
 export const screenHeight = Dimensions.get("window").height;
 export const defaultCountryCode = "FR";
+export const ROLL_CREATION_LAST_STEP = 2;
+export const ROLL_CREATION_FIRST_STEP = 0;
 
 export const svgMapping: { [key: string]: JSX.Element } = {
   eye: <Eye />,

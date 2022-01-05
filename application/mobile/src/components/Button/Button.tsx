@@ -28,6 +28,8 @@ const useStyles = makeStyles(
         borderWidth: shape.width.buttonBorder,
         borderColor: color || palette("yellow"),
         height: size === "large" ? 50 : 25,
+        paddingTop: shape.spacing(0),
+        paddingBottom: shape.spacing(0),
         paddingLeft: shape.spacing(2),
         paddingRight: shape.spacing(2),
         backgroundColor:

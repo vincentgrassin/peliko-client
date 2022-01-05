@@ -24,7 +24,10 @@ import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
-import RollFormStep3 from "./RollFormStep3";
+import {
+  ROLL_CREATION_FIRST_STEP,
+  ROLL_CREATION_LAST_STEP
+} from "../../utils/helpers/constants";
 
 interface RollFormWizardProps {}
 
@@ -68,12 +71,12 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const [step, setStep] = React.useState(0);
 
   const handlePrevious = () => {
-    if (step > 0) {
+    if (step > ROLL_CREATION_FIRST_STEP) {
       setStep(step - 1);
     }
   };
   const handleNext = () => {
-    if (step < 3) {
+    if (step < ROLL_CREATION_LAST_STEP) {
       setStep(step + 1);
     }
   };
@@ -135,7 +138,6 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
                   {step === 0 && <RollFormStep0 />}
                   {step === 1 && <RollFormStep1 />}
                   {step === 2 && <RollFormStep2 />}
-                  {step === 3 && <RollFormStep3 />}
                 </View>
                 <View style={styles.formActions}>
                   {step !== 0 ? (
@@ -148,7 +150,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
                   ) : (
                     <View style={styles.actionButton} />
                   )}
-                  {step === 3 ? (
+                  {step === ROLL_CREATION_LAST_STEP ? (
                     <Button
                       onPress={handleSubmit as any}
                       title={resources.submit}

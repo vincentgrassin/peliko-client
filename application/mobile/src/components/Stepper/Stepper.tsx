@@ -24,7 +24,6 @@ const Stepper: React.FC<StepperProps> = ({ step, onStepChange }) => {
       <Step step={0} isActive={step === 0} onStepChange={onStepChange} />
       <Step step={1} isActive={step === 1} onStepChange={onStepChange} />
       <Step step={2} isActive={step === 2} onStepChange={onStepChange} />
-      <Step step={3} isActive={step === 3} onStepChange={onStepChange} />
     </View>
   );
 };

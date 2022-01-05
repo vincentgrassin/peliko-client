@@ -172,6 +172,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           onPress={handleAddField}
           buttonStyle={styles.addButton}
           title={resources.add}
+          size="small"
         />
       </View>
       <View style={styles.participantsArea}>

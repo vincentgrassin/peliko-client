@@ -9,6 +9,7 @@ import { palette } from "../../themeHelpers";
 import Badge from "../Badge";
 import Text from "../Text";
 import { getDefaultAvatarUri } from "../../utils/helpers/colorHelper";
+import View from "../View";
 
 interface AvatarProps extends ReactNativeAvatarProps {
   notification?: number;
@@ -46,7 +47,7 @@ const Avatar: React.FC<AvatarProps> = ({
   const styles = useStyles();
 
   return (
-    <>
+    <View>
       <ReactNativeAvatar
         rounded
         source={source || { uri: getDefaultAvatarUri(index) }}
@@ -60,7 +61,7 @@ const Avatar: React.FC<AvatarProps> = ({
         />
       )}
       <Text style={styles.name}>{name}</Text>
-    </>
+    </View>
   );
 };
 

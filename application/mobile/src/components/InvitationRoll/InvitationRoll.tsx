@@ -62,7 +62,7 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
     joinRoll({
       variables: {
         rollId,
-        accessCode: "AAA111" // fake code to remove when implementating roll validation
+        accessCode: "AAA111" // TODO: fake code to remove when implementating roll validation
       },
       refetchQueries: [
         { query: GET_INVITATIONS_BY_USER },
@@ -91,7 +91,7 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
         key="avatar"
         source={adminAvatarSource}
         index={index}
-        size="medium"
+        size="large"
       />
       <View style={styles.detail}>
         <View>

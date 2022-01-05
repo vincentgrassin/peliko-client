@@ -6,6 +6,10 @@ import TouchableOpacity from "../TouchableOpacity";
 import Divider from "../Divider";
 import { palette } from "../../themeHelpers";
 import { getAlternateColor } from "../../utils/helpers/colorHelper";
+import {
+  ROLL_CREATION_FIRST_STEP,
+  ROLL_CREATION_LAST_STEP
+} from "../../utils/helpers/constants";
 
 interface StepProps {
   isActive: boolean;
@@ -18,16 +22,16 @@ const useStyles = makeStyles((theme, step: number) => {
     step: {
       display: "flex",
       flexDirection: "row",
-      width: "25%",
+      width: "33%",
       alignItems: "center"
     },
     divider: {
-      width: "25%",
+      width: "34%",
       borderBottomWidth: 2,
       borderBottomColor: palette("black")
     },
     emptyView: {
-      width: "25%"
+      width: "33%"
     },
     textArea: {
       width: 45,
@@ -48,7 +52,7 @@ const Step: React.FC<StepProps> = ({ isActive, step, onStepChange }) => {
   const styles = useStyles(step);
   return (
     <View style={styles.step}>
-      {step !== 0 ? (
+      {step !== ROLL_CREATION_FIRST_STEP ? (
         <Divider style={styles.divider} />
       ) : (
         <View style={styles.emptyView} />
@@ -59,7 +63,7 @@ const Step: React.FC<StepProps> = ({ isActive, step, onStepChange }) => {
       >
         <Text h2>{step}</Text>
       </TouchableOpacity>
-      {step !== 3 ? (
+      {step !== ROLL_CREATION_LAST_STEP ? (
         <Divider style={styles.divider} />
       ) : (
         <View style={styles.emptyView} />
