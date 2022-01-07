@@ -10,34 +10,34 @@ interface PicturesGalleryProps {}
 
 const useStyles = makeStyles((theme) => ({}));
 
-const PicturesGallery: React.FC<PicturesGalleryProps> = () => {
+const PicturesGallery: React.FC<PicturesGalleryProps> = ({}) => {
   const styles = useStyles();
   const route = useRoute<RouteProp<ParamList, "PictureGalleryScreen">>();
-  const pictures = route?.params?.pictures;
-  const initialScrollToValue = route?.params?.initialScrollValue;
+  const { backgroundColor, pictures, computedScrollToOffset } = route?.params;
 
   const flatListRef = React.useRef<FlatList>(null);
 
   React.useEffect(() => {
     if (flatListRef.current) {
-      flatListRef.current.scrollToOffset({ offset: initialScrollToValue });
+      flatListRef.current.scrollToOffset({ offset: computedScrollToOffset });
     }
-  }, [initialScrollToValue]);
+  }, [computedScrollToOffset]);
 
   const renderItem = ({ item }: { item: PictureType }) => (
     <Picture
       url={getCloudinaryUrl(item.cloudinaryPublicId)}
       height={item.height}
       width={item.width}
+      backgroundColor={backgroundColor}
     />
   );
   const getItemLayout = React.useCallback(
     (data, index) => ({
       length: 0,
-      offset: initialScrollToValue,
+      offset: computedScrollToOffset,
       index
     }),
-    [initialScrollToValue]
+    [computedScrollToOffset]
   );
 
   return (

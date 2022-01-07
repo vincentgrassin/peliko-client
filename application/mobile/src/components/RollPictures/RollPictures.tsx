@@ -4,7 +4,7 @@ import { Image, ImageSourcePropType, FlatList } from "react-native";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { GET_PICTURES_BY_ROLL } from "../../utils/helpers/queries";
 import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
-import { Picture } from "../../utils/types/types";
+import { Colors, Picture } from "../../utils/types/types";
 import TouchableOpacity from "../TouchableOpacity";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { screenWidth } from "../../utils/helpers/constants";
@@ -14,6 +14,7 @@ import { ScreenList } from "../../navigation/NavigationContainer";
 interface RollPicturesProps {
   rollId: number;
   listHeaderComponent: JSX.Element;
+  backgroundColor: Colors;
 }
 
 const useStyles = makeStyles(() => ({
@@ -28,7 +29,7 @@ const useStyles = makeStyles(() => ({
     height: 100
   },
   item: {
-    flex: 1,
+    flex: 1 / 3,
     flexDirection: "column",
     margin: 1
   }
@@ -36,7 +37,8 @@ const useStyles = makeStyles(() => ({
 
 const RollPictures: React.FC<RollPicturesProps> = ({
   rollId,
-  listHeaderComponent
+  listHeaderComponent,
+  backgroundColor
 }) => {
   const styles = useStyles();
 
@@ -47,7 +49,6 @@ const RollPictures: React.FC<RollPicturesProps> = ({
 
   const pictures: Picture[] =
     data && data.getPicturesByRoll && data?.getPicturesByRoll;
-
   return (
     <FlatList
       data={pictures}
@@ -59,7 +60,8 @@ const RollPictures: React.FC<RollPicturesProps> = ({
             navigate<ScreenList>("PicturesGallery", {
               rollId,
               pictures,
-              initialScrollValue: computeScrollToValue(
+              backgroundColor,
+              computedScrollToOffset: computeScrollToValue(
                 pictures,
                 index,
                 screenWidth
@@ -70,9 +72,9 @@ const RollPictures: React.FC<RollPicturesProps> = ({
           <Image
             style={styles.imageThumbnail}
             source={
-              ({
-                uri: getCloudinaryUrl(item.cloudinaryPublicId)
-              } as unknown) as ImageSourcePropType
+              {
+                uri: getCloudinaryUrl(item.cloudinaryPublicId, 50)
+              } as unknown as ImageSourcePropType
             }
           />
         </TouchableOpacity>

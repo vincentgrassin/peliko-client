@@ -19,7 +19,8 @@ export type ParamList = {
   PictureGalleryScreen: {
     rollId: number;
     pictures: Picture[];
-    initialScrollValue: number;
+    computedScrollToOffset: number;
+    backgroundColor: Colors;
   };
 };
 

@@ -97,6 +97,7 @@ const Roll: React.FC<RollProps> = ({}) => {
         <RollPictures
           rollId={rollId}
           listHeaderComponent={HeaderRollComponent}
+          backgroundColor={route.params.backgroundColor}
         />
       )}
     </>

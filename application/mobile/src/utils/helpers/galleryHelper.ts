@@ -1,4 +1,5 @@
 import { Picture } from "../types/types";
+import { PICTURE_LEGEND_HEIGHT } from "./constants";
 
 export const computeScrollToValue = (
   pictures: Picture[],
@@ -9,7 +10,7 @@ export const computeScrollToValue = (
     .slice(0, index)
     .map(({ height, width }) => {
       if (height && width) {
-        return height * (screenWidth / width);
+        return height * (screenWidth / width) + PICTURE_LEGEND_HEIGHT;
       }
       return 0;
     })

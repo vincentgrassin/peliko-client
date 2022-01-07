@@ -52,7 +52,7 @@ const RollParticipants: React.FC<RollParticipantsProps> = ({
             );
             const profilePictureUrl =
               associatedUser?.avatarCloudinaryPublicId &&
-              getCloudinaryUrl(associatedUser?.avatarCloudinaryPublicId);
+              getCloudinaryUrl(associatedUser?.avatarCloudinaryPublicId, 50);
             return (
               <View style={styles.participant} key={`avatar-${index}`}>
                 <Avatar

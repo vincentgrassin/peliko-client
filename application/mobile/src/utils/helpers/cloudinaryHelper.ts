@@ -4,8 +4,8 @@ import {
   CLOUDINARY_UPLOAD_URL
 } from "@env";
 
-export const getCloudinaryUrl = (publicId: string) => {
-  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}.jpg`;
+export const getCloudinaryUrl = (publicId: string, quality = 90) => {
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/q_${quality}/${publicId}.jpg`;
 };
 
 export const uploadToCloudinary = async (base64: string) => {
