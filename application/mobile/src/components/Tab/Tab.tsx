@@ -38,9 +38,15 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
 
   const { updateNotificationNumber } = useNavigationContext();
   const { data: count } = useQuery(GET_INVITATION_COUNT_BY_USER);
+  console.log(count);
 
   React.useEffect(() => {
-    count && updateNotificationNumber(count.invitationNotificationByUser);
+    if (
+      count?.invitationNotificationCountByUser ||
+      count?.invitationNotificationCountByUser === 0
+    ) {
+      updateNotificationNumber(count.invitationNotificationCountByUser);
+    }
   }, [count, updateNotificationNumber]);
 
   if (loading) return <Loader />;
