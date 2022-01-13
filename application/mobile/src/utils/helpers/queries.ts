@@ -84,6 +84,12 @@ export const GET_PICTURES_BY_ROLL = gql`
       cloudinaryPublicId
       height
       width
+      createdAt
+      user {
+        id
+        name
+        phoneNumber
+      }
     }
   }
 `;

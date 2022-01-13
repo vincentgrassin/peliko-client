@@ -14,7 +14,6 @@ const PicturesGallery: React.FC<PicturesGalleryProps> = ({}) => {
   const styles = useStyles();
   const route = useRoute<RouteProp<ParamList, "PictureGalleryScreen">>();
   const { backgroundColor, pictures, computedScrollToOffset } = route?.params;
-
   const flatListRef = React.useRef<FlatList>(null);
 
   React.useEffect(() => {
@@ -29,6 +28,8 @@ const PicturesGallery: React.FC<PicturesGalleryProps> = ({}) => {
       height={item.height}
       width={item.width}
       backgroundColor={backgroundColor}
+      createdAt={item.createdAt}
+      author={item.user}
     />
   );
   const getItemLayout = React.useCallback(

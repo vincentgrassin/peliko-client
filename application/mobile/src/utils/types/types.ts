@@ -24,10 +24,16 @@ export type Picture = {
   width: number;
   height: number;
   id: number;
+  createdAt: Date;
+  user: {
+    id: number;
+    name: string;
+    phoneNumber: string;
+  };
 };
 
 export type Participant = {
-  id: string;
+  id: number;
   email: string;
   phoneNumber: string;
   role: string;

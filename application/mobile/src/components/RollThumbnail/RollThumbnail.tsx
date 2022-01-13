@@ -90,9 +90,11 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
               }
               containerStyle={styles.badge}
             />
-            <Badge
-              value={<RollBadge value={remainingTime?.value} icon="date" />}
-            />
+            {isOpenRoll && (
+              <Badge
+                value={<RollBadge value={remainingTime?.value} icon="date" />}
+              />
+            )}
           </View>
         </View>
       </View>

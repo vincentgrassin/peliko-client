@@ -1,7 +1,7 @@
-import { DAYS_IN_SECONDS, HOURS } from "./constants";
+import { DAYS_IN_SECONDS, HOURS, locale } from "./constants";
 import { resources } from "../../themeHelpers";
 
-export const getDateFormat = (s: string) => {
+export const getDateFormat = (s: string | number) => {
   const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
@@ -9,7 +9,7 @@ export const getDateFormat = (s: string) => {
     day: "numeric"
   };
   const date = new Date(s);
-  return date.toLocaleDateString();
+  return date.toLocaleDateString(locale);
 };
 
 export const getRemainingTimeOnDate = (

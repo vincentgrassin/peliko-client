@@ -6,13 +6,22 @@ import {
   screenWidth
 } from "../../utils/helpers/constants";
 import { Colors } from "../../utils/types/types";
-import { View, Text } from "..";
+import View from "../View";
+import Text from "../Text";
+import { getDateFormat } from "../../utils/helpers/dateHelper";
+import { resources } from "../../themeHelpers";
 
 interface PictureProps {
   height: number;
   width: number;
   url: string;
   backgroundColor: Colors;
+  createdAt: any;
+  author: {
+    id: number;
+    name?: string;
+    phoneNumber?: string;
+  };
 }
 
 const useStyles = makeStyles(
@@ -22,7 +31,11 @@ const useStyles = makeStyles(
       picture: { height },
       legend: {
         backgroundColor,
-        height: PICTURE_LEGEND_HEIGHT
+        height: PICTURE_LEGEND_HEIGHT,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-evenly"
       }
     };
   }
@@ -32,7 +45,9 @@ const Picture: React.FC<PictureProps> = ({
   height,
   url,
   width,
-  backgroundColor
+  backgroundColor,
+  createdAt,
+  author
 }) => {
   const styles = useStyles({
     height: width ? (height * screenWidth) / width : 0,
@@ -46,7 +61,12 @@ const Picture: React.FC<PictureProps> = ({
         source={{ uri: url } as unknown as ImageSourcePropType}
       />
       <View style={styles.legend}>
-        <Text>Hello</Text>
+        {author && (
+          <Text h3>
+            {resources.shotBy} {author.name || author.phoneNumber}
+          </Text>
+        )}
+        {createdAt && <Text h3>{getDateFormat(+createdAt)}</Text>}
       </View>
     </>
   );
