@@ -61,13 +61,15 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const [createRoll] = useMutation(CREATE_ROLL);
   const { navigate } = useNavigation();
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
+  const initialValues = React.useMemo(() => {
+    return {
+      rollName: "",
+      description: "",
+      date: new Date(Date.now()),
+      participantsContact: []
+    };
+  }, []);
 
-  const [formValues, setFormValues] = React.useState<RollCreationValues>({
-    rollName: "",
-    description: "",
-    date: new Date(Date.now()),
-    participantsContact: []
-  });
   const [step, setStep] = React.useState(0);
 
   const handlePrevious = () => {
@@ -85,7 +87,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
     setStep(step);
   };
 
-  const handleSubmit = async (values: RollCreationValues) => {
+  const handleSubmission = async (values: RollCreationValues) => {
     const { date, description, participantsContact, rollName } = values;
     openModal();
     const response = await createRoll({
@@ -109,12 +111,15 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       awaitRefetchQueries: true
     });
     closeModal();
-    response?.data &&
+    if (response?.data) {
       navigate<ScreenList>("RollScreen", {
         backgroundColor: palette("blue"),
         rollId: response.data.createRoll.id,
         isOpenRoll: true
       });
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -128,8 +133,11 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Stepper step={step} onStepChange={handleStep} />
           <Formik
-            initialValues={formValues}
-            onSubmit={handleSubmit}
+            initialValues={initialValues}
+            onSubmit={async (values, { setValues }) => {
+              const isSubmissionOk = await handleSubmission(values);
+              isSubmissionOk && setValues(initialValues);
+            }}
             validationSchema={rollCreationSchema}
           >
             {({ handleSubmit, errors }) => (
