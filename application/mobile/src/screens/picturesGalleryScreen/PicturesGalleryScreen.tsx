@@ -2,7 +2,7 @@ import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
 import { ParamList } from "../../navigation/NavigationContainer";
-import { Picture, FlatList } from "../../components";
+import { Picture, FlatList, NavigationHeader } from "../../components";
 import { Picture as PictureType } from "../../utils/types/types";
 import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
 
@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({}));
 const PicturesGallery: React.FC<PicturesGalleryProps> = ({}) => {
   const styles = useStyles();
   const route = useRoute<RouteProp<ParamList, "PictureGalleryScreen">>();
-  const { backgroundColor, pictures, computedScrollToOffset } = route?.params;
+  const { backgroundColor, pictures, computedScrollToOffset, title } =
+    route?.params;
   const flatListRef = React.useRef<FlatList>(null);
 
   React.useEffect(() => {
@@ -42,14 +43,21 @@ const PicturesGallery: React.FC<PicturesGalleryProps> = ({}) => {
   );
 
   return (
-    <FlatList
-      ref={flatListRef}
-      data={pictures}
-      renderItem={renderItem}
-      numColumns={1}
-      keyExtractor={(item, index) => index.toString()}
-      getItemLayout={getItemLayout}
-    />
+    <>
+      <NavigationHeader
+        color={backgroundColor}
+        screen="RollScreen"
+        text={title}
+      />
+      <FlatList
+        ref={flatListRef}
+        data={pictures}
+        renderItem={renderItem}
+        numColumns={1}
+        keyExtractor={(item, index) => index.toString()}
+        getItemLayout={getItemLayout}
+      />
+    </>
   );
 };
 

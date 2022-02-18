@@ -21,6 +21,7 @@ export type ParamList = {
     pictures: Picture[];
     computedScrollToOffset: number;
     backgroundColor: Colors;
+    title: string;
   };
 };
 

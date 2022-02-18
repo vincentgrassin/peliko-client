@@ -15,6 +15,7 @@ interface RollPicturesProps {
   rollId: number;
   listHeaderComponent: JSX.Element;
   backgroundColor: Colors;
+  title: string;
 }
 
 const useStyles = makeStyles(() => ({
@@ -38,7 +39,8 @@ const useStyles = makeStyles(() => ({
 const RollPictures: React.FC<RollPicturesProps> = ({
   rollId,
   listHeaderComponent,
-  backgroundColor
+  backgroundColor,
+  title
 }) => {
   const styles = useStyles();
 
@@ -61,6 +63,7 @@ const RollPictures: React.FC<RollPicturesProps> = ({
               rollId,
               pictures,
               backgroundColor,
+              title,
               computedScrollToOffset: computeScrollToValue(
                 pictures,
                 index,

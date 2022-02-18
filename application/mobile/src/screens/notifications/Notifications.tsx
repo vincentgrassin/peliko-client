@@ -40,6 +40,7 @@ const Notifications: React.FC<NotificationsProps> = ({}) => {
       <NavigationHeader
         color={palette("green")}
         text={resources.notificationScreen}
+        screen="Home"
       />
       {invitationRollsByUser?.length > 0 ? (
         <ScrollView style={styles.invitationList}>
