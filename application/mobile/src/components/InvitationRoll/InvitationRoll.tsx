@@ -14,6 +14,7 @@ import {
   GET_ROLLS_BY_USER
 } from "../../utils/helpers/queries";
 import { getDateFormat } from "../../utils/helpers/dateHelper";
+import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
 
 interface InvitationRollProps {
   adminAvatarSource: ImageSourcePropType | undefined;
@@ -54,8 +55,9 @@ const InvitationRoll: React.FC<InvitationRollProps> = ({
   index
 }) => {
   const styles = useStyles();
+  const { handleError } = useHandleQueryError();
 
-  const [joinRoll] = useMutation(JOIN_ROLL);
+  const [joinRoll] = useMutation(JOIN_ROLL, { onError: handleError });
   const [declineRollInvitation] = useMutation(DECLINE_INVITATION);
 
   const handleConfirm = () => {

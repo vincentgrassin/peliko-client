@@ -28,6 +28,7 @@ import {
   ROLL_CREATION_FIRST_STEP,
   ROLL_CREATION_LAST_STEP
 } from "../../utils/helpers/constants";
+import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
 
 interface RollFormWizardProps {}
 
@@ -57,9 +58,12 @@ const useStyles = makeStyles(() => ({
 
 const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const styles = useStyles();
-
-  const [createRoll] = useMutation(CREATE_ROLL);
   const { navigate } = useNavigation();
+  const { handleError } = useHandleQueryError();
+
+  const [createRoll] = useMutation(CREATE_ROLL, {
+    onError: handleError
+  });
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
   const initialValues = React.useMemo(() => {
     return {
@@ -111,6 +115,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       awaitRefetchQueries: true
     });
     closeModal();
+
     if (response?.data) {
       navigate<ScreenList>("RollScreen", {
         backgroundColor: palette("blue"),

@@ -75,3 +75,5 @@ export type UserCard = {
   avatarCloudinaryPublicId?: string;
   phoneNumber?: string;
 };
+
+export type ErrorCode = "UNAUTHENTICATED";

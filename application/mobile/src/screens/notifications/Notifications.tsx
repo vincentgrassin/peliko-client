@@ -13,6 +13,7 @@ import { useQuery } from "../../utils/hooks/useApolloClient";
 import { InvitationRoll as InvitationRollType } from "../../utils/types/types";
 import { GET_INVITATIONS_BY_USER } from "../../utils/helpers/queries";
 import { palette, resources, shape } from "../../themeHelpers";
+import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
 
 interface NotificationsProps {}
 
@@ -26,8 +27,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Notifications: React.FC<NotificationsProps> = ({}) => {
-  const { loading, error, data } = useQuery(GET_INVITATIONS_BY_USER);
   const styles = useStyles();
+  const { handleError } = useHandleQueryError();
+  const { loading, error, data } = useQuery(GET_INVITATIONS_BY_USER, {
+    onError: handleError
+  });
 
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error.message} />;

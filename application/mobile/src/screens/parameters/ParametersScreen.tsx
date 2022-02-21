@@ -34,6 +34,7 @@ import {
   uploadToCloudinary
 } from "../../utils/helpers/cloudinaryHelper";
 import { UPDATE_USER } from "../../utils/helpers/mutation";
+import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
 
 interface ParametersProps {}
 
@@ -73,15 +74,15 @@ const useStyles = makeStyles(() => ({
 
 const Parameters: React.FC<ParametersProps> = ({}) => {
   const styles = useStyles();
-  const { data } = useQuery(GET_USER_BY_ID);
-  const [updateUser] = useMutation(UPDATE_USER);
+  const { handleError } = useHandleQueryError();
+  const { data } = useQuery(GET_USER_BY_ID, { onError: handleError });
+  const [updateUser] = useMutation(UPDATE_USER, { onError: handleError });
 
   const userInformations: UserCard | undefined = data?.getUserById;
 
   const { navigate } = useNavigation();
-  const [isEditingProfile, setIsEditingProfile] = React.useState<boolean>(
-    false
-  );
+  const [isEditingProfile, setIsEditingProfile] =
+    React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [profilePicture, setProfilePicture] = React.useState<{
     base64: string | undefined;

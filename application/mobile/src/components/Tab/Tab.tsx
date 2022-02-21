@@ -15,6 +15,7 @@ import FlatList from "../FlatList";
 import Illustration from "../Illustration";
 import { useNavigationContext } from "../../navigation/NavigationContext";
 import ErrorMessage from "../ErrorMessage";
+import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
 
 interface TabProps {
   isOpenRollTab: boolean;
@@ -32,12 +33,17 @@ const useStyles = makeStyles(() => ({
 
 const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const styles = useStyles();
+  const { updateNotificationNumber } = useNavigationContext();
+  const { handleError } = useHandleQueryError();
+
   const { loading, error, data } = useQuery(GET_ROLLS_BY_USER, {
-    variables: { isOpenTab: isOpenRollTab }
+    variables: { isOpenTab: isOpenRollTab },
+    onError: handleError
   });
 
-  const { updateNotificationNumber } = useNavigationContext();
-  const { data: count } = useQuery(GET_INVITATION_COUNT_BY_USER);
+  const { data: count } = useQuery(GET_INVITATION_COUNT_BY_USER, {
+    onError: handleError
+  });
 
   React.useEffect(() => {
     if (
@@ -49,7 +55,9 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   }, [count, updateNotificationNumber]);
 
   if (loading) return <Loader />;
-  if (error) return <ErrorMessage message={error.message} />;
+  if (error) {
+    return <ErrorMessage message={error.message} error={error} />;
+  }
 
   const rollList: RollData[] = data?.rollsByUser;
 

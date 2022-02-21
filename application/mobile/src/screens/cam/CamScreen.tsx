@@ -11,6 +11,7 @@ import { GET_ROLLS_BY_USER, GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
 import { uploadToCloudinary } from "../../utils/helpers/cloudinaryHelper";
+import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
 
 interface CamProps {}
 
@@ -32,7 +33,8 @@ const Cam: React.FC<CamProps> = ({}) => {
   const [hasPermission, setHasPermission] = React.useState<boolean>(false);
   const [isCameraBack, setIsCameraBack] = React.useState<boolean>(true);
   const [isFlashOn, setIsFlashOn] = React.useState<boolean>(false);
-  const [uploadPicture] = useMutation(UPLOAD_PICTURE);
+  const { handleError } = useHandleQueryError();
+  const [uploadPicture] = useMutation(UPLOAD_PICTURE, { onError: handleError });
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const rollId = route?.params?.rollId;
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
@@ -47,7 +49,7 @@ const Cam: React.FC<CamProps> = ({}) => {
     requestPermission();
   }, []);
 
-  async function takePicture() {
+  const takePicture = async () => {
     openModal();
     if (camera) {
       //@ts-ignore
@@ -74,7 +76,7 @@ const Cam: React.FC<CamProps> = ({}) => {
       }
       closeModal();
     }
-  }
+  };
 
   const toggleFlash = () => {
     setIsFlashOn(!isFlashOn);
