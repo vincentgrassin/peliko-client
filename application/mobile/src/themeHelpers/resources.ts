@@ -16,7 +16,7 @@ const globalResources = {
   password: "Mot de passe",
   confirmPassword: "Confirmation du mot de passe",
   phoneNumber: "Numéro de téléphone",
-  signIn: "Change to sign in",
+  logIn: "Change to sign in",
   signUp: "Change to sign up",
   remaningPictures: "photos restantes",
   confirm: "confirm",

@@ -11,7 +11,8 @@ import {
   ScrollView,
   InputFormik,
   PhoneNumberInputFormik,
-  NavigationHeader
+  NavigationHeader,
+  Text
 } from "../../components";
 import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
@@ -57,8 +58,15 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const styles = useStyles();
 
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
-  const [logIn] = useMutation(LOG_IN);
-  const [signUp] = useMutation(SIGN_UP);
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
+    ""
+  );
+  const [logIn] = useMutation(LOG_IN, {
+    errorPolicy: "all"
+  });
+  const [signUp] = useMutation(SIGN_UP, {
+    errorPolicy: "all"
+  });
 
   const { navigate } = useNavigation();
 
@@ -95,23 +103,31 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   }, [navigate]);
 
   const handleSubmit = async (values: LoginValues) => {
+    setErrorMessage("");
     const { userName, password, phoneNumber } = values;
     let data: { accessToken: string; refreshToken: string };
     if (isSignUpForm) {
       const response = await signUp({
         variables: { name: userName, password, phoneNumber: phoneNumber.value }
       });
-      data = response.data.createUser;
+      if (response?.errors) {
+        setErrorMessage(response.errors[0].message);
+        return;
+      }
+      data = response?.data?.createUser;
     } else {
       const response = await logIn({
         variables: { password, phoneNumber: phoneNumber.value }
       });
-      data = response.data.login;
+      data = response?.data?.login;
+      if (response?.errors) {
+        setErrorMessage(response.errors[0].message);
+        return;
+      }
     }
     if (data) {
       await AsyncStorage.setItem("@accessToken", data.accessToken);
       await AsyncStorage.setItem("@refreshToken", data.refreshToken);
-
       navigate<ScreenList>("BottomNavigation");
       try {
         await AsyncStorage.setItem("@refreshToken", data.refreshToken);
@@ -154,6 +170,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
                   )}
                 </View>
                 <View style={styles.actionArea}>
+                  <Text isError>{errorMessage}</Text>
                   <Button
                     onPress={(e: any) => handleSubmit(e)}
                     title={resources.submit}
@@ -167,8 +184,9 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
                     onPress={() => {
                       setFieldValue("isSignUpForm", !isSignUpForm);
                       setIsSignUpForm((prev) => !prev);
+                      setErrorMessage("");
                     }}
-                    title={isSignUpForm ? resources.signUp : resources.signIn}
+                    title={isSignUpForm ? resources.logIn : resources.signUp}
                   />
                 </View>
               </View>

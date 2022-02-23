@@ -52,29 +52,20 @@ const useStyles = makeStyles(() => ({
   },
   trashButton: {
     color: palette("lightGrey")
-  },
-  errorText: {
-    color: palette("red")
   }
 }));
 
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
   const styles = useStyles();
 
-  const {
-    setFieldValue,
-    values,
-    errors
-  } = useFormikContext<RollCreationValues>();
+  const { setFieldValue, values, errors } =
+    useFormikContext<RollCreationValues>();
   const [field, meta] = useField("participantsContact");
 
   const [isHiddenResult, setIsHiddenResult] = React.useState(true);
   const [searchContact, setSearchContact] = React.useState("");
-  const {
-    phoneContactData,
-    loadPhoneContacts,
-    findContact
-  } = usePhoneContacts();
+  const { phoneContactData, loadPhoneContacts, findContact } =
+    usePhoneContacts();
 
   React.useEffect(() => {
     loadPhoneContacts();
@@ -204,9 +195,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
           )
         )}
       </View>
-      {meta.error && isString(meta.error) && (
-        <Text style={styles.errorText}>{meta.error}</Text>
-      )}
+      {meta.error && isString(meta.error) && <Text isError>{meta.error}</Text>}
     </View>
   );
 };
