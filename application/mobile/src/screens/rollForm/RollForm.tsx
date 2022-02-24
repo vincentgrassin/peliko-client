@@ -60,8 +60,8 @@ const useStyles = makeStyles(() => ({
 const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { handleError } = useHandleQueryError();
-  const [errorMessage, setErrorMessage] = React.useState<string>("");
+  const { handleError, errorMessage, updateErrorMessage } =
+    useHandleQueryError();
 
   const [createRoll] = useMutation(CREATE_ROLL, {
     onError: handleError,
@@ -118,7 +118,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       awaitRefetchQueries: true
     });
     if (response.errors) {
-      setErrorMessage(response.errors[0]?.message || resources.genericError);
+      updateErrorMessage(response.errors);
     }
     closeModal();
 

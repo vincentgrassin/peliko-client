@@ -21,6 +21,7 @@ import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import { loginSchema, LoginValues } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
+import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
 
 interface LoginFormProps {}
 
@@ -58,9 +59,9 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const styles = useStyles();
 
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
-    ""
-  );
+  const { errorMessage, resetErrorMessage, updateErrorMessage } =
+    useHandleQueryError();
+
   const [logIn] = useMutation(LOG_IN, {
     errorPolicy: "all"
   });
@@ -103,7 +104,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   }, [navigate]);
 
   const handleSubmit = async (values: LoginValues) => {
-    setErrorMessage("");
+    resetErrorMessage();
     const { userName, password, phoneNumber } = values;
     let data: { accessToken: string; refreshToken: string };
     if (isSignUpForm) {
@@ -111,7 +112,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
         variables: { name: userName, password, phoneNumber: phoneNumber.value }
       });
       if (response?.errors) {
-        setErrorMessage(response.errors[0].message || resources.genericError);
+        updateErrorMessage(response.errors);
         return;
       }
       data = response?.data?.createUser;
@@ -121,7 +122,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
       });
       data = response?.data?.login;
       if (response?.errors) {
-        setErrorMessage(response.errors[0]?.message || resources.genericError);
+        updateErrorMessage(response.errors);
         return;
       }
     }
@@ -184,7 +185,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
                     onPress={() => {
                       setFieldValue("isSignUpForm", !isSignUpForm);
                       setIsSignUpForm((prev) => !prev);
-                      setErrorMessage("");
+                      resetErrorMessage();
                     }}
                     title={isSignUpForm ? resources.logIn : resources.signUp}
                   />

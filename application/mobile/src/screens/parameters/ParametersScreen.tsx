@@ -74,9 +74,13 @@ const useStyles = makeStyles(() => ({
 
 const Parameters: React.FC<ParametersProps> = ({}) => {
   const styles = useStyles();
-  const { handleError } = useHandleQueryError();
+  const { handleError, errorMessage, updateErrorMessage } =
+    useHandleQueryError();
   const { data } = useQuery(GET_USER_BY_ID, { onError: handleError });
-  const [updateUser] = useMutation(UPDATE_USER, { onError: handleError });
+  const [updateUser] = useMutation(UPDATE_USER, {
+    onError: handleError,
+    errorPolicy: "all"
+  });
 
   const userInformations: UserCard | undefined = data?.getUserById;
 
@@ -136,17 +140,17 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
 
   const saveProfile = async (values: ProfileValues) => {
     const { phoneNumber, userName } = values;
-    let response;
+    let pictureServerResponse;
     setLoading(true);
     if (profilePicture.base64) {
-      response = await uploadToCloudinary(profilePicture.base64);
+      pictureServerResponse = await uploadToCloudinary(profilePicture.base64);
     }
-    await updateUser({
+    const response = await updateUser({
       variables: {
         phoneNumber: phoneNumber?.value,
         name: userName,
         profilePicture:
-          response?.public_id ||
+          pictureServerResponse?.public_id ||
           userInformations?.avatarCloudinaryPublicId ||
           ""
       },
@@ -154,11 +158,14 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
         cache.writeQuery({
           query: GET_USER_BY_ID,
           data: {
-            getUserById: data.updateUser
+            getUserById: data?.updateUser || userInformations
           }
         });
       }
     });
+    if (response.errors) {
+      updateErrorMessage(response.errors);
+    }
     setLoading(false);
     setIsEditingProfile(false);
   };
@@ -189,6 +196,7 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
         )}
       </View>
       {loading && <Loader />}
+      <Text isError>{!!errorMessage && errorMessage}</Text>
       <View style={styles.userInformation}>
         {!isEditingProfile && (
           <>

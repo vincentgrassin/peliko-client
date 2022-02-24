@@ -1,13 +1,16 @@
+import * as React from "react";
 import { ApolloError } from "@apollo/client";
+import { GraphQLError } from "graphql";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import { ScreenList } from "../../navigation/NavigationContainer";
+import { resources } from "../../themeHelpers";
 import { ErrorCode } from "../types/types";
 import { client } from "./useApolloClient";
 import { useNavigation } from "./useNavigation";
 
 export const useHandleQueryError = () => {
   const { navigate } = useNavigation();
+  const [errorMessage, setErrorMessage] = React.useState<string>("");
 
   const handleLogOut = async () => {
     await AsyncStorage.setItem("@accessToken", "");
@@ -16,12 +19,25 @@ export const useHandleQueryError = () => {
     navigate<ScreenList>("Login");
   };
 
-  const handleError = async (error: ApolloError) => {
+  const handleError = (error: ApolloError) => {
     const code: ErrorCode = error?.graphQLErrors[0]?.extensions?.code;
     if (code === "UNAUTHENTICATED") {
       handleLogOut();
     }
   };
 
-  return { handleLogOut, handleError };
+  const updateErrorMessage = (errors: readonly GraphQLError[]) => {
+    setErrorMessage(errors[0]?.message || resources.genericError);
+  };
+
+  const resetErrorMessage = () => {
+    setErrorMessage("");
+  };
+  return {
+    handleLogOut,
+    handleError,
+    updateErrorMessage,
+    errorMessage,
+    resetErrorMessage
+  };
 };
