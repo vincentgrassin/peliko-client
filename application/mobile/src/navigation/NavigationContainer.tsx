@@ -15,6 +15,7 @@ export type ParamList = {
     backgroundColor: Colors;
     rollId: number;
     isOpenRoll: boolean;
+    errorMessage?: string;
   };
   PictureGalleryScreen: {
     rollId: number;
@@ -22,6 +23,10 @@ export type ParamList = {
     computedScrollToOffset: number;
     backgroundColor: Colors;
     title: string;
+  };
+  CamScreen: {
+    rollId: number;
+    backgroundColor: Colors;
   };
 };
 

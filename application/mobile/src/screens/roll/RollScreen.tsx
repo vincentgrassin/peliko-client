@@ -8,7 +8,8 @@ import {
   NavigationHeader,
   Loader,
   Icon,
-  ErrorMessage
+  ErrorMessage,
+  Text
 } from "../../components";
 import { iconSet, resources, shape } from "../../themeHelpers";
 import {
@@ -45,8 +46,7 @@ const Roll: React.FC<RollProps> = ({}) => {
   const { handleError } = useHandleQueryError();
   const { navigate } = useNavigation();
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
-  const rollId = route?.params?.rollId;
-  const isOpenRoll = route?.params?.isOpenRoll;
+  const { rollId, isOpenRoll, errorMessage, backgroundColor } = route?.params;
   const { loading, error, data } = useQuery(GET_ROLL_BY_ID, {
     variables: { id: rollId },
     onError: handleError
@@ -64,7 +64,7 @@ const Roll: React.FC<RollProps> = ({}) => {
           <NavigationHeader
             text={resources.roll}
             screen="BottomNavigation"
-            color={route.params.backgroundColor}
+            color={backgroundColor}
           />
           <RollHeader
             name={roll?.name}
@@ -86,12 +86,15 @@ const Roll: React.FC<RollProps> = ({}) => {
       {isOpenRoll ? (
         <ScrollView contentContainerStyle={styles.rollContainer}>
           {HeaderRollComponent}
+          {!!errorMessage && <Text isError>{errorMessage}</Text>}
           {roll && roll.remainingPictures > 0 && (
             <Button
               containerStyle={styles.shootButton}
-              onPress={() => navigate<ScreenList>("CamScreen", { rollId })}
+              onPress={() =>
+                navigate<ScreenList>("CamScreen", { rollId, backgroundColor })
+              }
               title={<Icon {...iconSet.camera} />}
-              color={route.params.backgroundColor}
+              color={backgroundColor}
             />
           )}
         </ScrollView>
@@ -99,7 +102,7 @@ const Roll: React.FC<RollProps> = ({}) => {
         <RollPictures
           rollId={rollId}
           listHeaderComponent={HeaderRollComponent}
-          backgroundColor={route.params.backgroundColor}
+          backgroundColor={backgroundColor}
           title={roll.name}
         />
       )}

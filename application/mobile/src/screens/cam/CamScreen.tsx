@@ -1,12 +1,16 @@
 import * as React from "react";
 import { Camera } from "expo-camera";
 import { makeStyles } from "react-native-elements";
-import { Button, Icon, View, NavigationHeader } from "../../components";
+import { Button, Icon, View, NavigationHeader, Text } from "../../components";
 import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { UPLOAD_PICTURE } from "../../utils/helpers/mutation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
-import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
-import { ParamList } from "../../navigation/NavigationContainer";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "../../utils/hooks/useNavigation";
+import { ParamList, ScreenList } from "../../navigation/NavigationContainer";
 import { GET_ROLLS_BY_USER, GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
@@ -29,16 +33,19 @@ const useStyles = makeStyles(() => ({
 
 const Cam: React.FC<CamProps> = ({}) => {
   const styles = useStyles();
+  const { navigate } = useNavigation();
   let camera = React.useRef(null);
   const [hasPermission, setHasPermission] = React.useState<boolean>(false);
   const [isCameraBack, setIsCameraBack] = React.useState<boolean>(true);
   const [isFlashOn, setIsFlashOn] = React.useState<boolean>(false);
   const { handleError } = useHandleQueryError();
-  const [uploadPicture] = useMutation(UPLOAD_PICTURE, { onError: handleError });
-  const route = useRoute<RouteProp<ParamList, "RollScreen">>();
-  const rollId = route?.params?.rollId;
+  const [uploadPicture] = useMutation(UPLOAD_PICTURE, {
+    onError: handleError,
+    errorPolicy: "all"
+  });
+  const route = useRoute<RouteProp<ParamList, "CamScreen">>();
+  const { rollId, backgroundColor } = route.params;
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
-
   React.useEffect(() => {
     const requestPermission = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -50,6 +57,7 @@ const Cam: React.FC<CamProps> = ({}) => {
   }, []);
 
   const takePicture = async () => {
+    let errorMessage = null;
     openModal();
     if (camera) {
       //@ts-ignore
@@ -60,7 +68,7 @@ const Cam: React.FC<CamProps> = ({}) => {
       });
       if (picture.base64) {
         const jsonResponse = await uploadToCloudinary(picture.base64);
-        uploadPicture({
+        const response = await uploadPicture({
           variables: {
             cloudinaryId: jsonResponse.public_id,
             height: jsonResponse.height,
@@ -73,9 +81,15 @@ const Cam: React.FC<CamProps> = ({}) => {
             { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } }
           ]
         });
+        if (response.errors) {
+          errorMessage = response.errors[0]?.message || resources.genericError;
+        }
       }
-      closeModal();
     }
+    closeModal();
+    navigate<ScreenList>("RollScreen", {
+      errorMessage
+    });
   };
 
   const toggleFlash = () => {
@@ -91,7 +105,7 @@ const Cam: React.FC<CamProps> = ({}) => {
       {hasPermission && (
         <>
           <NavigationHeader
-            color={palette("blue")}
+            color={backgroundColor}
             screen="RollScreen"
             text={resources.roll}
           />
@@ -116,7 +130,11 @@ const Cam: React.FC<CamProps> = ({}) => {
                 <Icon {...iconSet.flash} onPress={toggleFlash} />
                 <Icon {...iconSet.reverseCam} onPress={reverseCam} />
               </View>
-              <Button onPress={takePicture} title={resources.shootPicture} />
+              <Button
+                onPress={takePicture}
+                title={resources.shootPicture}
+                color={backgroundColor}
+              />
             </View>
           </Camera>
           <Modal

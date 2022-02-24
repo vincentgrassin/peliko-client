@@ -52,7 +52,8 @@ const globalResources = {
   pickProfilePicture: "Choisir une photo",
   cancel: "Annuler",
   baseErrorMessage: "¯|_(ツ)_/¯ Oh no...",
-  shotBy: "Capturé par"
+  shotBy: "Capturé par",
+  genericError: "generic error"
 };
 
 export default globalResources;

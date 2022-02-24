@@ -111,7 +111,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
         variables: { name: userName, password, phoneNumber: phoneNumber.value }
       });
       if (response?.errors) {
-        setErrorMessage(response.errors[0].message);
+        setErrorMessage(response.errors[0].message || resources.genericError);
         return;
       }
       data = response?.data?.createUser;
@@ -121,7 +121,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
       });
       data = response?.data?.login;
       if (response?.errors) {
-        setErrorMessage(response.errors[0].message);
+        setErrorMessage(response.errors[0]?.message || resources.genericError);
         return;
       }
     }
