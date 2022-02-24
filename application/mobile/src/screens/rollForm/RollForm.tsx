@@ -29,7 +29,7 @@ import {
   ROLL_CREATION_FIRST_STEP,
   ROLL_CREATION_LAST_STEP
 } from "../../utils/helpers/constants";
-import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
+import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
 interface RollFormWizardProps {}
 
@@ -61,7 +61,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const styles = useStyles();
   const { navigate } = useNavigation();
   const { handleError, errorMessage, updateErrorMessage } =
-    useHandleQueryError();
+    useHandleServerError();
 
   const [createRoll] = useMutation(CREATE_ROLL, {
     onError: handleError,

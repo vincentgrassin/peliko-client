@@ -10,7 +10,7 @@ import { useNavigation } from "../../utils/hooks/useNavigation";
 import { screenWidth } from "../../utils/helpers/constants";
 import { computeScrollToValue } from "../../utils/helpers/galleryHelper";
 import { ScreenList } from "../../navigation/NavigationContainer";
-import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
+import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
 interface RollPicturesProps {
   rollId: number;
@@ -46,7 +46,7 @@ const RollPictures: React.FC<RollPicturesProps> = ({
   const styles = useStyles();
 
   const { navigate } = useNavigation();
-  const { handleError } = useHandleQueryError();
+  const { handleError } = useHandleServerError();
 
   const { data } = useQuery(GET_PICTURES_BY_ROLL, {
     variables: { rollId },

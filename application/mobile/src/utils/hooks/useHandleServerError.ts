@@ -8,7 +8,7 @@ import { ErrorCode } from "../types/types";
 import { client } from "./useApolloClient";
 import { useNavigation } from "./useNavigation";
 
-export const useHandleQueryError = () => {
+export const useHandleServerError = () => {
   const { navigate } = useNavigation();
   const [errorMessage, setErrorMessage] = React.useState<string>("");
 

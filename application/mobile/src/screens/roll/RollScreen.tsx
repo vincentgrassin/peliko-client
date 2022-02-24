@@ -22,7 +22,7 @@ import { GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { RollData } from "../../utils/types/types";
 import RollPictures from "../../components/RollPictures";
-import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
+import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
 interface RollProps {}
 
@@ -43,7 +43,7 @@ const useStyles = makeStyles(() => ({
 
 const Roll: React.FC<RollProps> = ({}) => {
   const styles = useStyles();
-  const { handleError } = useHandleQueryError();
+  const { handleError } = useHandleServerError();
   const { navigate } = useNavigation();
   const route = useRoute<RouteProp<ParamList, "RollScreen">>();
   const { rollId, isOpenRoll, errorMessage, backgroundColor } = route?.params;

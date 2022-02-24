@@ -10,7 +10,7 @@ import { resources, shape } from "../../themeHelpers";
 import { useQuery } from "../../utils/hooks/useApolloClient";
 import { GET_USERS_BY_IDS } from "../../utils/helpers/queries";
 import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
-import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
+import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
 interface RollParticipantsProps {
   participants: Participant[] | undefined;
@@ -34,7 +34,7 @@ const RollParticipants: React.FC<RollParticipantsProps> = ({
   className
 }) => {
   const styles = useStyles();
-  const { handleError } = useHandleQueryError();
+  const { handleError } = useHandleServerError();
   const ids = participants?.map((p) => p.userId).filter(Boolean);
   const { data } = useQuery(GET_USERS_BY_IDS, {
     variables: { ids },

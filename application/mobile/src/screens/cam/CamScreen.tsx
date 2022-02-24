@@ -15,7 +15,7 @@ import { GET_ROLLS_BY_USER, GET_ROLL_BY_ID } from "../../utils/helpers/queries";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
 import { uploadToCloudinary } from "../../utils/helpers/cloudinaryHelper";
-import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
+import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
 interface CamProps {}
 
@@ -38,7 +38,7 @@ const Cam: React.FC<CamProps> = ({}) => {
   const [hasPermission, setHasPermission] = React.useState<boolean>(false);
   const [isCameraBack, setIsCameraBack] = React.useState<boolean>(true);
   const [isFlashOn, setIsFlashOn] = React.useState<boolean>(false);
-  const { handleError } = useHandleQueryError();
+  const { handleError } = useHandleServerError();
   const [uploadPicture] = useMutation(UPLOAD_PICTURE, {
     onError: handleError,
     errorPolicy: "all"

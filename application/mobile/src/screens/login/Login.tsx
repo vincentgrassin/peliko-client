@@ -21,7 +21,7 @@ import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
 import { ScreenList } from "../../navigation/NavigationContainer";
 import { loginSchema, LoginValues } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
-import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
+import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
 interface LoginFormProps {}
 
@@ -60,7 +60,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
   const { errorMessage, resetErrorMessage, updateErrorMessage } =
-    useHandleQueryError();
+    useHandleServerError();
 
   const [logIn] = useMutation(LOG_IN, {
     errorPolicy: "all"

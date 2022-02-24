@@ -15,7 +15,7 @@ import FlatList from "../FlatList";
 import Illustration from "../Illustration";
 import { useNavigationContext } from "../../navigation/NavigationContext";
 import ErrorMessage from "../ErrorMessage";
-import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
+import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
 interface TabProps {
   isOpenRollTab: boolean;
@@ -34,7 +34,7 @@ const useStyles = makeStyles(() => ({
 const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   const styles = useStyles();
   const { updateNotificationNumber } = useNavigationContext();
-  const { handleError } = useHandleQueryError();
+  const { handleError } = useHandleServerError();
 
   const { loading, error, data } = useQuery(GET_ROLLS_BY_USER, {
     variables: { isOpenTab: isOpenRollTab },

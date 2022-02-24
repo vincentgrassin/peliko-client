@@ -34,7 +34,7 @@ import {
   uploadToCloudinary
 } from "../../utils/helpers/cloudinaryHelper";
 import { UPDATE_USER } from "../../utils/helpers/mutation";
-import { useHandleQueryError } from "../../utils/hooks/useHandleQueryError";
+import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
 interface ParametersProps {}
 
@@ -75,7 +75,7 @@ const useStyles = makeStyles(() => ({
 const Parameters: React.FC<ParametersProps> = ({}) => {
   const styles = useStyles();
   const { handleError, errorMessage, updateErrorMessage } =
-    useHandleQueryError();
+    useHandleServerError();
   const { data } = useQuery(GET_USER_BY_ID, { onError: handleError });
   const [updateUser] = useMutation(UPDATE_USER, {
     onError: handleError,
