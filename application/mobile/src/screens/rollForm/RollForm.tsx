@@ -7,7 +7,8 @@ import {
   Button,
   Stepper,
   ScrollView,
-  NavigationHeader
+  NavigationHeader,
+  Text
 } from "../../components";
 import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
@@ -60,9 +61,11 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
   const styles = useStyles();
   const { navigate } = useNavigation();
   const { handleError } = useHandleQueryError();
+  const [errorMessage, setErrorMessage] = React.useState<string>("");
 
   const [createRoll] = useMutation(CREATE_ROLL, {
-    onError: handleError
+    onError: handleError,
+    errorPolicy: "all"
   });
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
   const initialValues = React.useMemo(() => {
@@ -114,6 +117,9 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       ],
       awaitRefetchQueries: true
     });
+    if (response.errors) {
+      setErrorMessage(response.errors[0]?.message || resources.genericError);
+    }
     closeModal();
 
     if (response?.data) {
@@ -152,6 +158,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
                   {step === 1 && <RollFormStep1 />}
                   {step === 2 && <RollFormStep2 />}
                 </View>
+                <Text isError>{!!errorMessage && errorMessage}</Text>
                 <View style={styles.formActions}>
                   {step !== 0 ? (
                     <Button
