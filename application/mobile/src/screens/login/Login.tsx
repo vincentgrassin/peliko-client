@@ -22,12 +22,14 @@ import { ScreenList } from "../../navigation/NavigationContainer";
 import { loginSchema, LoginValues } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
+import InputWrapper from "../../components/InputWrapper";
 
 interface LoginFormProps {}
 
 const useStyles = makeStyles(() => ({
   container: { flex: 1 },
   scrollContainer: {
+    marginTop: shape.spacing(4),
     flexGrow: 1
   },
   formArea: {
@@ -140,7 +142,10 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   return (
     <>
-      <NavigationHeader color={palette("white", 0)} />
+      <NavigationHeader
+        color={palette("yellow")}
+        text={isSignUpForm ? resources.subscribe : resources.connect}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <KeyboardAvoidingView style={styles.container} behavior="height">
           <Formik
@@ -153,21 +158,32 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
               <View style={styles.formArea}>
                 <View style={styles.inputArea}>
                   {isSignUpForm && (
-                    <InputFormik
-                      fieldName="userName"
-                      label={resources.userName}
-                    />
+                    <InputWrapper>
+                      <InputFormik
+                        fieldName="userName"
+                        label={resources.userName}
+                      />
+                    </InputWrapper>
                   )}
-                  <PhoneNumberInputFormik fieldName="phoneNumber" />
-                  <InputFormik
-                    fieldName="password"
-                    label={resources.password}
-                  />
-                  {isSignUpForm && (
-                    <InputFormik
-                      fieldName="passwordConfirm"
-                      label={resources.confirmPassword}
+                  <InputWrapper hasStartAdornment>
+                    <PhoneNumberInputFormik
+                      fieldName="phoneNumber"
+                      label={resources.phoneNumber}
                     />
+                  </InputWrapper>
+                  <InputWrapper>
+                    <InputFormik
+                      fieldName="password"
+                      label={resources.password}
+                    />
+                  </InputWrapper>
+                  {isSignUpForm && (
+                    <InputWrapper>
+                      <InputFormik
+                        fieldName="passwordConfirm"
+                        label={resources.confirmPassword}
+                      />
+                    </InputWrapper>
                   )}
                 </View>
                 <View style={styles.actionArea}>

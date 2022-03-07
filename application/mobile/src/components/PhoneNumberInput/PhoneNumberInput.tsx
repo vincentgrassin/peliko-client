@@ -1,7 +1,7 @@
 import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import PhoneInput, { PhoneInputProps } from "react-native-phone-number-input";
-import { typography } from "../../themeHelpers";
+import { shape, typography } from "../../themeHelpers";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import Text from "../Text";
 
@@ -14,7 +14,8 @@ export interface CustomPhoneInputProps extends PhoneInputProps {
 
 const useStyles = makeStyles(() => ({
   errorText: {
-    fontSize: typography.fontSize.xs
+    fontSize: typography.fontSize.xs,
+    marginLeft: shape.spacing(2)
   }
 }));
 

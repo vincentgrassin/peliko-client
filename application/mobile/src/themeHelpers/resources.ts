@@ -53,7 +53,9 @@ const globalResources = {
   cancel: "Annuler",
   baseErrorMessage: "¯|_(ツ)_/¯ Oh no...",
   shotBy: "Capturé par",
-  genericError: "generic error"
+  genericError: "generic error",
+  connect: "Se connecter",
+  subscribe: "S'inscrire"
 };
 
 export default globalResources;
