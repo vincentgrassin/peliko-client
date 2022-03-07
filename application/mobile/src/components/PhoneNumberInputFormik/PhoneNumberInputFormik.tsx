@@ -13,19 +13,11 @@ interface PhoneNumberInputPropsFormik extends CustomPhoneInputProps {
   onFocus?: (e: any) => any;
 }
 
-const useStyles = makeStyles(() => ({
-  input: {
-    backgroundColor: palette("white", 0)
-  }
-}));
-
 const PhoneNumberInputFormik: React.FC<PhoneNumberInputPropsFormik> = ({
   fieldName,
   label,
   onFocus
 }) => {
-  const styles = useStyles();
-
   const { setFieldValue, errors, values } = useFormikContext<FormikValues>();
   const updatePhoneNumberValue = (value: string, countryCode: any) => {
     const check = isValidNumber(value, countryCode);
@@ -56,9 +48,7 @@ const PhoneNumberInputFormik: React.FC<PhoneNumberInputPropsFormik> = ({
         onChangeCountry={handleCountryChange}
         //@ts-ignore
         errorMessage={errors.phoneNumber}
-        containerStyle={styles.input}
         placeholder=" "
-        textContainerStyle={styles.input}
         textInputProps={{
           onFocus,
           accessibilityLabel: label

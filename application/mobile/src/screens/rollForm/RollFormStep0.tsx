@@ -1,6 +1,7 @@
 import * as React from "react";
 import { makeStyles } from "react-native-elements";
 import { View, InputFormik, Text } from "../../components";
+import InputWrapper from "../../components/InputWrapper";
 import { resources, shape } from "../../themeHelpers";
 
 interface RollFormStep0Props {}
@@ -24,8 +25,12 @@ const RollFormStep0: React.FC<RollFormStep0Props> = ({}) => {
       <Text h1 style={styles.title}>
         {resources.nameAndDescription}
       </Text>
-      <InputFormik fieldName="rollName" label={resources.name} />
-      <InputFormik fieldName="description" label={resources.description} />
+      <InputWrapper>
+        <InputFormik fieldName="rollName" label={resources.name} />
+      </InputWrapper>
+      <InputWrapper>
+        <InputFormik fieldName="description" label={resources.description} />
+      </InputWrapper>
     </View>
   );
 };

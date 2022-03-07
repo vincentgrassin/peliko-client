@@ -35,6 +35,7 @@ import {
 } from "../../utils/helpers/cloudinaryHelper";
 import { UPDATE_USER } from "../../utils/helpers/mutation";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
+import InputWrapper from "../../components/InputWrapper";
 
 interface ParametersProps {}
 
@@ -232,11 +233,18 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
                     title={resources.saveProfile}
                   />
                   <View style={styles.inputArea}>
-                    <InputFormik
-                      fieldName="userName"
-                      label={resources.userName}
-                    />
-                    <PhoneNumberInputFormik fieldName="phoneNumber" />
+                    <InputWrapper>
+                      <InputFormik
+                        fieldName="userName"
+                        label={resources.userName}
+                      />
+                    </InputWrapper>
+                    <InputWrapper hasStartAdornment>
+                      <PhoneNumberInputFormik
+                        fieldName="phoneNumber"
+                        label={resources.phoneNumber}
+                      />
+                    </InputWrapper>
                   </View>
                   <Button
                     onPress={() => setIsEditingProfile(false)}
