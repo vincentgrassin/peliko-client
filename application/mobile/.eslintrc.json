@@ -37,7 +37,7 @@
     "prettier/prettier": "off",
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
-    "linebreak-style": ["error", "windows"],
+    // "linebreak-style": ["error", "windows"],
     "quotes": "off",
     "comma-dangle": "off",
     "no-shadow": "off",

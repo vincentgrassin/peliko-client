@@ -5,7 +5,7 @@ const radius = {
 };
 
 const width = {
-  buttonBorder: 2,
+  buttonBorder: 1,
   autocompleteInput: 40
 };
 

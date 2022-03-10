@@ -152,7 +152,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
         {resources.participants}
       </Text>
       <View style={styles.addArea}>
-        <InputWrapper>
+        <InputWrapper fullWidth>
           <Autocomplete
             label={resources.search}
             data={phoneContactData}

@@ -10,11 +10,18 @@ import View from "../View";
 
 export interface InputWrapperProps extends ReactNativeInputProps {
   hasStartAdornment?: boolean;
+  fullWidth?: boolean;
 }
 
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles((theme, styleProps: { fullWidth: boolean }) => {
+  const { fullWidth } = styleProps;
+
   return {
-    input: { position: "relative", marginTop: shape.spacing(3), flex: 1 }
+    input: {
+      position: "relative",
+      marginTop: shape.spacing(3),
+      flex: fullWidth ? 1 : undefined
+    }
   };
 });
 
@@ -22,8 +29,10 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
   children,
   onFocus,
   hasStartAdornment = false,
+  fullWidth = false,
   ...props
 }) => {
+  const styles = useStyles({ fullWidth });
   const { values } = useFormikContext<unknown>();
   const isReactElement = React.isValidElement(children);
 
@@ -42,7 +51,6 @@ const InputWrapper: React.FC<InputWrapperProps> = ({
     )
   ).current;
 
-  const styles = useStyles();
   const animatedStyle = {
     position: "absolute",
     left: fadeAnim.interpolate({

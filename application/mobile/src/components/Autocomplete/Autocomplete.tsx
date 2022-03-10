@@ -12,8 +12,7 @@ export interface CustomAutocompleteProps<T> extends AutocompleteProps<T> {
 const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: palette("white", 0),
-    height: shape.width.autocompleteInput,
-    flex: 1
+    height: shape.width.autocompleteInput
   },
   container: {
     borderWidth: 0,
