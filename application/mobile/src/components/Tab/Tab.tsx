@@ -60,12 +60,18 @@ const Tab: React.FC<TabProps> = ({ isOpenRollTab }) => {
   }
 
   const rollList: RollData[] = data?.rollsByUser;
+  const sortedRollList = [...rollList]?.sort((a, b) => {
+    if (isOpenRollTab) {
+      return new Date(a.closingDate) > new Date(b.closingDate) ? 1 : -1;
+    }
+    return new Date(a.closingDate) < new Date(b.closingDate) ? 1 : -1;
+  });
 
   return (
     <>
-      {rollList && rollList.length > 0 ? (
+      {sortedRollList && sortedRollList.length > 0 ? (
         <FlatList
-          data={rollList}
+          data={sortedRollList}
           renderItem={({ item, index }) => (
             <View style={styles.thumbNail} key={index}>
               <RollThumbnail
