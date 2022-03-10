@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const CustomPhoneInputProps: React.FC<CustomPhoneInputProps> = ({
+const CustomPhoneInput: React.FC<CustomPhoneInputProps> = ({
   errorMessage,
   ...props
 }) => {
@@ -58,4 +58,4 @@ const CustomPhoneInputProps: React.FC<CustomPhoneInputProps> = ({
   );
 };
 
-export default CustomPhoneInputProps;
+export default CustomPhoneInput;
