@@ -14,7 +14,7 @@ export interface InputWrapperProps extends ReactNativeInputProps {
 
 const useStyles = makeStyles((theme) => {
   return {
-    input: { position: "relative", marginTop: shape.spacing(3) }
+    input: { position: "relative", marginTop: shape.spacing(3), flex: 1 }
   };
 });
 

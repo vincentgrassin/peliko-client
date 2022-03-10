@@ -55,7 +55,11 @@ const globalResources = {
   shotBy: "Capturé par",
   genericError: "generic error",
   connect: "Se connecter",
-  subscribe: "S'inscrire"
+  subscribe: "S'inscrire",
+  search: "Rechercher",
+  myParticipants: "Mes participants",
+  searchParticipantHelperText:
+    "Ajoutez un participant à partir de vos contacts ou d'un numéro de téléphone"
 };
 
 export default globalResources;

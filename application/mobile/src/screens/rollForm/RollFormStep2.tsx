@@ -19,6 +19,7 @@ import {
 } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import { getNumberAfterPossiblyEliminatingZero } from "../../utils/helpers/dataCheckHelper";
+import InputWrapper from "../../components/InputWrapper";
 
 interface RollFormStep2Props {}
 
@@ -48,10 +49,13 @@ const useStyles = makeStyles(() => ({
     height: 30
   },
   participantsArea: {
-    marginTop: shape.spacing(3)
+    marginTop: shape.spacing(8)
   },
   trashButton: {
     color: palette("lightGrey")
+  },
+  searchHelperText: {
+    marginTop: shape.spacing(2)
   }
 }));
 
@@ -148,17 +152,20 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
         {resources.participants}
       </Text>
       <View style={styles.addArea}>
-        <Autocomplete
-          data={phoneContactData}
-          hideResults={isHiddenResult}
-          value={searchContact}
-          onChangeText={handleChangeText}
-          // onBlur={handleAutocompleteBlur}
-          flatListProps={{
-            renderItem: renderFlatListItem,
-            nestedScrollEnabled: true
-          }}
-        />
+        <InputWrapper>
+          <Autocomplete
+            label={resources.search}
+            data={phoneContactData}
+            hideResults={isHiddenResult}
+            value={searchContact}
+            onChangeText={handleChangeText}
+            // onBlur={handleAutocompleteBlur}
+            flatListProps={{
+              renderItem: renderFlatListItem,
+              nestedScrollEnabled: true
+            }}
+          />
+        </InputWrapper>
         <Button
           onPress={handleAddField}
           buttonStyle={styles.addButton}
@@ -167,6 +174,14 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
         />
       </View>
       <View style={styles.participantsArea}>
+        <View>
+          <Text h2> {resources.myParticipants} </Text>
+          {values.participantsContact.length === 0 && (
+            <Text style={styles.searchHelperText}>
+              {resources.searchParticipantHelperText}
+            </Text>
+          )}
+        </View>
         {values.participantsContact.map(
           (participant: ParticipantContact, index: number) => (
             <View key={index} style={styles.participantField}>

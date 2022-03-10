@@ -5,7 +5,8 @@ const radius = {
 };
 
 const width = {
-  buttonBorder: 2
+  buttonBorder: 2,
+  autocompleteInput: 40
 };
 
 const globalShapes = {
