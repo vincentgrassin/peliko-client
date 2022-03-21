@@ -63,7 +63,7 @@ const Roll: React.FC<RollProps> = ({}) => {
         <>
           <NavigationHeader
             text={resources.roll}
-            screen="BottomNavigation"
+            screen="Home"
             color={backgroundColor}
           />
           <RollHeader
