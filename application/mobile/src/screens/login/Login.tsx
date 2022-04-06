@@ -12,7 +12,7 @@ import {
   InputFormik,
   PhoneNumberInputFormik,
   NavigationHeader,
-  Text
+  Text,
 } from "../../components";
 import { resources, iconSet, shape, palette } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
@@ -30,23 +30,23 @@ const useStyles = makeStyles(() => ({
   container: { flex: 1 },
   scrollContainer: {
     marginTop: shape.spacing(4),
-    flexGrow: 1
+    flexGrow: 1,
   },
   formArea: {
     margin: shape.spacing(2),
-    height: "100%"
+    height: "100%",
   },
   inputArea: {
-    flex: 1
+    flex: 1,
   },
   actionArea: {
     marginBottom: shape.spacing(6),
     marginLeft: shape.spacing(2),
-    marginRight: shape.spacing(2)
+    marginRight: shape.spacing(2),
   },
   action: {
-    marginTop: shape.spacing(1)
-  }
+    marginTop: shape.spacing(1),
+  },
 }));
 
 const LoginForm: React.FC<LoginFormProps> = ({}) => {
@@ -56,7 +56,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
     email: "",
     password: "",
     passwordConfirm: "",
-    isSignUpForm: true
+    isSignUpForm: true,
   });
   const styles = useStyles();
 
@@ -65,10 +65,10 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
     useHandleServerError();
 
   const [logIn] = useMutation(LOG_IN, {
-    errorPolicy: "all"
+    errorPolicy: "all",
   });
   const [signUp] = useMutation(SIGN_UP, {
-    errorPolicy: "all"
+    errorPolicy: "all",
   });
 
   const { navigate } = useNavigation();
@@ -81,7 +81,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
           const response = await fetch(`${BASE_URL}/refresh_token/`, {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `refreshToken=${token}`
+            body: `refreshToken=${token}`,
           });
           const responseJson = await response.json();
           if (responseJson.ok) {
@@ -111,7 +111,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
     let data: { accessToken: string; refreshToken: string };
     if (isSignUpForm) {
       const response = await signUp({
-        variables: { name: userName, password, phoneNumber: phoneNumber.value }
+        variables: { name: userName, password, phoneNumber: phoneNumber.value },
       });
       if (response?.errors) {
         updateErrorMessage(response.errors);
@@ -120,7 +120,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
       data = response?.data?.createUser;
     } else {
       const response = await logIn({
-        variables: { password, phoneNumber: phoneNumber.value }
+        variables: { password, phoneNumber: phoneNumber.value },
       });
       data = response?.data?.login;
       if (response?.errors) {

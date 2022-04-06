@@ -8,7 +8,7 @@ import { useMutation } from "../../utils/hooks/useApolloClient";
 import {
   RouteProp,
   useNavigation,
-  useRoute
+  useRoute,
 } from "../../utils/hooks/useNavigation";
 import { ParamList, ScreenList } from "../../navigation/NavigationContainer";
 import { GET_ROLLS_BY_USER, GET_ROLL_BY_ID } from "../../utils/helpers/queries";
@@ -21,27 +21,28 @@ interface CamProps {}
 
 const useStyles = makeStyles(() => ({
   actions: {
-    marginTop: "auto"
+    marginTop: "auto",
   },
   cameraOptions: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom: shape.spacing(3)
-  }
+    marginBottom: shape.spacing(3),
+  },
 }));
 
 const Cam: React.FC<CamProps> = ({}) => {
   const styles = useStyles();
   const { navigate } = useNavigation();
   let camera = React.useRef(null);
+  const [isCameraReady, setIsCameraReady] = React.useState<boolean>(false);
   const [hasPermission, setHasPermission] = React.useState<boolean>(false);
   const [isCameraBack, setIsCameraBack] = React.useState<boolean>(true);
   const [isFlashOn, setIsFlashOn] = React.useState<boolean>(false);
   const { handleError } = useHandleServerError();
   const [uploadPicture] = useMutation(UPLOAD_PICTURE, {
     onError: handleError,
-    errorPolicy: "all"
+    errorPolicy: "all",
   });
   const route = useRoute<RouteProp<ParamList, "CamScreen">>();
   const { rollId, backgroundColor } = route.params;
@@ -64,7 +65,7 @@ const Cam: React.FC<CamProps> = ({}) => {
       const picture = await camera.takePictureAsync({
         quality: 0.7,
         base64: true,
-        exif: true
+        exif: true,
       });
       if (picture.base64) {
         const jsonResponse = await uploadToCloudinary(picture.base64);
@@ -73,22 +74,22 @@ const Cam: React.FC<CamProps> = ({}) => {
             cloudinaryId: jsonResponse.public_id,
             height: jsonResponse.height,
             width: jsonResponse.width,
-            rollId
+            rollId,
           },
           awaitRefetchQueries: true,
           refetchQueries: [
             { query: GET_ROLL_BY_ID, variables: { id: rollId } },
-            { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } }
-          ]
+            { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } },
+          ],
         });
         if (response.errors) {
-          errorMessage = response.errors[0]?.message || resources.genericError;
+          errorMessage = JSON.stringify(response);
         }
       }
     }
     closeModal();
     navigate<ScreenList>("RollScreen", {
-      errorMessage
+      errorMessage,
     });
   };
 
@@ -102,7 +103,7 @@ const Cam: React.FC<CamProps> = ({}) => {
 
   return (
     <>
-      {hasPermission && (
+      {hasPermission ? (
         <>
           <NavigationHeader
             color={backgroundColor}
@@ -122,6 +123,9 @@ const Cam: React.FC<CamProps> = ({}) => {
                 ? Camera.Constants.FlashMode.torch
                 : Camera.Constants.FlashMode.off
             }
+            onCameraReady={() => {
+              setIsCameraReady(true);
+            }}
             //@ts-ignore
             ref={(ref) => (camera = ref)}
           >
@@ -134,6 +138,7 @@ const Cam: React.FC<CamProps> = ({}) => {
                 onPress={takePicture}
                 title={resources.shootPicture}
                 color={backgroundColor}
+                disabled={!isCameraReady}
               />
             </View>
           </Camera>
@@ -145,7 +150,7 @@ const Cam: React.FC<CamProps> = ({}) => {
             text={resources.processingPicture}
           />
         </>
-      )}
+      ) : null}
     </>
   );
 };

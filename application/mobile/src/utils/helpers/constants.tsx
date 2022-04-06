@@ -15,5 +15,5 @@ export const locale = "en-GB";
 export const svgMapping: { [key: string]: JSX.Element } = {
   eye: <Eye />,
   box: <Box />,
-  mailbox: <MailBox />
+  mailbox: <MailBox />,
 };
