@@ -22,6 +22,9 @@ interface CamProps {}
 const useStyles = makeStyles(() => ({
   actions: {
     marginTop: "auto",
+    marginBottom: shape.spacing(4),
+    marginLeft: shape.spacing(4),
+    marginRight: shape.spacing(4),
   },
   cameraOptions: {
     display: "flex",
@@ -113,6 +116,7 @@ const Cam: React.FC<CamProps> = ({}) => {
           <Camera
             style={{ flex: 1 }}
             ratio="16:9"
+            autoFocus={false}
             type={
               isCameraBack
                 ? Camera.Constants.Type.back
@@ -131,12 +135,20 @@ const Cam: React.FC<CamProps> = ({}) => {
           >
             <View style={styles.actions}>
               <View style={styles.cameraOptions}>
-                <Icon {...iconSet.flash} onPress={toggleFlash} />
-                <Icon {...iconSet.reverseCam} onPress={reverseCam} />
+                <Icon
+                  {...iconSet.flash}
+                  onPress={toggleFlash}
+                  color={backgroundColor}
+                />
+                <Icon
+                  {...iconSet.reverseCam}
+                  onPress={reverseCam}
+                  color={backgroundColor}
+                />
               </View>
               <Button
                 onPress={takePicture}
-                title={resources.shootPicture}
+                title={<Icon {...iconSet.camera} />}
                 color={backgroundColor}
                 disabled={!isCameraReady}
               />
