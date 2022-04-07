@@ -7,6 +7,7 @@ import { Button, Text, View } from "../../components";
 import { resources, shape } from "../../themeHelpers";
 import { getDateFormat } from "../../utils/helpers/dateHelper";
 import { RollCreationValues } from "../../utils/helpers/validationSchema";
+import { minimumRollDate } from "../../utils/helpers/constants";
 
 interface RollFormStep1Props {}
 
@@ -14,29 +15,28 @@ const useStyles = makeStyles(() => ({
   formStep: {
     marginTop: shape.spacing(3),
     marginLeft: shape.spacing(2),
-    marginRight: shape.spacing(2)
+    marginRight: shape.spacing(2),
   },
   title: {
-    marginBottom: shape.spacing(3)
+    marginBottom: shape.spacing(3),
   },
   datePicker: {
     display: "flex",
     flexDirection: "row",
     alignContent: "center",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
   },
   date: {
     alignSelf: "center",
-    marginLeft: shape.spacing(3)
-  }
+    marginLeft: shape.spacing(3),
+  },
 }));
 const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
   const styles = useStyles();
   const { setFieldValue } = useFormikContext<RollCreationValues>();
   const [field] = useField("date");
   const [show, setShow] = React.useState(false);
-
-  const onChange = (event: any, selectedDate: Date | undefined) => {
+  const handleChange = (_: any, selectedDate: Date | undefined) => {
     setShow(Platform.OS === "ios");
     setFieldValue(field.name, selectedDate);
   };
@@ -44,6 +44,12 @@ const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
   const showDatepicker = () => {
     setShow(true);
   };
+
+  React.useEffect(() => {
+    if (!field.value) {
+      setFieldValue(field.name, minimumRollDate);
+    }
+  }, [field.name, field.value, setFieldValue]);
 
   return (
     <View style={styles.formStep}>
@@ -63,8 +69,8 @@ const RollFormStep1: React.FC<RollFormStep1Props> = ({ ...props }) => {
           value={(field.value && new Date(field.value)) || null}
           mode="date"
           display="default"
-          onChange={onChange}
-          minimumDate={new Date(Date.now())}
+          onChange={handleChange}
+          minimumDate={new Date(minimumRollDate)}
         />
       )}
     </View>

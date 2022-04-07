@@ -8,7 +8,7 @@ import {
   Stepper,
   ScrollView,
   NavigationHeader,
-  Text
+  Text,
 } from "../../components";
 import RollFormStep0 from "./RollFormStep0";
 import RollFormStep1 from "./RollFormStep1";
@@ -18,7 +18,7 @@ import { useMutation } from "../../utils/hooks/useApolloClient";
 import { CREATE_ROLL } from "../../utils/helpers/mutation";
 import {
   rollCreationSchema,
-  RollCreationValues
+  RollCreationValues,
 } from "../../utils/helpers/validationSchema";
 import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useNavigation } from "../../utils/hooks/useNavigation";
@@ -26,8 +26,9 @@ import { ScreenList } from "../../navigation/NavigationContainer";
 import Modal from "../../components/Modal";
 import { useModal } from "../../utils/hooks/useModal";
 import {
+  minimumRollDate,
   ROLL_CREATION_FIRST_STEP,
-  ROLL_CREATION_LAST_STEP
+  ROLL_CREATION_LAST_STEP,
 } from "../../utils/helpers/constants";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 
@@ -35,26 +36,26 @@ interface RollFormWizardProps {}
 
 const useStyles = makeStyles(() => ({
   container: {
-    flex: 1
+    flex: 1,
   },
   scrollContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   formActions: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom: shape.spacing(3)
+    marginBottom: shape.spacing(3),
   },
   actionButton: {
-    width: "45%"
+    width: "45%",
   },
   formStep: {
-    flex: 1
+    flex: 1,
   },
   form: {
-    height: "100%"
-  }
+    height: "100%",
+  },
 }));
 
 const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
@@ -65,15 +66,15 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
 
   const [createRoll] = useMutation(CREATE_ROLL, {
     onError: handleError,
-    errorPolicy: "all"
+    errorPolicy: "all",
   });
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
   const initialValues = React.useMemo(() => {
     return {
       rollName: "",
       description: "",
-      date: new Date(Date.now()),
-      participantsContact: []
+      date: new Date(minimumRollDate),
+      participantsContact: [],
     };
   }, []);
 
@@ -107,15 +108,15 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
           participants: participantsContact.map(({ name, phoneNumber }) => {
             return {
               phoneNumber: phoneNumber.value,
-              name
+              name,
             };
-          })
-        }
+          }),
+        },
       },
       refetchQueries: [
-        { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } }
+        { query: GET_ROLLS_BY_USER, variables: { isOpenTab: true } },
       ],
-      awaitRefetchQueries: true
+      awaitRefetchQueries: true,
     });
     if (response.errors) {
       updateErrorMessage(response.errors);
@@ -126,7 +127,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
       navigate<ScreenList>("RollScreen", {
         backgroundColor: palette("blue"),
         rollId: response.data.createRoll.id,
-        isOpenRoll: true
+        isOpenRoll: true,
       });
       return true;
     }
