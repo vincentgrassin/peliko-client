@@ -6,11 +6,11 @@ export const loginSchema = Yup.object().shape({
   userName: Yup.string().when("isSignUpForm", {
     is: true,
     then: Yup.string().required(resources.required),
-    otherwise: Yup.string()
+    otherwise: Yup.string(),
   }),
   phoneNumber: Yup.object().shape({
     isValid: Yup.bool().isTrue(resources.phoneNumberValidityErrorMessage),
-    value: Yup.string().required(resources.required)
+    value: Yup.string().required(resources.required),
   }),
   password: Yup.string().required(resources.required),
   passwordConfirm: Yup.string().when("isSignUpForm", {
@@ -18,8 +18,8 @@ export const loginSchema = Yup.object().shape({
     then: Yup.string()
       .oneOf([Yup.ref("password"), null], resources.errorNotMatchingPassword)
       .required(resources.required),
-    otherwise: Yup.string()
-  })
+    otherwise: Yup.string(),
+  }),
 });
 
 export type PhoneNumberCard = {
@@ -46,12 +46,12 @@ export const rollCreationSchema = Yup.object().shape({
       Yup.object().shape({
         phoneNumber: Yup.object().shape({
           isValid: Yup.bool().isTrue(resources.phoneNumberValidityErrorMessage),
-          value: Yup.string().required(resources.required)
-        })
+          value: Yup.string().required(resources.required),
+        }),
       })
     )
     .required(resources.participantEmptyErrorMessage)
-    .min(1, resources.participantMinimunNumberErrorMessage)
+    .min(1, resources.participantMinimunNumberErrorMessage),
 });
 
 export type ParticipantContact = {
@@ -66,16 +66,15 @@ export type RollCreationValues = {
   participantsContact: ParticipantContact[];
 };
 
-export type ProfileValues = Partial<
-  Pick<LoginValues, "phoneNumber" | "userName">
-> & {
+export type ProfileValues = Partial<Pick<LoginValues, "userName">> & {
   profilePictureCloudinaryId?: string;
+  phoneNumber: Partial<PhoneNumberCard>;
 };
 
 export const userProfileSchema = Yup.object().shape({
   userName: Yup.string().required(resources.required),
   phoneNumber: Yup.object().shape({
     isValid: Yup.bool().isTrue(resources.phoneNumberValidityErrorMessage),
-    value: Yup.string().required(resources.required)
-  })
+    value: Yup.string().required(resources.required),
+  }),
 });

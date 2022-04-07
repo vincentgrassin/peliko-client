@@ -10,7 +10,7 @@ import {
   NavigationHeader,
   PhoneNumberInputFormik,
   Text,
-  View
+  View,
 } from "../../components";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
@@ -18,12 +18,12 @@ import { resources, palette, shape } from "../../themeHelpers";
 import {
   client,
   useMutation,
-  useQuery
+  useQuery,
 } from "../../utils/hooks/useApolloClient";
 import { ImageProfile } from "../../assets";
 import {
   ProfileValues,
-  userProfileSchema
+  userProfileSchema,
 } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import { pickImageFromGallery } from "../../utils/helpers/pictureHelper";
@@ -31,7 +31,7 @@ import { GET_USER_BY_ID } from "../../utils/helpers/queries";
 import { UserCard } from "../../utils/types/types";
 import {
   getCloudinaryUrl,
-  uploadToCloudinary
+  uploadToCloudinary,
 } from "../../utils/helpers/cloudinaryHelper";
 import { UPDATE_USER } from "../../utils/helpers/mutation";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
@@ -42,35 +42,35 @@ interface ParametersProps {}
 const useStyles = makeStyles(() => ({
   container: {
     display: "flex",
-    flex: 1
+    flex: 1,
   },
   button: {
-    width: "75%"
+    width: "75%",
   },
   userInformation: {
     marginTop: shape.spacing(3),
-    alignItems: "center"
+    alignItems: "center",
   },
   inputArea: {
     width: "80%",
-    marginTop: shape.spacing(3)
+    marginTop: shape.spacing(3),
   },
   profilePicturePicker: {
     position: "absolute",
     top: shape.spacing(4),
-    right: shape.spacing(1)
+    right: shape.spacing(1),
   },
   logOut: {
     marginTop: "auto",
     marginBottom: shape.spacing(8),
-    alignSelf: "center"
+    alignSelf: "center",
   },
   userDetail: {
-    marginTop: 30
+    marginTop: 30,
   },
   cancelButton: {
-    marginTop: shape.spacing(2)
-  }
+    marginTop: shape.spacing(2),
+  },
 }));
 
 const Parameters: React.FC<ParametersProps> = ({}) => {
@@ -80,7 +80,7 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
   const { data } = useQuery(GET_USER_BY_ID, { onError: handleError });
   const [updateUser] = useMutation(UPDATE_USER, {
     onError: handleError,
-    errorPolicy: "all"
+    errorPolicy: "all",
   });
 
   const userInformations: UserCard | undefined = data?.getUserById;
@@ -94,17 +94,17 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
     uri: string;
   }>({
     base64: "",
-    uri: ""
+    uri: "",
   });
   const [formValues, setFormValues] = React.useState<ProfileValues>({
     userName: userInformations?.name,
     phoneNumber: {
       value: userInformations?.phoneNumber || "",
-      isValid: false,
-      countryCode: defaultCountryCode
     },
-    profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId
+    profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId,
   });
+
+  console.log(formValues);
 
   React.useEffect(() => {
     if (userInformations?.avatarCloudinaryPublicId) {
@@ -113,7 +113,7 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
           ...prevState,
           uri: userInformations.avatarCloudinaryPublicId
             ? getCloudinaryUrl(userInformations.avatarCloudinaryPublicId)
-            : ""
+            : "",
         };
       });
     }
@@ -121,10 +121,8 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
       userName: userInformations?.name,
       phoneNumber: {
         value: userInformations?.phoneNumber || "",
-        isValid: false,
-        countryCode: defaultCountryCode
       },
-      profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId
+      profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId,
     });
   }, [userInformations]);
 
@@ -153,16 +151,16 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
         profilePicture:
           pictureServerResponse?.public_id ||
           userInformations?.avatarCloudinaryPublicId ||
-          ""
+          "",
       },
       update(cache, { data }) {
         cache.writeQuery({
           query: GET_USER_BY_ID,
           data: {
-            getUserById: data?.updateUser || userInformations
-          }
+            getUserById: data?.updateUser || userInformations,
+          },
         });
-      }
+      },
     });
     if (response.errors) {
       updateErrorMessage(response.errors);
@@ -250,7 +248,7 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
                     onPress={() => setIsEditingProfile(false)}
                     containerStyle={{
                       ...styles.button,
-                      ...styles.cancelButton
+                      ...styles.cancelButton,
                     }}
                     title={resources.cancel}
                     type="outline"
