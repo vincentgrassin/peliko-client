@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   Avatar as ReactNativeAvatar,
   AvatarProps as ReactNativeAvatarProps,
-  makeStyles
+  makeStyles,
 } from "react-native-elements";
 
 import { palette } from "../../themeHelpers";
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   notification: {
     position: "absolute",
     top: 0,
-    right: 0
+    right: 0,
   },
   badge: {
     backgroundColor: palette("black"),
@@ -29,12 +29,12 @@ const useStyles = makeStyles(() => ({
     paddingRight: 0,
     height: 20,
     width: 20,
-    borderRadius: 20
+    borderRadius: 20,
   },
   name: {
     width: 60,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 }));
 
 const Avatar: React.FC<AvatarProps> = ({

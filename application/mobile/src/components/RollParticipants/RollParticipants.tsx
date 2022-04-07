@@ -19,26 +19,26 @@ interface RollParticipantsProps {
 
 const useStyles = makeStyles(() => ({
   participants: {
-    flex: 1
+    flex: 1,
   },
   participant: {
-    marginRight: shape.spacing(1)
+    marginRight: shape.spacing(1),
   },
   title: {
-    marginBottom: shape.spacing(2)
-  }
+    marginBottom: shape.spacing(2),
+  },
 }));
 
 const RollParticipants: React.FC<RollParticipantsProps> = ({
   participants,
-  className
+  className,
 }) => {
   const styles = useStyles();
   const { handleError } = useHandleServerError();
   const ids = participants?.map((p) => p.userId).filter(Boolean);
   const { data } = useQuery(GET_USERS_BY_IDS, {
     variables: { ids },
-    onError: handleError
+    onError: handleError,
   });
   const users: User[] = data?.getUsersByIds;
 
@@ -62,14 +62,14 @@ const RollParticipants: React.FC<RollParticipantsProps> = ({
                   source={
                     profilePictureUrl
                       ? {
-                          uri: profilePictureUrl
+                          uri: profilePictureUrl,
                         }
                       : undefined
                   }
                   index={index}
                   size="large"
                   notification={participant.pictureCount}
-                  name={associatedUser?.name || associatedUser?.phoneNumber}
+                  name={associatedUser?.name || participant?.phoneNumber}
                 />
               </View>
             );
