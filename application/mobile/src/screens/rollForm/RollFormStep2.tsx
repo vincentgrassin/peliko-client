@@ -9,16 +9,16 @@ import {
   Text,
   Icon,
   Button,
-  PhoneNumberInput
+  PhoneNumberInput,
 } from "../../components";
 import { iconSet, palette, resources, shape } from "../../themeHelpers";
 import { usePhoneContacts, Contact } from "../../utils/hooks/usePhoneContacts";
 import {
   ParticipantContact,
-  RollCreationValues
+  RollCreationValues,
 } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
-import { getNumberAfterPossiblyEliminatingZero } from "../../utils/helpers/dataCheckHelper";
+import { formatPhoneNumber } from "../../utils/helpers/dataCheckHelper";
 import InputWrapper from "../../components/InputWrapper";
 
 interface RollFormStep2Props {}
@@ -27,36 +27,36 @@ const useStyles = makeStyles(() => ({
   rollForm: {
     marginTop: shape.spacing(3),
     marginLeft: shape.spacing(2),
-    marginRight: shape.spacing(2)
+    marginRight: shape.spacing(2),
   },
   title: {
-    marginBottom: shape.spacing(3)
+    marginBottom: shape.spacing(3),
   },
   participantField: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   inputParticipant: {
-    width: "90%"
+    width: "90%",
   },
   addArea: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   addButton: {
-    height: 30
+    height: 30,
   },
   participantsArea: {
-    marginTop: shape.spacing(8)
+    marginTop: shape.spacing(8),
   },
   trashButton: {
-    color: palette("lightGrey")
+    color: palette("lightGrey"),
   },
   searchHelperText: {
-    marginTop: shape.spacing(2)
-  }
+    marginTop: shape.spacing(2),
+  },
 }));
 
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
@@ -81,15 +81,15 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
     index: number
   ) => {
     const check = isValidNumber(value, countryCode);
-    const formattedNumber = getNumberAfterPossiblyEliminatingZero(value);
+    const formattedNumber = formatPhoneNumber(value, countryCode);
     const participantsList = values.participantsContact;
     participantsList[index] = {
       name: "",
       phoneNumber: {
         value: formattedNumber,
         isValid: check,
-        countryCode
-      }
+        countryCode,
+      },
     };
     setFieldValue(field.name, participantsList);
   };
@@ -162,7 +162,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
             // onBlur={handleAutocompleteBlur}
             flatListProps={{
               renderItem: renderFlatListItem,
-              nestedScrollEnabled: true
+              nestedScrollEnabled: true,
             }}
           />
         </InputWrapper>

@@ -1,11 +1,9 @@
 import * as React from "react";
-import { makeStyles } from "react-native-elements";
 import { isValidNumber } from "react-native-phone-number-input";
 import { FormikValues, useFormikContext } from "formik";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import PhoneNumberInput, { CustomPhoneInputProps } from "../PhoneNumberInput";
-import { getNumberAfterPossiblyEliminatingZero } from "../../utils/helpers/dataCheckHelper";
-import { palette } from "../../themeHelpers";
+import { formatPhoneNumber } from "../../utils/helpers/dataCheckHelper";
 
 interface PhoneNumberInputPropsFormik extends CustomPhoneInputProps {
   fieldName: string;
@@ -16,16 +14,16 @@ interface PhoneNumberInputPropsFormik extends CustomPhoneInputProps {
 const PhoneNumberInputFormik: React.FC<PhoneNumberInputPropsFormik> = ({
   fieldName,
   label,
-  onFocus
+  onFocus,
 }) => {
   const { setFieldValue, errors, values } = useFormikContext<FormikValues>();
   const updatePhoneNumberValue = (value: string, countryCode: any) => {
     const check = isValidNumber(value, countryCode);
-    const formattedNumber = getNumberAfterPossiblyEliminatingZero(value);
+    const formattedNumber = formatPhoneNumber(value, countryCode);
     setFieldValue(fieldName, {
       value: formattedNumber,
       isValid: check,
-      countryCode
+      countryCode,
     });
   };
 
@@ -51,7 +49,7 @@ const PhoneNumberInputFormik: React.FC<PhoneNumberInputPropsFormik> = ({
         placeholder=" "
         textInputProps={{
           onFocus,
-          accessibilityLabel: label
+          accessibilityLabel: label,
         }}
       />
     </>
