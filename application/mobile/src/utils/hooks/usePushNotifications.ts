@@ -7,9 +7,7 @@ import { UPDATE_USER_PUSH_TOKEN } from "../helpers/mutation";
 
 export const usePushNotification = () => {
   const [updateUserPushToken] = useMutation(UPDATE_USER_PUSH_TOKEN);
-  const [expoPushToken, setExpoPushToken] = React.useState<string>("");
-
-  const registerForPushNotificationsAsync = async () => {
+  const registerForPushNotificationsAsync = React.useCallback(async () => {
     if (Device.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
@@ -23,7 +21,13 @@ export const usePushNotification = () => {
         return;
       }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
-      setExpoPushToken(token);
+      if (token) {
+        updateUserPushToken({
+          variables: {
+            pushToken: token,
+          },
+        });
+      }
     } else {
       alert("Must use physical device for Push Notifications");
     }
@@ -36,24 +40,9 @@ export const usePushNotification = () => {
         lightColor: "#FF231F7C",
       });
     }
-  };
-
-  React.useEffect(() => {
-    registerForPushNotificationsAsync();
-  }, []);
-
-  React.useEffect(() => {
-    if (expoPushToken) {
-      updateUserPushToken({
-        variables: {
-          pushToken: expoPushToken,
-        },
-      });
-    }
-  }, [expoPushToken, updateUserPushToken]);
+  }, [updateUserPushToken]);
 
   return {
-    expoPushToken,
     registerForPushNotificationsAsync,
   };
 };

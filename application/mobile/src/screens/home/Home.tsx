@@ -4,7 +4,6 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { makeStyles } from "react-native-elements";
 import { palette, resources } from "../../themeHelpers";
 import { Tab, NavigationHeader } from "../../components";
-import { usePushNotification } from "../../utils/hooks/usePushNotifications";
 
 interface HomeProps {}
 
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme, styleProps: { layout: ScaledSize }) => {
 
 const Home: React.FC<HomeProps> = ({}) => {
   const layout = useWindowDimensions();
-  usePushNotification();
 
   const styles = useStyles({ layout });
   const [index, setIndex] = React.useState(0);

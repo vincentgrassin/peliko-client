@@ -23,6 +23,7 @@ import { loginSchema, LoginValues } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 import InputWrapper from "../../components/InputWrapper";
+import { usePushNotification } from "../../utils/hooks/usePushNotifications";
 
 interface LoginFormProps {}
 
@@ -63,6 +64,8 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
   const { errorMessage, resetErrorMessage, updateErrorMessage } =
     useHandleServerError();
+
+  const { registerForPushNotificationsAsync } = usePushNotification();
 
   const [logIn] = useMutation(LOG_IN, {
     errorPolicy: "all",
@@ -132,6 +135,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
       await AsyncStorage.setItem("@accessToken", data.accessToken);
       await AsyncStorage.setItem("@refreshToken", data.refreshToken);
       navigate<ScreenList>("BottomNavigation");
+      registerForPushNotificationsAsync();
       try {
         await AsyncStorage.setItem("@refreshToken", data.refreshToken);
       } catch (e) {
