@@ -5,9 +5,7 @@
     "name": "pelliko",
     "slug": "pelliko",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "icon": "./src/assets/images/icon.png",
     "splash": {
       "image": "./src/assets/images/splash.png",
@@ -15,10 +13,20 @@
       "backgroundColor": "#ffffff"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png"
       },
       "package": "com.vincentgrassin.pelliko"
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/assets/images/icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ]
   }
 }

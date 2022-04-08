@@ -4,6 +4,9 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { makeStyles } from "react-native-elements";
 import { palette, resources } from "../../themeHelpers";
 import { Tab, NavigationHeader } from "../../components";
+import { usePushNotification } from "../../utils/hooks/usePushNotifications";
+import { useMutation } from "../../utils/hooks/useApolloClient";
+import { UPDATE_USER_PUSH_TOKEN } from "../../utils/helpers/mutation";
 
 interface HomeProps {}
 
@@ -12,25 +15,39 @@ const useStyles = makeStyles((theme, styleProps: { layout: ScaledSize }) => {
   return {
     layout: { width: layout.width },
     indicator: {
-      backgroundColor: palette("black")
+      backgroundColor: palette("black"),
     },
     tabBar: {
-      backgroundColor: palette("blue")
-    }
+      backgroundColor: palette("blue"),
+    },
   };
 });
 
 const Home: React.FC<HomeProps> = ({}) => {
   const layout = useWindowDimensions();
+  const { expoPushToken } = usePushNotification();
+  const [updateUserPushToken] = useMutation(UPDATE_USER_PUSH_TOKEN);
+
+  // a déplacer ?
+  React.useEffect(() => {
+    if (expoPushToken) {
+      updateUserPushToken({
+        variables: {
+          pushToken: expoPushToken,
+        },
+      });
+    }
+  }, [expoPushToken, updateUserPushToken]);
+
   const styles = useStyles({ layout });
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "openRollList", title: resources.openRollListTabTitle },
-    { key: "closedRollList", title: resources.closedRollListTabTitle }
+    { key: "closedRollList", title: resources.closedRollListTabTitle },
   ]);
   const renderScene = SceneMap({
     openRollList: () => <Tab isOpenRollTab />,
-    closedRollList: () => <Tab isOpenRollTab={false} />
+    closedRollList: () => <Tab isOpenRollTab={false} />,
   });
 
   const renderTabBar = (props: any) => (

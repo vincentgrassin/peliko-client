@@ -75,3 +75,9 @@ export const UPDATE_USER = gql`
     }
   }
 `;
+
+export const UPDATE_USER_PUSH_TOKEN = gql`
+  mutation UpdateUserPushToken($pushToken: String!) {
+    updateUserPushToken(pushToken: $pushToken)
+  }
+`;

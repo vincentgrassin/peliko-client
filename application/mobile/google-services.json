@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "493371358565",
+    "project_id": "pelliko-alpha",
+    "storage_bucket": "pelliko-alpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493371358565:android:a9058e320e886d1dcc758c",
+        "android_client_info": {
+          "package_name": "com.vincentgrassin.pelliko"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493371358565-jbldiom00j4fvl510b8f8mic2ang3lhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnYWk8es96G29ztvOUwGhzbsqf2UgbzfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493371358565-jbldiom00j4fvl510b8f8mic2ang3lhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
