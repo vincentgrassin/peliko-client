@@ -5,8 +5,6 @@ import { makeStyles } from "react-native-elements";
 import { palette, resources } from "../../themeHelpers";
 import { Tab, NavigationHeader } from "../../components";
 import { usePushNotification } from "../../utils/hooks/usePushNotifications";
-import { useMutation } from "../../utils/hooks/useApolloClient";
-import { UPDATE_USER_PUSH_TOKEN } from "../../utils/helpers/mutation";
 
 interface HomeProps {}
 
@@ -25,19 +23,7 @@ const useStyles = makeStyles((theme, styleProps: { layout: ScaledSize }) => {
 
 const Home: React.FC<HomeProps> = ({}) => {
   const layout = useWindowDimensions();
-  const { expoPushToken } = usePushNotification();
-  const [updateUserPushToken] = useMutation(UPDATE_USER_PUSH_TOKEN);
-
-  // a déplacer ?
-  React.useEffect(() => {
-    if (expoPushToken) {
-      updateUserPushToken({
-        variables: {
-          pushToken: expoPushToken,
-        },
-      });
-    }
-  }, [expoPushToken, updateUserPushToken]);
+  usePushNotification();
 
   const styles = useStyles({ layout });
   const [index, setIndex] = React.useState(0);

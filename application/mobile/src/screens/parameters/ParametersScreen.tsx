@@ -104,8 +104,6 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
     profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId,
   });
 
-  console.log(formValues);
-
   React.useEffect(() => {
     if (userInformations?.avatarCloudinaryPublicId) {
       setProfilePicture((prevState) => {

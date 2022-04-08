@@ -2,8 +2,11 @@ import * as React from "react";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { Platform } from "react-native";
+import { useMutation } from "./useApolloClient";
+import { UPDATE_USER_PUSH_TOKEN } from "../helpers/mutation";
 
 export const usePushNotification = () => {
+  const [updateUserPushToken] = useMutation(UPDATE_USER_PUSH_TOKEN);
   const [expoPushToken, setExpoPushToken] = React.useState<string>("");
 
   const registerForPushNotificationsAsync = async () => {
@@ -38,6 +41,16 @@ export const usePushNotification = () => {
   React.useEffect(() => {
     registerForPushNotificationsAsync();
   }, []);
+
+  React.useEffect(() => {
+    if (expoPushToken) {
+      updateUserPushToken({
+        variables: {
+          pushToken: expoPushToken,
+        },
+      });
+    }
+  }, [expoPushToken, updateUserPushToken]);
 
   return {
     expoPushToken,
