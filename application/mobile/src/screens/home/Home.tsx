@@ -46,7 +46,7 @@ const Home: React.FC<HomeProps> = ({}) => {
 
   return (
     <>
-      <NavigationHeader color={palette("blue")} showParameters size="small" />
+      <NavigationHeader color={palette("blue")} showLogoAndParameter />
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

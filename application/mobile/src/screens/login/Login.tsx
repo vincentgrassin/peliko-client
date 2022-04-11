@@ -7,14 +7,13 @@ import { KeyboardAvoidingView } from "react-native";
 import {
   View,
   Button,
-  Icon,
   ScrollView,
   InputFormik,
   PhoneNumberInputFormik,
   NavigationHeader,
   Text,
 } from "../../components";
-import { resources, iconSet, shape, palette } from "../../themeHelpers";
+import { resources, shape, palette } from "../../themeHelpers";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";

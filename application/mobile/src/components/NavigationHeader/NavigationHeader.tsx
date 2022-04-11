@@ -6,13 +6,14 @@ import Icon from "../Icon";
 import Text from "../Text";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
+import { PellikoLogoHorizontal } from "../../assets";
 
 interface NavigationHeaderProps {
   text?: string;
   screen?: ScreenList;
   color: string;
   size?: "small";
-  showParameters?: boolean;
+  showLogoAndParameter?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -25,14 +26,26 @@ const useStyles = makeStyles(
         alignItems: "center",
         paddingTop: size === "small" ? shape.spacing(4) : shape.spacing(5),
         paddingBottom: size === "small" ? 0 : shape.spacing(2),
-        backgroundColor: color
+        backgroundColor: color,
       },
       icon: {
-        marginLeft: shape.spacing(2)
+        marginLeft: shape.spacing(2),
       },
       title: {
-        marginLeft: shape.spacing(2)
-      }
+        marginLeft: shape.spacing(2),
+      },
+      logo: {
+        flex: 1,
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+      },
+      parameterIcon: {
+        paddingRight: shape.spacing(2),
+        position: "absolute",
+        right: shape.spacing(2),
+      },
     };
   }
 );
@@ -42,7 +55,7 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   screen,
   color,
   size,
-  showParameters = false
+  showLogoAndParameter = false,
 }) => {
   const styles = useStyles({ color, size });
   const { navigate } = useNavigation();
@@ -61,12 +74,19 @@ const NavigationHeader: React.FC<NavigationHeaderProps> = ({
         />
       )}
       {text && (
-        <Text h3 style={styles.title}>
+        <Text h2 style={styles.title}>
           {text}
         </Text>
       )}
-      {showParameters && (
-        <Icon {...iconSet.cog} onPress={() => navigateToScreen("Parameters")} />
+      {showLogoAndParameter && (
+        <View style={styles.logo}>
+          <PellikoLogoHorizontal height={25} width={120} />
+          <Icon
+            {...iconSet.cog}
+            onPress={() => navigateToScreen("Parameters")}
+            containerStyle={styles.parameterIcon}
+          />
+        </View>
       )}
     </View>
   );

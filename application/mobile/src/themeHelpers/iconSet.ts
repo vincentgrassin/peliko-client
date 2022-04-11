@@ -1,64 +1,64 @@
 const globalIconSet = {
   bell: {
     name: "bell",
-    type: "entypo"
+    type: "entypo",
   },
   roll: {
     name: "camera-roll",
-    type: "materialicons"
+    type: "materialicons",
   },
   plus: {
     name: "plus",
-    type: "entypo"
+    type: "entypo",
   },
   minus: {
     name: "minuscircleo",
-    type: "antdesign"
+    type: "antdesign",
   },
   calendar: {
     name: "calendar",
-    type: "antdesign"
+    type: "antdesign",
   },
   people: {
     name: "people",
-    type: "materialicons"
+    type: "materialicons",
   },
   picture: {
     name: "picture",
-    type: "antdesign"
+    type: "antdesign",
   },
   flash: {
     name: "flash",
-    type: "entypo"
+    type: "entypo",
   },
   reverseCam: {
     name: "camera-reverse",
-    type: "ionicon"
+    type: "ionicon",
   },
   trash: {
     name: "trash",
-    type: "entypo"
+    type: "entypo",
   },
   arrowLeft: {
     name: "arrowleft",
-    type: "antdesign"
+    type: "antdesign",
   },
   cog: {
     name: "cog",
-    type: "entypo"
+    type: "entypo",
   },
   camera: {
     name: "camera",
-    type: "entypo"
+    type: "entypo",
   },
   edit: {
     name: "edit",
-    type: "entypo"
+    type: "entypo",
   },
   image: {
     name: "image",
-    type: "entypo"
-  }
+    type: "entypo",
+  },
 };
 
 export default globalIconSet;

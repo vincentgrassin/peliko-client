@@ -7,50 +7,49 @@ const globalTheme = {
       {
         fontFamily: "WorkSansRegular",
         fontSize: typography.fontSize.xm,
-        fontWeight: "bold"
-      }
-    ]
+      },
+    ],
   },
   Input: {
     labelStyle: [
       {
         fontFamily: "Windsor",
-        fontSize: typography.fontSize.xm
-      }
+        fontSize: typography.fontSize.xm,
+      },
     ],
     errorStyle: [
       {
-        color: globalPalette("red")
-      }
+        color: globalPalette("red"),
+      },
     ],
     errorProps: [
       {
         fontFamily: "WorkSansRegular",
-        fontSize: typography.fontSize.s
-      }
-    ]
+        fontSize: typography.fontSize.s,
+      },
+    ],
   },
   Text: {
     h1Style: {
       fontFamily: "Windsor",
       fontWeight: "normal",
-      fontSize: typography.fontSize.xl
+      fontSize: typography.fontSize.xl,
     },
     h2Style: {
       fontFamily: "Windsor",
       fontWeight: "normal",
-      fontSize: typography.fontSize.m
+      fontSize: typography.fontSize.m,
     },
     h3Style: {
       fontFamily: "WorkSansRegular",
       fontWeight: "normal",
-      fontSize: typography.fontSize.xm
+      fontSize: typography.fontSize.xm,
     },
     style: {
       fontFamily: "WorkSansRegular",
-      fontSize: typography.fontSize.s
-    }
-  }
+      fontSize: typography.fontSize.s,
+    },
+  },
 };
 
 export default globalTheme;
