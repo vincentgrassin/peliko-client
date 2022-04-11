@@ -8,5 +8,7 @@ export { default as ImageProfile } from "./ImageProfile";
 export * from "./ImageProfile";
 export { default as MailBox } from "./MailBox";
 export * from "./MailBox";
+export { default as PellikoLogoVertical } from "./PellikoLogoVertical";
+export * from "./PellikoLogoVertical";
 export { default as Thumbnail } from "./ThumbnailSvg";
 export * from "./ThumbnailSvg";

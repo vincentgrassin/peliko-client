@@ -5,10 +5,10 @@ const globalResources = {
   closedRollListTabTitle: "Développés",
   next: "Suivant",
   previous: "Précédent",
-  submit: "submit",
+  submit: "Envoyer",
   accessPhoneContact: "load contact",
   shootPicture: "shootPicture",
-  name: "Name",
+  name: "Nom",
   description: "Description",
   date: "Date",
   participants: "Participants",
@@ -16,11 +16,11 @@ const globalResources = {
   password: "Mot de passe",
   confirmPassword: "Confirmation du mot de passe",
   phoneNumber: "Numéro de téléphone",
-  logIn: "Change to sign in",
-  signUp: "Change to sign up",
+  logIn: "J'ai déjà un compte",
+  signUp: "Je n'ai pas encore de compte",
   remaningPictures: "photos restantes",
-  confirm: "confirm",
-  decline: "decline",
+  confirm: "confirmer",
+  decline: "supprimer",
   invitationText: "vous à invité à rejoindre",
   remainingDays: "jours restants",
   remainingHours: "heures restantes",
@@ -38,8 +38,8 @@ const globalResources = {
   processingPicture: "Enregistrement de la photo !",
   processingRoll: "Enregistrement de la pellicule !",
   phoneNumberValidityErrorMessage: "Téléphone non valide",
-  participantEmptyErrorMessage: "Must have friends",
-  participantMinimunNumberErrorMessage: "Minimum of 1 friends",
+  participantEmptyErrorMessage: "Il manque des participants",
+  participantMinimunNumberErrorMessage: "Minimum 1 participant",
   formErrors: "Erreurs dans le formulaire",
   errorNotMatchingPassword: "Les mots de passe ne sont pas identiques",
   emptyRolls: "Pas encore de pellicules",
@@ -59,7 +59,7 @@ const globalResources = {
   search: "Rechercher",
   myParticipants: "Mes participants",
   searchParticipantHelperText:
-    "Ajoutez un participant à partir de vos contacts ou d'un numéro de téléphone"
+    "Ajoutez un participant à partir de vos contacts ou d'un numéro de téléphone",
 };
 
 export default globalResources;

@@ -24,6 +24,7 @@ import { defaultCountryCode } from "../../utils/helpers/constants";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 import InputWrapper from "../../components/InputWrapper";
 import { usePushNotification } from "../../utils/hooks/usePushNotifications";
+import { PellikoLogoVertical } from "../../assets";
 
 interface LoginFormProps {}
 
@@ -47,6 +48,9 @@ const useStyles = makeStyles(() => ({
   },
   action: {
     marginTop: shape.spacing(1),
+  },
+  logo: {
+    alignItems: "center",
   },
 }));
 
@@ -146,11 +150,11 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   return (
     <>
-      <NavigationHeader
-        color={palette("yellow")}
-        text={isSignUpForm ? resources.subscribe : resources.connect}
-      />
+      <NavigationHeader color={palette("white", 0)} />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.logo}>
+          <PellikoLogoVertical width={140} height={120} />
+        </View>
         <KeyboardAvoidingView style={styles.container} behavior="height">
           <Formik
             initialValues={formValues}
@@ -196,7 +200,6 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
                     onPress={(e: any) => handleSubmit(e)}
                     title={resources.submit}
                     buttonStyle={styles.action}
-                    icon={<Icon {...iconSet.bell} />}
                     disabled={errors && Object.keys(errors).length > 0}
                   />
                   <Button

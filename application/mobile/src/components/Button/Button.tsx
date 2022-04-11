@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   Button as ReactNativeButton,
   ButtonProps as ReactNativeButtonProps,
-  makeStyles
+  makeStyles,
 } from "react-native-elements";
 import { shape, palette, typography } from "../../themeHelpers";
 import { Colors } from "../../utils/types/types";
@@ -33,13 +33,13 @@ const useStyles = makeStyles(
         paddingLeft: shape.spacing(2),
         paddingRight: shape.spacing(2),
         backgroundColor:
-          color || (type === "outline" ? palette("white") : palette("yellow"))
+          color || (type === "outline" ? palette("white") : palette("yellow")),
       },
       buttonTitle: {
         color: type === "outline" ? palette("yellow") : palette("black"),
         fontSize:
-          size === "small" ? typography.fontSize.xs : typography.fontSize.s
-      }
+          size === "small" ? typography.fontSize.xs : typography.fontSize.s,
+      },
     };
   }
 );
