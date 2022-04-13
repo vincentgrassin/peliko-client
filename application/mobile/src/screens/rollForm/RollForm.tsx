@@ -31,6 +31,7 @@ import {
   ROLL_CREATION_LAST_STEP,
 } from "../../utils/helpers/constants";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
+import { buildFullPhoneNumber } from "../../utils/helpers/dataCheckHelper";
 
 interface RollFormWizardProps {}
 
@@ -106,8 +107,13 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
           description,
           closingDate: date,
           participants: participantsContact.map(({ name, phoneNumber }) => {
+            const fullPhoneNumber = buildFullPhoneNumber(
+              phoneNumber.value,
+              phoneNumber.countryCode
+            );
+
             return {
-              phoneNumber: phoneNumber.value,
+              phoneNumber: fullPhoneNumber,
               name,
             };
           }),

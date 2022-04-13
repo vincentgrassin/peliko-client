@@ -25,7 +25,6 @@ import {
   ProfileValues,
   userProfileSchema,
 } from "../../utils/helpers/validationSchema";
-import { defaultCountryCode } from "../../utils/helpers/constants";
 import { pickImageFromGallery } from "../../utils/helpers/pictureHelper";
 import { GET_USER_BY_ID } from "../../utils/helpers/queries";
 import { UserCard } from "../../utils/types/types";
@@ -36,6 +35,7 @@ import {
 import { UPDATE_USER } from "../../utils/helpers/mutation";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 import InputWrapper from "../../components/InputWrapper";
+import { buildFullPhoneNumber } from "../../utils/helpers/dataCheckHelper";
 
 interface ParametersProps {}
 
@@ -75,7 +75,7 @@ const useStyles = makeStyles(() => ({
 
 const Parameters: React.FC<ParametersProps> = ({}) => {
   const styles = useStyles();
-  const { handleError, errorMessage, updateErrorMessage } =
+  const { handleError, errorMessage, updateErrorMessage, setErrorMessage } =
     useHandleServerError();
   const { data } = useQuery(GET_USER_BY_ID, { onError: handleError });
   const [updateUser] = useMutation(UPDATE_USER, {
@@ -139,12 +139,22 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
     const { phoneNumber, userName } = values;
     let pictureServerResponse;
     setLoading(true);
+    const fullPhoneNumber = buildFullPhoneNumber(
+      phoneNumber?.value,
+      phoneNumber?.countryCode
+    );
+
+    if (!fullPhoneNumber || !phoneNumber.isValid) {
+      setErrorMessage(resources.genericError);
+      return;
+    }
+
     if (profilePicture.base64) {
       pictureServerResponse = await uploadToCloudinary(profilePicture.base64);
     }
     const response = await updateUser({
       variables: {
-        phoneNumber: phoneNumber?.value,
+        phoneNumber: fullPhoneNumber,
         name: userName,
         profilePicture:
           pictureServerResponse?.public_id ||

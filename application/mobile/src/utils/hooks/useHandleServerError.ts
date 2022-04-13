@@ -38,6 +38,7 @@ export const useHandleServerError = () => {
     handleError,
     updateErrorMessage,
     errorMessage,
-    resetErrorMessage
+    resetErrorMessage,
+    setErrorMessage,
   };
 };

@@ -24,6 +24,7 @@ import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 import InputWrapper from "../../components/InputWrapper";
 import { usePushNotification } from "../../utils/hooks/usePushNotifications";
 import { PellikoLogoVertical } from "../../assets";
+import { buildFullPhoneNumber } from "../../utils/helpers/dataCheckHelper";
 
 interface LoginFormProps {}
 
@@ -65,8 +66,12 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const styles = useStyles();
 
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);
-  const { errorMessage, resetErrorMessage, updateErrorMessage } =
-    useHandleServerError();
+  const {
+    errorMessage,
+    resetErrorMessage,
+    updateErrorMessage,
+    setErrorMessage,
+  } = useHandleServerError();
 
   const { registerForPushNotificationsAsync } = usePushNotification();
 
@@ -114,10 +119,19 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const handleSubmit = async (values: LoginValues) => {
     resetErrorMessage();
     const { userName, password, phoneNumber } = values;
+    const fullPhoneNumber = buildFullPhoneNumber(
+      phoneNumber.value,
+      phoneNumber.countryCode
+    );
+
+    if (!fullPhoneNumber || !phoneNumber.isValid) {
+      setErrorMessage(resources.genericError);
+      return;
+    }
     let data: { accessToken: string; refreshToken: string };
     if (isSignUpForm) {
       const response = await signUp({
-        variables: { name: userName, password, phoneNumber: phoneNumber.value },
+        variables: { name: userName, password, phoneNumber: fullPhoneNumber },
       });
       if (response?.errors) {
         updateErrorMessage(response.errors);
@@ -126,7 +140,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
       data = response?.data?.createUser;
     } else {
       const response = await logIn({
-        variables: { password, phoneNumber: phoneNumber.value },
+        variables: { password, phoneNumber: fullPhoneNumber },
       });
       data = response?.data?.login;
       if (response?.errors) {

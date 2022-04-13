@@ -14,3 +14,17 @@ export const formatPhoneNumber = (phoneNumber: string, countryCode: string) => {
   }
   return phoneNumber;
 };
+
+export const buildFullPhoneNumber = (
+  phoneNumber: string | undefined,
+  countryCode: string | undefined
+) => {
+  if (!phoneNumber || !countryCode) {
+    return null;
+  }
+  const detailedCountryCode = countryCodes.find(
+    (el) => el.code === countryCode
+  );
+
+  return detailedCountryCode?.dial_code.concat(phoneNumber) || null;
+};
