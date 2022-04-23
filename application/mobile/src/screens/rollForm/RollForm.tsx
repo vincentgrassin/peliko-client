@@ -16,10 +16,7 @@ import RollFormStep2 from "./RollFormStep2";
 import { palette, resources, shape } from "../../themeHelpers";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { CREATE_ROLL } from "../../utils/helpers/mutation";
-import {
-  rollCreationSchema,
-  RollCreationValues,
-} from "../../utils/helpers/validationSchema";
+import { rollCreationSchema } from "../../utils/helpers/validationSchema";
 import { GET_ROLLS_BY_USER } from "../../utils/helpers/queries";
 import { useNavigation } from "../../utils/hooks/useNavigation";
 import { ScreenList } from "../../navigation/NavigationContainer";
@@ -32,6 +29,7 @@ import {
 } from "../../utils/helpers/constants";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 import { buildFullPhoneNumber } from "../../utils/helpers/dataCheckHelper";
+import { RollCreationValues } from "../../utils/types/types";
 
 interface RollFormWizardProps {}
 

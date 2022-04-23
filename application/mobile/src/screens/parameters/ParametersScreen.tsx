@@ -14,13 +14,10 @@ import {
 import { resources, palette, shape } from "../../themeHelpers";
 import { useMutation, useQuery } from "../../utils/hooks/useApolloClient";
 import { ImageProfile } from "../../assets";
-import {
-  ProfileValues,
-  userProfileSchema,
-} from "../../utils/helpers/validationSchema";
+import { userProfileSchema } from "../../utils/helpers/validationSchema";
 import { pickImageFromGallery } from "../../utils/helpers/pictureHelper";
 import { GET_USER_BY_ID } from "../../utils/helpers/queries";
-import { UserCard } from "../../utils/types/types";
+import { ProfileValues, UserCard } from "../../utils/types/types";
 import {
   getCloudinaryUrl,
   uploadToCloudinary,

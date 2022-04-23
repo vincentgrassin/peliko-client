@@ -6,8 +6,8 @@ import { makeStyles } from "react-native-elements";
 import { Button, Text, View } from "../../components";
 import { resources, shape } from "../../themeHelpers";
 import { getDateFormat } from "../../utils/helpers/dateHelper";
-import { RollCreationValues } from "../../utils/helpers/validationSchema";
 import { minimumRollDate } from "../../utils/helpers/constants";
+import { RollCreationValues } from "../../utils/types/types";
 
 interface RollFormStep1Props {}
 

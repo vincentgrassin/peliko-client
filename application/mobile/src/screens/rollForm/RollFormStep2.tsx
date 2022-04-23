@@ -13,13 +13,14 @@ import {
 } from "../../components";
 import { iconSet, palette, resources, shape } from "../../themeHelpers";
 import { usePhoneContacts, Contact } from "../../utils/hooks/usePhoneContacts";
-import {
-  ParticipantContact,
-  RollCreationValues,
-} from "../../utils/helpers/validationSchema";
+import {} from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import { formatPhoneNumber } from "../../utils/helpers/dataCheckHelper";
 import InputWrapper from "../../components/InputWrapper";
+import {
+  ParticipantContact,
+  RollCreationValues,
+} from "../../utils/types/types";
 
 interface RollFormStep2Props {}
 

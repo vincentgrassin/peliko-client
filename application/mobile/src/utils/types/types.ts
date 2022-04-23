@@ -77,3 +77,35 @@ export type UserCard = {
 };
 
 export type ErrorCode = "UNAUTHENTICATED";
+
+export type PhoneNumberCard = {
+  value: string;
+  isValid: boolean;
+  countryCode: string;
+};
+
+export type LoginValues = {
+  phoneNumber: PhoneNumberCard;
+  password: string;
+  email?: string;
+  userName?: string;
+  passwordConfirm?: string;
+  isSignUpForm: boolean;
+};
+
+export type ParticipantContact = {
+  name: string;
+  phoneNumber: PhoneNumberCard;
+};
+
+export type RollCreationValues = {
+  rollName: string;
+  description: string;
+  date: Date;
+  participantsContact: ParticipantContact[];
+};
+
+export type ProfileValues = Partial<Pick<LoginValues, "userName">> & {
+  profilePictureCloudinaryId?: string;
+  phoneNumber: Partial<PhoneNumberCard>;
+};

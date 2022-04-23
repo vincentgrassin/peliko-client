@@ -17,7 +17,7 @@ import { useNavigation } from "../../utils/hooks/useNavigation";
 import { useMutation } from "../../utils/hooks/useApolloClient";
 import { LOG_IN, SIGN_UP } from "../../utils/helpers/mutation";
 import { ScreenList } from "../../navigation/NavigationContainer";
-import { loginSchema, LoginValues } from "../../utils/helpers/validationSchema";
+import { loginSchema } from "../../utils/helpers/validationSchema";
 import { defaultCountryCode } from "../../utils/helpers/constants";
 import { useHandleServerError } from "../../utils/hooks/useHandleServerError";
 import InputWrapper from "../../components/InputWrapper";
@@ -25,6 +25,7 @@ import { usePushNotification } from "../../utils/hooks/usePushNotifications";
 import { PellikoLogoVertical } from "../../assets";
 import { buildFullPhoneNumber } from "../../utils/helpers/dataCheckHelper";
 import { getRefreshedTokens } from "../../utils/helpers/auth";
+import { LoginValues } from "../../utils/types/types";
 
 interface LoginFormProps {}
 

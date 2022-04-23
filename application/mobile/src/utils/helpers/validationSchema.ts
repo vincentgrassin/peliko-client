@@ -22,21 +22,6 @@ export const loginSchema = Yup.object().shape({
   }),
 });
 
-export type PhoneNumberCard = {
-  value: string;
-  isValid: boolean;
-  countryCode: string;
-};
-
-export type LoginValues = {
-  phoneNumber: PhoneNumberCard;
-  password: string;
-  email?: string;
-  userName?: string;
-  passwordConfirm?: string;
-  isSignUpForm: boolean;
-};
-
 export const rollCreationSchema = Yup.object().shape({
   rollName: Yup.string().required(resources.required),
   description: Yup.string().required(resources.required),
@@ -53,23 +38,6 @@ export const rollCreationSchema = Yup.object().shape({
     .required(resources.participantEmptyErrorMessage)
     .min(1, resources.participantMinimunNumberErrorMessage),
 });
-
-export type ParticipantContact = {
-  name: string;
-  phoneNumber: PhoneNumberCard;
-};
-
-export type RollCreationValues = {
-  rollName: string;
-  description: string;
-  date: Date;
-  participantsContact: ParticipantContact[];
-};
-
-export type ProfileValues = Partial<Pick<LoginValues, "userName">> & {
-  profilePictureCloudinaryId?: string;
-  phoneNumber: Partial<PhoneNumberCard>;
-};
 
 export const userProfileSchema = Yup.object().shape({
   userName: Yup.string().required(resources.required),

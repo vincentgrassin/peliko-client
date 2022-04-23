@@ -1,5 +1,4 @@
 import * as React from "react";
-import { makeStyles } from "react-native-elements";
 import { RouteProp, useRoute } from "../../utils/hooks/useNavigation";
 import { ParamList } from "../../navigation/NavigationContainer";
 import { Picture, FlatList, NavigationHeader } from "../../components";
@@ -8,10 +7,7 @@ import { getCloudinaryUrl } from "../../utils/helpers/cloudinaryHelper";
 
 interface PicturesGalleryProps {}
 
-const useStyles = makeStyles((theme) => ({}));
-
 const PicturesGallery: React.FC<PicturesGalleryProps> = ({}) => {
-  const styles = useStyles();
   const route = useRoute<RouteProp<ParamList, "PictureGalleryScreen">>();
   const { backgroundColor, pictures, computedScrollToOffset, title } =
     route?.params;
@@ -37,7 +33,7 @@ const PicturesGallery: React.FC<PicturesGalleryProps> = ({}) => {
     (data, index) => ({
       length: 0,
       offset: computedScrollToOffset,
-      index
+      index,
     }),
     [computedScrollToOffset]
   );
