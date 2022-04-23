@@ -15,23 +15,24 @@ export interface CustomPhoneInputProps extends PhoneInputProps {
 const useStyles = makeStyles(() => ({
   errorText: {
     fontSize: typography.fontSize.xs,
-    marginLeft: shape.spacing(2)
+    marginLeft: shape.spacing(2),
   },
   input: {
     backgroundColor: palette("white", 0),
-    paddingBottom: shape.spacing(1)
+    paddingBottom: shape.spacing(1),
   },
   container: {
     backgroundColor: palette("white", 0),
     borderBottomWidth: 1,
     borderBottomColor: palette("lightGrey"),
     width: "95%",
-    marginLeft: shape.spacing(1)
-  }
+    marginLeft: shape.spacing(1),
+  },
 }));
 
 const CustomPhoneInput: React.FC<CustomPhoneInputProps> = ({
   errorMessage,
+  value,
   ...props
 }) => {
   const styles = useStyles();
@@ -42,6 +43,10 @@ const CustomPhoneInput: React.FC<CustomPhoneInputProps> = ({
         layout="first"
         textContainerStyle={styles.input}
         containerStyle={styles.container}
+        textInputProps={{
+          value,
+        }}
+        value={value}
         {...props}
       />
       {errorMessage?.isValid && (
