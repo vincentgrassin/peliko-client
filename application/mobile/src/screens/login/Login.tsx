@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Formik } from "formik";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BASE_URL } from "@env";
 import { makeStyles } from "react-native-elements";
 import { KeyboardAvoidingView } from "react-native";
 import {
@@ -25,6 +24,7 @@ import InputWrapper from "../../components/InputWrapper";
 import { usePushNotification } from "../../utils/hooks/usePushNotifications";
 import { PellikoLogoVertical } from "../../assets";
 import { buildFullPhoneNumber } from "../../utils/helpers/dataCheckHelper";
+import { getRefreshedTokens } from "../../utils/helpers/auth";
 
 interface LoginFormProps {}
 
@@ -89,12 +89,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
       try {
         const token = await AsyncStorage.getItem("@refreshToken");
         if (token !== null) {
-          const response = await fetch(`${BASE_URL}/refresh_token/`, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `refreshToken=${token}`,
-          });
-          const responseJson = await response.json();
+          const responseJson = await getRefreshedTokens(token);
           if (responseJson.ok) {
             navigate<ScreenList>("BottomNavigation");
             try {
@@ -123,7 +118,6 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
       phoneNumber.value,
       phoneNumber.countryCode
     );
-
     if (!fullPhoneNumber || !phoneNumber.isValid) {
       setErrorMessage(resources.genericError);
       return;

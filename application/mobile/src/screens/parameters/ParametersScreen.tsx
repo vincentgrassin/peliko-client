@@ -1,6 +1,5 @@
 import * as React from "react";
 import { makeStyles } from "react-native-elements";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ImageSourcePropType } from "react-native";
 import { Formik } from "formik";
 import {
@@ -12,14 +11,8 @@ import {
   Text,
   View,
 } from "../../components";
-import { useNavigation } from "../../utils/hooks/useNavigation";
-import { ScreenList } from "../../navigation/NavigationContainer";
 import { resources, palette, shape } from "../../themeHelpers";
-import {
-  client,
-  useMutation,
-  useQuery,
-} from "../../utils/hooks/useApolloClient";
+import { useMutation, useQuery } from "../../utils/hooks/useApolloClient";
 import { ImageProfile } from "../../assets";
 import {
   ProfileValues,
@@ -75,9 +68,16 @@ const useStyles = makeStyles(() => ({
 
 const Parameters: React.FC<ParametersProps> = ({}) => {
   const styles = useStyles();
-  const { handleError, errorMessage, updateErrorMessage, setErrorMessage } =
-    useHandleServerError();
-  const { data } = useQuery(GET_USER_BY_ID, { onError: handleError });
+  const {
+    handleLogOut,
+    handleError,
+    errorMessage,
+    updateErrorMessage,
+    setErrorMessage,
+  } = useHandleServerError();
+  const { data } = useQuery(GET_USER_BY_ID, {
+    onError: handleError,
+  });
   const [updateUser] = useMutation(UPDATE_USER, {
     onError: handleError,
     errorPolicy: "all",
@@ -85,7 +85,6 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
 
   const userInformations: UserCard | undefined = data?.getUserById;
 
-  const { navigate } = useNavigation();
   const [isEditingProfile, setIsEditingProfile] =
     React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -123,13 +122,6 @@ const Parameters: React.FC<ParametersProps> = ({}) => {
       profilePictureCloudinaryId: userInformations?.avatarCloudinaryPublicId,
     });
   }, [userInformations]);
-
-  const handleLogOut = async () => {
-    await AsyncStorage.setItem("@accessToken", "");
-    await AsyncStorage.setItem("@refreshToken", "");
-    client.cache.reset();
-    navigate<ScreenList>("Login");
-  };
 
   const openProfileUpdater = () => {
     setIsEditingProfile(true);

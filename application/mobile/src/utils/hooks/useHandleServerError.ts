@@ -7,6 +7,7 @@ import { resources } from "../../themeHelpers";
 import { ErrorCode } from "../types/types";
 import { client } from "./useApolloClient";
 import { useNavigation } from "./useNavigation";
+import { getRefreshToken } from "../helpers/auth";
 
 export const useHandleServerError = () => {
   const { navigate } = useNavigation();
@@ -19,9 +20,10 @@ export const useHandleServerError = () => {
     navigate<ScreenList>("Login");
   };
 
-  const handleError = (error: ApolloError) => {
+  const handleError = async (error: ApolloError) => {
     const code: ErrorCode = error?.graphQLErrors[0]?.extensions?.code;
-    if (code === "UNAUTHENTICATED") {
+    const updatedTokens = await getRefreshToken();
+    if (code === "UNAUTHENTICATED" && (!updatedTokens || !updatedTokens?.ok)) {
       handleLogOut();
     }
   };
@@ -33,6 +35,7 @@ export const useHandleServerError = () => {
   const resetErrorMessage = () => {
     setErrorMessage("");
   };
+
   return {
     handleLogOut,
     handleError,
