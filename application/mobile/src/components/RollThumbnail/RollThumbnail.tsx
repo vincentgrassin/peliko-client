@@ -29,16 +29,16 @@ const useStyles = makeStyles(() => ({
   thumbnailContent: {
     position: "absolute",
     top: "30%",
-    marginLeft: shape.spacing(3)
+    marginLeft: shape.spacing(3),
   },
   badgeArea: {
     display: "flex",
     flexDirection: "row",
-    marginTop: shape.spacing(2)
+    marginTop: shape.spacing(2),
   },
   badge: {
-    marginRight: shape.spacing(1)
-  }
+    marginRight: shape.spacing(1),
+  },
 }));
 
 const RollThumbnail: React.FC<RollThumbnailProps> = ({
@@ -63,7 +63,7 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
         navigate<ScreenList>("RollScreen", {
           backgroundColor,
           rollId,
-          isOpenRoll
+          isOpenRoll,
         })
       }
     >
@@ -92,7 +92,13 @@ const RollThumbnail: React.FC<RollThumbnailProps> = ({
             />
             {isOpenRoll && (
               <Badge
-                value={<RollBadge value={remainingTime?.value} icon="date" />}
+                value={
+                  <RollBadge
+                    value={remainingTime?.value}
+                    secondaryValue={remainingTime?.text}
+                    icon="date"
+                  />
+                }
               />
             )}
           </View>
