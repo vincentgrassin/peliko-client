@@ -58,6 +58,16 @@ const useStyles = makeStyles(() => ({
   searchHelperText: {
     marginTop: shape.spacing(2),
   },
+  listItem: {
+    paddingLeft: shape.spacing(2),
+    minHeight: shape.spacing(3),
+    display: "flex",
+    flexDirection: "row",
+    flex: 1,
+  },
+  name: {
+    fontWeight: "bold",
+  },
 }));
 
 const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
@@ -130,6 +140,7 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
 
   const renderFlatListItem = ({ item }: { item: Contact }) => (
     <TouchableOpacity
+      style={styles.listItem}
       onPress={() => {
         setIsHiddenResult(true);
         item.phoneNumbers &&
@@ -138,7 +149,9 @@ const RollFormStep2: React.FC<RollFormStep2Props> = ({}) => {
       }}
     >
       <Text>
-        {item.name} {item.phoneNumbers && item.phoneNumbers[0].number}
+        <Text style={styles.name}>{item.name}</Text>
+        {"  "}
+        {item.phoneNumbers && item.phoneNumbers[0].number}
       </Text>
     </TouchableOpacity>
   );
