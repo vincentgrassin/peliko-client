@@ -5,7 +5,7 @@ import {
   makeStyles,
 } from "react-native-elements";
 
-import { palette } from "../../themeHelpers";
+import { palette, typography } from "../../themeHelpers";
 import Badge from "../Badge";
 import Text from "../Text";
 import { getDefaultAvatarUri } from "../../utils/helpers/colorHelper";
@@ -35,6 +35,9 @@ const useStyles = makeStyles(() => ({
     width: 60,
     textAlign: "center",
   },
+  pictureNumberText: {
+    fontSize: typography.fontSize.xxxs,
+  },
 }));
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -57,6 +60,7 @@ const Avatar: React.FC<AvatarProps> = ({
         <Badge
           containerStyle={styles.notification}
           badgeStyle={styles.badge}
+          textStyle={styles.pictureNumberText}
           value={notification}
         />
       )}
