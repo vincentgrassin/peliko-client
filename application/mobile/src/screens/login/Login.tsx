@@ -56,14 +56,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 const LoginForm: React.FC<LoginFormProps> = ({}) => {
-  const [formValues, setFormValues] = React.useState<LoginValues>({
+  const formValues: LoginValues = {
     userName: "",
     phoneNumber: { value: "", isValid: false, countryCode: defaultCountryCode },
     email: "",
     password: "",
     passwordConfirm: "",
     isSignUpForm: true,
-  });
+  };
   const styles = useStyles();
 
   const [isSignUpForm, setIsSignUpForm] = React.useState<boolean>(true);

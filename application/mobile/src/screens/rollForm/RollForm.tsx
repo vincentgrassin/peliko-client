@@ -68,14 +68,12 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
     errorPolicy: "all",
   });
   const { openModal, closeModal, isOpen: isVisibleModal } = useModal();
-  const initialValues = React.useMemo(() => {
-    return {
-      rollName: "",
-      description: "",
-      date: new Date(minimumRollDate),
-      participantsContact: [],
-    };
-  }, []);
+  const initialValues: RollCreationValues = {
+    rollName: "",
+    description: "",
+    date: new Date(minimumRollDate),
+    participantsContact: [],
+  };
 
   const [step, setStep] = React.useState(0);
 
@@ -153,6 +151,7 @@ const RollFormWizard: React.FC<RollFormWizardProps> = ({}) => {
             onSubmit={async (values, { setValues }) => {
               const isSubmissionOk = await handleSubmission(values);
               isSubmissionOk && setValues(initialValues);
+              setStep(0);
             }}
             validationSchema={rollCreationSchema}
           >
